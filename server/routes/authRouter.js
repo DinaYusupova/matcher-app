@@ -1,6 +1,7 @@
 const express = require('express');
-const { User } = require('../db/models');
 const bcrypt = require('bcrypt');
+const { User } = require('../db/models');
+
 const authRouter = express.Router();
 authRouter.post('/signup', async (req, res) => {
   try {
