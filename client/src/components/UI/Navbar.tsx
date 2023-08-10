@@ -4,7 +4,6 @@ import Tab from '@mui/material/Tab';
 import { Link, PathMatch, matchPath, useLocation } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { logoutUserThunk } from '../../redux/slices/user/userThunk';
 
 function useRouteMatch(patterns: readonly string[]): PathMatch | null {
   const location = useLocation();
