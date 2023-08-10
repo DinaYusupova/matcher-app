@@ -27,6 +27,6 @@ app.use(
   }),
 );
 
-// app.use('/api/user', userRouter);
+// app.use('/api/userinfo', userInfoRouter);
 
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

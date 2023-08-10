@@ -2,7 +2,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
-      'UserAuths',
+      'Users',
       [
         {
           email: 'user1@example.com',
@@ -20,14 +20,14 @@ module.exports = {
       {},
     );
     await queryInterface.bulkInsert(
-      'UserInfos',
+      'Anketas',
       [
         {
           name: 'Alice',
           age: 28,
           gender: 'Female',
           city: 'New York',
-          userAuthId: 1,
+          userId: 1,
           description: 'I love hiking and photography.',
         },
         {
@@ -35,7 +35,7 @@ module.exports = {
           age: 35,
           gender: 'Male',
           city: 'Los Angeles',
-          userAuthId: 2,
+          userId: 2,
           description: 'Musician and avid traveler.',
         },
         {
@@ -43,7 +43,7 @@ module.exports = {
           age: 22,
           gender: 'Female',
           city: 'Chicago',
-          userAuthId: 3,
+          userId: 3,
           description: 'Aspiring artist and coffee enthusiast.',
         },
       ],

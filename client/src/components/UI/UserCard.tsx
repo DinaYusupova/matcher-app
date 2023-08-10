@@ -14,26 +14,30 @@ export default function UserCard(): JSX.Element {
   };
 
   const [showDescription, setShowDescription] = useState(false);
-  const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
+  const [action, setAction] = useState(null);
 
   const toggleDescription = () => {
     setShowDescription(!showDescription);
   };
 
-  const handleLike = () => {
-    setLiked(true);
-    // Здесь вы можете добавить логику для обработки лайка
+  const handleAction = (type) => {
+    setAction(type);
+    // Здесь вы можете добавить логику для обработки лайка или дизлайка
+    setTimeout(() => {
+      setAction(null);
+    }, 300); // Сбрасываем анимацию через 300 миллисекунд
   };
 
-  const handleDislike = () => {
-    setDisliked(true);
-    // Здесь вы можете добавить логику для обработки дизлайка
-  };
+  let profileClasses = 'user-profile';
+  if (action === 'liked') {
+    profileClasses += ' swipe-right liked';
+  } else if (action === 'disliked') {
+    profileClasses += ' swipe-left disliked';
+  }
 
   return (
     <div className="centered-container">
-      <div className={`user-profile ${liked ? 'liked' : ''} ${disliked ? 'disliked' : ''}`}>
+      <div className={profileClasses}>
         <div className="user-photo">
           <img src={user.photo} alt="User" />
         </div>
@@ -49,8 +53,8 @@ export default function UserCard(): JSX.Element {
           )}
         </div>
         <div className="user-actions">
-          <button onClick={handleDislike}>Дизлайк</button>
-          <button onClick={handleLike}>Лайк</button>
+          <button onClick={() => handleAction('disliked')}>Дизлайк</button>
+          <button onClick={() => handleAction('liked')}>Лайк</button>
         </div>
       </div>
     </div>

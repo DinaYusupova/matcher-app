@@ -62,6 +62,8 @@ button:hover {
     opacity 0.3s,
     background-color 0.3s,
     filter 0.3s;
+  position: relative;
+  transform-origin: center; 
 }
 
 .user-profile.liked {
@@ -86,4 +88,28 @@ button:hover {
   height: auto; /* Автоматическая высота, чтобы сохранить пропорции */
 }
 
-/* Остальные стили остаются без изменений */
+@keyframes swipeLeft {
+  0% {
+    transform: rotate(0) translateX(0);
+  }
+  100% {
+    transform: rotate(-20deg) translateX(-150%); /* Свайп влево */
+  }
+}
+
+@keyframes swipeRight {
+  0% {
+    transform: rotate(0) translateX(0);
+  }
+  100% {
+    transform: rotate(20deg) translateX(150%); /* Свайп вправо */
+  }
+}
+
+.user-profile.swipe-left {
+  animation: swipeLeft 0.3s forwards;
+}
+
+.user-profile.swipe-right {
+  animation: swipeRight 0.3s forwards;
+}
