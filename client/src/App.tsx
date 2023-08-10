@@ -1,7 +1,16 @@
 import React from 'react';
+import { Container } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+import MainPage from './components/pages/MainPage';
 
 function App(): JSX.Element {
-  return <h2>Привет!</h2>;
+  return (
+    <Container>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+      </Routes>
+    </Container>
+  );
 }
 
 export default App;
