@@ -1,0 +1,89 @@
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.user-name-age {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.user-description {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.user-actions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+.liked {
+  background-color: #4caf50;
+  color: #ffffff;
+}
+
+.disliked {
+  background-color: #e53935;
+  color: #ffffff;
+}
+
+.user-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin: 10px;
+  transition:
+    transform 0.3s,
+    opacity 0.3s,
+    background-color 0.3s,
+    filter 0.3s;
+}
+
+.user-profile.liked {
+  background-color: #4caf50;
+  filter: brightness(1.2); /* Добавляем эффект яркости */
+}
+
+.user-profile.disliked {
+  background-color: #e53935;
+  filter: brightness(1.2); /* Добавляем эффект яркости */
+}
+
+.user-photo {
+  width: 100%; /* Заполняем всю ширину */
+  max-height: 300px; /* Максимальная высота фотографии */
+  overflow: hidden; /* Обрезаем избыточное содержимое */
+  border-radius: 10px; /* Скругленные границы для фотографии */
+}
+
+.user-photo img {
+  width: 100%;
+  height: auto; /* Автоматическая высота, чтобы сохранить пропорции */
+}
+
+/* Остальные стили остаются без изменений */
