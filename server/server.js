@@ -1,8 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const session = require('express-session');
-const FileStore = require('session-file-store')(session);
+const { createServer } = require('http');
+const { upgradeCB, wsServer } = require('./websocket/wsServer');
+const sessionParser = require('./middlewares/sessionParser');
 
 require('dotenv').config();
 
@@ -13,20 +14,12 @@ app.use(cors({ credentials: true, origin: true }));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  session({
-    name: 'sid',
-    secret: process.env.SESSION_SECRET ?? 'test',
-    resave: true,
-    store: new FileStore(),
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 12,
-      httpOnly: true,
-    },
-  }),
-);
+app.use(sessionParser);
 
+const server = createServer(app);
+
+server.on('upgrade', upgradeCB);
+// wsServer.on('connection', connectionCB);
 // app.use('/api/user', userRouter);
 
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));
