@@ -7,13 +7,13 @@ import AuthPage from './components/pages/AuthPage';
 import ChatPage from './components/pages/ChatPage';
 import Navigation from './components/UI/Navbar';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import { checkUserThunk } from './redux/slices/user/userThunk';
+import { checkUserAuthThunk } from './redux/slices/userAuth/userAuthThunk';
 
 function App(): JSX.Element {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    void dispatch(checkUserThunk);
+    void dispatch(checkUserAuthThunk());
   }, []);
   return (
     <>
