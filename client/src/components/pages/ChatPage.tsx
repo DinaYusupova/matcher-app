@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import React from 'react';
-import AllChatsAsidePart from '../ui/AllChatsAsidePart';
-import CurrentChat from '../ui/CurrentChat';
+import AllChatsAsidePart from '../UI/AllChatsAsidePart';
+import CurrentChat from '../UI/CurrentChat';
 
 export default function ChatPage(): JSX.Element {
   return (

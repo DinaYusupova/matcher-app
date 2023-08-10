@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       city: DataTypes.TEXT,
       userAuthId: DataTypes.INTEGER,
       description: DataTypes.TEXT,
+      userPhotoId:
     },
     {
       sequelize,

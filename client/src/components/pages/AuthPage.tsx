@@ -3,6 +3,9 @@ import { Box, Button, TextField } from '@mui/material';
 import React from 'react';
 import './AuthPage.css';
 import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/hooks';
+import { signinUserThunk, signupUserThunk } from '../../redux/slices/user/userThunk';
+import type { SigninUserType, SignupUserType } from '../../types/userType';
 
 export default function AuthPage(): JSX.Element {
   const { auth } = useParams();
@@ -29,16 +32,6 @@ export default function AuthPage(): JSX.Element {
         WELCOME
       </Box>
       <Box onSubmit={submitHandler} className="form" sx={{ mt: '10px' }} component="form">
-        {auth === 'signup' && (
-          <TextField
-            name="name"
-            className="inputs"
-            required
-            variant="filled"
-            label="enter your name"
-            type="text"
-          />
-        )}
         <TextField
           name="email"
           className="inputs"

@@ -1,16 +1,16 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { Link, PathMatch, matchPath, useLocation, useNavigate } from 'react-router-dom';
+import { Link, PathMatch, matchPath, useLocation } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { logoutUserThunk } from '../../redux/slices/userThunk';
+import { logoutUserThunk } from '../../redux/slices/user/userThunk';
 
-function useRouteMatch(patterns: readonly string[]) {
-  const { pathname } = useLocation();
+function useRouteMatch(patterns: readonly string[]): PathMatch | null {
+  const location = useLocation();
   for (let i = 0; i < patterns.length; i += 1) {
     const pattern = patterns[i];
-    const possibleMatch = matchPath(pattern, pathname);
+    const possibleMatch = matchPath(pattern, location.pathname);
     if (possibleMatch !== null) {
       return possibleMatch;
     }
