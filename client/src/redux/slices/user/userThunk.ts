@@ -1,15 +1,8 @@
+/* eslint-disable import/prefer-default-export */
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type{ SigninUserType, SignupUserType, UserModelType } from '../../../types/userType';
-import { checkUserService, logoutUserService, signinUserService, signupUserService } from '../../../services/apiUserServ';
+import type { UserInfoModelType } from '../../../types/userInfoType';
+import { fetchUserInfoService } from '../../../services/apiUserService';
 
-export const checkUserThunk = createAsyncThunk<UserModelType>('user/CheckUser', () => checkUserService());
-
-export const signinUserThunk = createAsyncThunk<UserModelType, SigninUserType>(
-  'user/SignInUser',
-  (formData) => signinUserService(formData),
+export const getUserThunk = createAsyncThunk<UserInfoModelType>('/user/getUser', (async) =>
+  fetchUserInfoService(),
 );
-export const signupUserThunk = createAsyncThunk<UserModelType, SignupUserType>(
-  'user/SignUpUser',
-  (formData) => signupUserService(formData),
-);
-export const logoutUserThunk = createAsyncThunk('user/LogoutUser', () => logoutUserService());

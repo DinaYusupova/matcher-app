@@ -1,36 +1,25 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Chats', {
+    await queryInterface.createTable('UserPhotos', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      senderId: {
+      userId: {
         type: Sequelize.INTEGER,
         references: {
           model: {
-            tableName: 'UserInfos',
+            tableName: 'Users',
           },
           key: 'id',
         },
         allowNull: true,
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       },
-      recipientId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: 'UserInfos',
-          },
-          key: 'id',
-        },
-        allowNull: true,
-        onDelete: 'SET NULL',
-      },
-      message: {
+      photo: {
         type: Sequelize.TEXT,
       },
       createdAt: {
@@ -46,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Chats');
+    await queryInterface.dropTable('UserPhotos');
   },
 };

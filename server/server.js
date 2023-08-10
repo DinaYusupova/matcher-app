@@ -5,6 +5,8 @@ const { createServer } = require('http');
 const { upgradeCB, wsServer } = require('./websocket/wsServer');
 const sessionParser = require('./middlewares/sessionParser');
 
+const UserInfoRouter = require('./routes/userInfoRouter')
+
 require('dotenv').config();
 
 const app = express();
@@ -21,5 +23,6 @@ const server = createServer(app);
 server.on('upgrade', upgradeCB);
 // wsServer.on('connection', connectionCB);
 // app.use('/api/user', userRouter);
+app.use('/api/userinfo', UserInfoRouter);
 
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

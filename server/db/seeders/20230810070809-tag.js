@@ -2,7 +2,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
-      'UserAuths',
+      'Users',
       [
         {
           email: 'user1@example.com',
@@ -20,14 +20,14 @@ module.exports = {
       {},
     );
     await queryInterface.bulkInsert(
-      'UserInfos',
+      'Profiles',
       [
         {
           name: 'Alice',
           age: 28,
           gender: 'Female',
           city: 'New York',
-          userAuthId: 1,
+          userId: 1,
           description: 'I love hiking and photography.',
         },
         {
@@ -35,7 +35,7 @@ module.exports = {
           age: 35,
           gender: 'Male',
           city: 'Los Angeles',
-          userAuthId: 2,
+          userId: 2,
           description: 'Musician and avid traveler.',
         },
         {
@@ -43,8 +43,30 @@ module.exports = {
           age: 22,
           gender: 'Female',
           city: 'Chicago',
-          userAuthId: 3,
+          userId: 3,
           description: 'Aspiring artist and coffee enthusiast.',
+        },
+      ],
+      {},
+    );
+
+    await queryInterface.bulkInsert(
+      'Chats',
+      [
+        {
+          senderId: 1,
+          recipientId: 2,
+          message: "Hey Bob, how's it going?",
+        },
+        {
+          senderId: 2,
+          recipientId: 1,
+          message: "Hey Alice, I'm doing great. Just got back from a gig!",
+        },
+        {
+          senderId: 3,
+          recipientId: 1,
+          message: 'Hi Alice, I really like your artwork.',
         },
       ],
       {},
@@ -63,27 +85,6 @@ module.exports = {
         {
           likedById: 3,
           likerId: 1,
-        },
-      ],
-      {},
-    );
-    await queryInterface.bulkInsert(
-      'Chats',
-      [
-        {
-          senderId: 1,
-          recipientId: 2,
-          message: "Hey Bob, how's it going?",
-        },
-        {
-          senderId: 2,
-          recipientId: 1,
-          message: "Hey Alice, I'm doing great. Just got back from a gig!",
-        },
-        {
-          senderId: 3,
-          recipientId: 1,
-          message: 'Hi Alice, I really like your artwork.',
         },
       ],
       {},

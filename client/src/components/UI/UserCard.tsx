@@ -1,39 +1,35 @@
 import React, { useState } from 'react';
 import './UserCard.css';
+import { useAppSelector } from '../../redux/hooks';
 
 export default function UserCard(): JSX.Element {
-  const user = {
-    name: 'Eve',
-    age: 22,
-    gender: 'Female',
-    city: 'Chicago',
-    userAuthId: 3,
-    description: 'Aspiring artist and coffee enthusiast.',
-    photo:
-      'https://media.istockphoto.com/id/1289220545/ru/%D1%84%D0%BE%D1%82%D0%BE/%D0%BA%D1%80%D0%B0%D1%81%D0%B8%D0%B2%D0%B0%D1%8F-%D0%B6%D0%B5%D0%BD%D1%89%D0%B8%D0%BD%D0%B0-%D1%83%D0%BB%D1%8B%D0%B1%D0%B0%D0%B5%D1%82%D1%81%D1%8F-%D1%81%D0%BE-%D1%81%D0%BA%D1%80%D0%B5%D1%89%D0%B5%D0%BD%D0%BD%D1%8B%D0%BC%D0%B8-%D1%80%D1%83%D0%BA%D0%B0%D0%BC%D0%B8.jpg?s=612x612&w=0&k=20&c=75Mz3Waiu8vJiPB_rGEE-6YNfrmffZreaRRNjlGE3Z8=',
-  };
+  const user = useAppSelector((store) => store.user);
 
   const [showDescription, setShowDescription] = useState(false);
-  const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
+  const [action, setAction] = useState(null);
 
   const toggleDescription = () => {
     setShowDescription(!showDescription);
   };
 
-  const handleLike = () => {
-    setLiked(true);
-    // Здесь вы можете добавить логику для обработки лайка
+  const handleAction = (type) => {
+    setAction(type);
+    // Здесь вы можете добавить логику для обработки лайка или дизлайка
+    setTimeout(() => {
+      setAction(null);
+    }, 300); // Сбрасываем анимацию через 300 миллисекунд
   };
 
-  const handleDislike = () => {
-    setDisliked(true);
-    // Здесь вы можете добавить логику для обработки дизлайка
-  };
+  let profileClasses = 'user-profile';
+  if (action === 'liked') {
+    profileClasses += ' swipe-right liked';
+  } else if (action === 'disliked') {
+    profileClasses += ' swipe-left disliked';
+  }
 
   return (
     <div className="centered-container">
-      <div className={`user-profile ${liked ? 'liked' : ''} ${disliked ? 'disliked' : ''}`}>
+      <div className={profileClasses}>
         <div className="user-photo">
           <img src={user.photo} alt="User" />
         </div>
@@ -49,8 +45,8 @@ export default function UserCard(): JSX.Element {
           )}
         </div>
         <div className="user-actions">
-          <button onClick={handleDislike}>Дизлайк</button>
-          <button onClick={handleLike}>Лайк</button>
+          <button onClick={() => handleAction('disliked')}>Дизлайк</button>
+          <button onClick={() => handleAction('liked')}>Лайк</button>
         </div>
       </div>
     </div>

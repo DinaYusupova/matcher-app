@@ -1,35 +1,24 @@
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import type { UserInfoType } from '../../../types/userInfoType';
+import { getUserThunk } from './userThunk';
 
-import { checkUserThunk, logoutUserThunk, signinUserThunk, signupUserThunk } from './userThunk';
-import type{ UserType } from '../../../types/userType';
+type UserInfoSliceType = UserInfoType | { status: 'loading' };
 
-const initialState = { status: 'loading' };
-const userSlice = createSlice({
+const initialState: UserInfoSliceType = { status: 'loading' };
+
+export const userSlice = createSlice({
   name: 'user',
-  initialState: initialState as UserType,
+  initialState: initialState as UserInfoSliceType,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(checkUserThunk.fulfilled, (state, { payload }) => ({
-      ...payload,
-      status: 'logged',
+    builder.addCase(getUserThunk.fulfilled, (state, action) => ({
+      ...action.payload,
+      status: 'loaded',
     }));
-    builder.addCase(checkUserThunk.pending, (state) => ({ status: 'loading' }));
-    builder.addCase(checkUserThunk.rejected, (state) => ({ status: 'guest' }));
-
-    builder.addCase(signupUserThunk.fulfilled, (state, { payload }) => ({
-      ...payload,
-      status: 'logged',
-    }));
-    builder.addCase(signupUserThunk.rejected, (state) => ({ status: 'guest' }));
-
-    builder.addCase(signinUserThunk.fulfilled, (state, { payload }) => ({
-      ...payload,
-      status: 'logged',
-    }));
-    builder.addCase(signinUserThunk.rejected, (state) => ({ status: 'guest' }));
-
-    builder.addCase(logoutUserThunk.fulfilled, (state) => ({ status: 'guest' }));
-    builder.addCase(logoutUserThunk.rejected, (state) => state);
+    builder.addCase(getUserThunk.pending, (state) => ({ status: 'loading' }));
+    builder.addCase(getUserThunk.rejected, (state) => ({ status: 'unloaded' }));
   },
 });
+
 export default userSlice.reducer;
