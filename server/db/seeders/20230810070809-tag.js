@@ -20,7 +20,7 @@ module.exports = {
       {},
     );
     await queryInterface.bulkInsert(
-      'Anketas',
+      'Profiles',
       [
         {
           name: 'Alice',
@@ -49,24 +49,7 @@ module.exports = {
       ],
       {},
     );
-    await queryInterface.bulkInsert(
-      'Likes',
-      [
-        {
-          likedById: 1,
-          likerId: 2,
-        },
-        {
-          likedById: 2,
-          likerId: 3,
-        },
-        {
-          likedById: 3,
-          likerId: 1,
-        },
-      ],
-      {},
-    );
+
     await queryInterface.bulkInsert(
       'Chats',
       [
@@ -84,6 +67,24 @@ module.exports = {
           senderId: 3,
           recipientId: 1,
           message: 'Hi Alice, I really like your artwork.',
+        },
+      ],
+      {},
+    );
+    await queryInterface.bulkInsert(
+      'Likes',
+      [
+        {
+          likedById: 1,
+          likerId: 2,
+        },
+        {
+          likedById: 2,
+          likerId: 3,
+        },
+        {
+          likedById: 3,
+          likerId: 1,
         },
       ],
       {},

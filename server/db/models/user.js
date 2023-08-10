@@ -3,9 +3,9 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      this.hasMany(models.Anketa, {
+      this.hasMany(models.Profile, {
         foreignKey: 'userId',
-        as: 'anketa',
+        as: 'profile',
       });
       this.hasMany(models.UserPhoto, {
         foreignKey: 'userId',
@@ -13,12 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       this.belongsToMany(models.User, {
-        through: 'Likes',
+        through: 'Chats',
         foreignKey: 'senderId',
         as: 'sender',
       });
       this.belongsToMany(models.User, {
-        through: 'Likes',
+        through: 'Chats',
         foreignKey: 'recipientId',
         as: 'recipient',
       });
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'likerId',
         as: 'liker',
       });
-      this.hasMany(models.User, {
+      this.belongsToMany(models.User, {
         through: 'Likes',
         foreignKey: 'likedById',
         as: 'likedBy',
@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Users',
+      modelName: 'User',
     },
   );
   return User;

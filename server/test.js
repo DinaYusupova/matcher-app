@@ -1,4 +1,4 @@
-const { UserAuth } = require('./db/models');
+const { UserAuth } = require('./test db/db/models');
 
 UserAuth.findAll({
  where: {
