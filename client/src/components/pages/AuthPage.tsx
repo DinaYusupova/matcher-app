@@ -4,8 +4,9 @@ import React from 'react';
 import './AuthPage.css';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/hooks';
-import { signinUserThunk, signupUserThunk } from '../../redux/slices/user/userThunk';
+
 import type { SigninUserType, SignupUserType } from '../../types/userType';
+import { signinUserAuthThunk, signupUserAuthThunk } from '../../redux/slices/userAuth/userAuthThunk';
 
 export default function AuthPage(): JSX.Element {
   const { auth } = useParams();
@@ -15,8 +16,8 @@ export default function AuthPage(): JSX.Element {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.currentTarget));
     auth === 'signup'
-      ? void dispatch(signupUserThunk(formData as SignupUserType))
-      : void dispatch(signinUserThunk(formData as SigninUserType));
+      ? void dispatch(signupUserAuthThunk(formData as SignupUserType))
+      : void dispatch(signinUserAuthThunk(formData as SigninUserType));
   };
   return (
     <>

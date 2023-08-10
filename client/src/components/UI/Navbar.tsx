@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import { Link, PathMatch, matchPath, useLocation } from 'react-router-dom';
+import type { PathMatch} from 'react-router-dom';
+import { Link, matchPath, useLocation } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { logoutUserThunk } from '../../redux/slices/user/userThunk';
+import { logoutUserAuthThunk } from '../../redux/slices/userAuth/userAuthThunk';
 
 function useRouteMatch(patterns: readonly string[]): PathMatch | null {
   const location = useLocation();
@@ -68,7 +69,7 @@ export default function Navigation(): JSX.Element {
         <Button
           color="error"
           onClick={() => {
-           void dispatch(logoutUserThunk());
+           void dispatch(logoutUserAuthThunk());
           }}
         >
           Разлогиниться
