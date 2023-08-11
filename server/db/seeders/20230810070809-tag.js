@@ -36,7 +36,7 @@ module.exports = {
           gender: 'Male',
           city: 'Los Angeles',
           userId: 2,
-          description: 'Musician and avid traveler.',
+          description: 'Musician and avid traveler. А еще ээээ люблю эээээ девушек и мужчин и да, ура, сегодня, есть что, куда?Пупупуппупупупупууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууу',
         },
         {
           name: 'Eve',
