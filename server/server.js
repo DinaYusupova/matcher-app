@@ -5,7 +5,10 @@ const { createServer } = require('http');
 const { upgradeCB, wsServer } = require('./websocket/wsServer');
 const sessionParser = require('./middlewares/sessionParser');
 
-const ProfileRouter = require('./routes/ProfileRouter');
+const ProfileRouter = require('./routes/ProfileRouter');;
+const authRouter = require('./routes/authRouter');
+const messageRouter = require('./routes/messageRouter');
+const connectionCB = require('./websocket/connection');
 
 require('dotenv').config();
 
@@ -21,8 +24,10 @@ app.use(sessionParser);
 const server = createServer(app);
 
 server.on('upgrade', upgradeCB);
-// wsServer.on('connection', connectionCB);
+wsServer.on('connection', connectionCB);
 // app.use('/api/user', userRouter);
 app.use('/api/profile', ProfileRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/chat', messageRouter);
 
-app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));
+server.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));
