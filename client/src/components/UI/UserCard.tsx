@@ -4,11 +4,16 @@ import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import type { ProfileType } from '../../types/profileType';
+import { likeProfileThunk } from '../../redux/slices/profile/profileThunk';
 
 export default function UserCard(): JSX.Element {
   const profile: ProfileType = useAppSelector((store) => store.profile.data[0]);
+
+  const profiles: ProfileType[] = useAppSelector((store) => store.profile.data);
+
+  const dispatch = useAppDispatch();
 
   const [showDescription, setShowDescription] = useState(false);
   const [action, setAction] = useState(null);
@@ -17,14 +22,15 @@ export default function UserCard(): JSX.Element {
     setShowDescription(!showDescription);
   };
 
-  console.log();
   const handleAction = (type) => {
-    // profile - запрос удаление + добавление + обновление
     setAction(type);
+    if (type === 'liked') {
+      void dispatch(likeProfileThunk(profile.userId));
+    }
     // Здесь вы можете добавить логику для обработки лайка или дизлайка
     setTimeout(() => {
       setAction(null);
-    }, 300); // Сбрасываем анимацию через 300 миллисекунд
+    }, 300); 
   };
 
   let profileClasses = 'user-profile';
@@ -32,6 +38,20 @@ export default function UserCard(): JSX.Element {
     profileClasses += ' swipe-right liked';
   } else if (action === 'disliked') {
     profileClasses += ' swipe-left disliked';
+  }
+
+  if (!profiles.length) {
+    return (
+      <div className="centered-container">
+        <div className={profileClasses}>
+          <div className="user-info">
+            <div className="user-name-age">
+              <h2>Пользователей с подходящими данными не найдено</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -43,7 +63,6 @@ export default function UserCard(): JSX.Element {
               {profile.name}, {profile.age}
             </h2>
           </div>
-
 
           {profile.description.length <= 50 || showDescription ? (
             <div className="description">{profile.description}</div>

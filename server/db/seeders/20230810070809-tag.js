@@ -16,6 +16,18 @@ module.exports = {
           email: 'user3@example.com',
           password: '12345qwerty',
         },
+        {
+          email: 'user4@example.com',
+          password: '12345qwerty',
+        },
+        {
+          email: 'user5@example.com',
+          password: '12345qwerty',
+        },
+        {
+          email: 'user6@example.com',
+          password: '12345qwerty',
+        },
       ],
       {},
     );
@@ -36,7 +48,8 @@ module.exports = {
           gender: 'Male',
           city: 'Los Angeles',
           userId: 2,
-          description: 'Musician and avid traveler. А еще ээээ люблю эээээ девушек и мужчин и да, ура, сегодня, есть что, куда?Пупупуппупупупупууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууу',
+          description:
+            'Musician and avid traveler. А еще ээээ люблю эээээ девушек и мужчин и да, ура, сегодня, есть что, куда?Пупупуппупупупупууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууууу',
         },
         {
           name: 'Eve',
@@ -45,6 +58,30 @@ module.exports = {
           city: 'Chicago',
           userId: 3,
           description: 'Aspiring artist and coffee enthusiast.',
+        },
+        {
+          name: 'Alicy',
+          age: 27,
+          gender: 'Female',
+          city: 'New York',
+          userId: 4,
+          description: 'I love hiking and photography.',
+        },
+        {
+          name: 'Alica',
+          age: 26,
+          gender: 'Female',
+          city: 'New York',
+          userId: 5,
+          description: 'I love hiking and photography.',
+        },
+        {
+          name: 'Alici',
+          age: 30,
+          gender: 'Female',
+          city: 'New York',
+          userId: 6,
+          description: 'I love hiking and photography.',
         },
       ],
       {},

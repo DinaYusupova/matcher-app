@@ -1,4 +1,5 @@
 export type ProfileModelType = {
+  id: number;
   name: string;
   age: number;
   gender: string;

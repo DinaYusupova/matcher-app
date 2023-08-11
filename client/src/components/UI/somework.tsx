@@ -21,6 +21,9 @@ export default function UserCard(): JSX.Element {
   const handleAction = (type) => {
     // profile - запрос удаление + добавление + обновление
     setAction(type);
+    // if (type ==='liked') {
+
+    // }
     // Здесь вы можете добавить логику для обработки лайка или дизлайка
     setTimeout(() => {
       setAction(null);
