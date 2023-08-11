@@ -7,7 +7,12 @@ import { apiService } from './apiServiceConfig';
 // ) => Promise<ReturnValue>;
 
 type ApiServiceLikeType<
-  ReturnValue = { data: ProfileModelType; userId: ProfileModelType['userId'] },
+  ReturnValue = { data: ProfileModelType[]; userId: ProfileModelType['userId'] },
+  ServiceArg = number,
+> = (arg: ServiceArg) => Promise<ReturnValue>;
+
+type ApiServiceDislikeType<
+  ReturnValue = { data: ProfileModelType[]; userId: ProfileModelType['userId'] },
   ServiceArg = number,
 > = (arg: ServiceArg) => Promise<ReturnValue>;
 
@@ -17,11 +22,11 @@ export const fetchProfileService = async (): Promise<ProfileModelType[]> => {
 };
 
 export const likeProfileService: ApiServiceLikeType = async (userId) => {
-  const { data } = await apiService.post<ProfileModelType>('/profile/like', { userId });
+  const { data } = await apiService.post<ProfileModelType[]>('/profile/like', { userId });
   return { data, userId };
 };
 
-export const dislikeProfileService = async (): Promise<ProfileModelType> => {
-  const { data } = await apiService<ProfileModelType>('/profile/dislike');
-  return data;
+export const dislikeProfileService: ApiServiceDislikeType = async (userId) => {
+  const { data } = await apiService.delete<ProfileModelType[]>(`/profile/dislike/${userId}`);
+  return { data, userId };
 };

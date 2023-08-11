@@ -11,11 +11,12 @@ export const getProfileThunk = createAsyncThunk<ProfileModelType[]>('/user/getUs
   fetchProfileService(),
 );
 
-export const likeProfileThunk = createAsyncThunk<{ data: ProfileModelType; userId: number; }, ProfileModelType['userId']>(
-  '/user/like',
-  async (userId) => likeProfileService(userId),
-);
+export const likeProfileThunk = createAsyncThunk<
+  { data: ProfileModelType[]; userId: number },
+  ProfileModelType['userId']
+>('/user/like', async (userId) => likeProfileService(userId));
 
-export const dislikeProfileThunk = createAsyncThunk<ProfileModelType>('/user/dislike', (async) =>
-  dislikeProfileService(),
-);
+export const dislikeProfileThunk = createAsyncThunk<
+  { data: ProfileModelType[]; userId: number },
+  ProfileModelType['userId']
+>('/user/dislike', async (userId) => dislikeProfileService(userId));

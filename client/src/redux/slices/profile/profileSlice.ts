@@ -1,8 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { ProfileType } from '../../../types/profileType';
-import { getProfileThunk, likeProfileThunk } from './profileThunk';
+import { dislikeProfileThunk, getProfileThunk, likeProfileThunk } from './profileThunk';
 
-type ProfileSliceType = { data: ProfileType[]; status: 'loading' | 'unloaded' | 'loaded' };
+type ProfileSliceType = {
+  data: ProfileType[];
+  status: 'loading' | 'unloaded' | 'loaded' | 'empty';
+};
 
 const initialState: ProfileSliceType = { data: [], status: 'loading' };
 
@@ -19,15 +22,35 @@ export const userSlice = createSlice({
     builder.addCase(getProfileThunk.rejected, (state) => ({ data: [], status: 'unloaded' }));
 
     builder.addCase(likeProfileThunk.fulfilled, (state, action) => {
-      state.data = state.data.filter((el) => el.id!==action.payload.userId)
-      state.data.push(action.payload.data)
-      console.log(state.data);
-      state.status = 'loaded'
-    })
+      state.data = state.data.filter((el) => el.id !== action.payload.userId);
+      if (action.payload.data.length) {
+        state.data.push(action.payload.data[0]);
+        state.status = 'loaded';
+      } else {
+        state.status = 'empty';
+      }
+    });
     builder.addCase(likeProfileThunk.pending, (state) => ({ data: state.data, status: 'loading' }));
-    builder.addCase(likeProfileThunk.rejected, (state) => ({ data: state.data, status: 'unloaded' }));
+    builder.addCase(likeProfileThunk.rejected, (state) => ({
+      data: state.data,
+      status: 'unloaded',
+    }));
 
-
+    builder.addCase(dislikeProfileThunk.fulfilled, (state, action) => {
+      state.data = state.data.filter((el) => el.id !== action.payload.userId);
+      if (action.payload.data.length) {
+        state.data.push(action.payload.data[0]);
+        state.status = 'loaded';
+      } else {
+        state.status = 'empty';
+      }
+      state.status = 'loaded';
+    });
+    builder.addCase(dislikeProfileThunk.pending, (state) => ({ data: state.data, status: 'loading' }));
+    builder.addCase(dislikeProfileThunk.rejected, (state) => ({
+      data: state.data,
+      status: 'unloaded',
+    }));
   },
 });
 

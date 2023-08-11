@@ -1,6 +1,6 @@
 const express = require('express');
 const { QueryTypes } = require('sequelize');
-const { Like, sequelize } = require('../db/models');
+const { Like, Dislikes, sequelize } = require('../db/models');
 
 const router = express.Router();
 const session_user = 2;
@@ -19,7 +19,6 @@ router.get('/', async (req, res) => {
         type: QueryTypes.SELECT,
       },
     );
-    console.log(newProfiles);
     res.json(newProfiles);
   } catch (err) {
     console.error(err);
@@ -29,13 +28,11 @@ router.get('/', async (req, res) => {
 
 router.post('/like', async (req, res) => {
   try {
-    const like = await Like.create({
+    await Like.create({
       // eslint-disable-next-line camelcase
       likerId: session_user,
       likedById: req.body.userId,
     });
-
-    console.log(like);
 
     const newProfile = await sequelize.query(
       '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge limit 1)',
@@ -56,4 +53,29 @@ router.post('/like', async (req, res) => {
   }
 });
 
+router.delete('/dislike/:id', async (req, res) => {
+  try {
+    await Dislikes.create({
+      // eslint-disable-next-line camelcase
+      dislikerId: session_user,
+      dislikedById: req.body.userId,
+    });
+    const newProfile = await sequelize.query(
+      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge limit 1)',
+      {
+        replacements: {
+          userId: session_user,
+          userGender: 'Female',
+          minAge: 18,
+          maxAge: 40,
+        },
+        type: QueryTypes.SELECT,
+      },
+    );
+    res.json(newProfile);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
 module.exports = router;

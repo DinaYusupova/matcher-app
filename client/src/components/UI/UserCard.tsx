@@ -6,12 +6,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import type { ProfileType } from '../../types/profileType';
-import { likeProfileThunk } from '../../redux/slices/profile/profileThunk';
+import { dislikeProfileThunk, likeProfileThunk } from '../../redux/slices/profile/profileThunk';
 
 export default function UserCard(): JSX.Element {
   const profile: ProfileType = useAppSelector((store) => store.profile.data[0]);
 
   const profiles: ProfileType[] = useAppSelector((store) => store.profile.data);
+
+  const profilesStatus: string = useAppSelector((store) => store.profile.status);
 
   const dispatch = useAppDispatch();
 
@@ -27,14 +29,17 @@ export default function UserCard(): JSX.Element {
     if (type === 'liked') {
       void dispatch(likeProfileThunk(profile.userId));
     }
+    if (type === 'disliked') {
+      void dispatch(dislikeProfileThunk(profile.userId));
+    }
     // Здесь вы можете добавить логику для обработки лайка или дизлайка
     setTimeout(() => {
       setAction(null);
-    }, 300); 
+    }, 300);
   };
 
   let profileClasses = 'user-profile';
-  if (action === 'liked') {
+  if (action === 'liked' || profilesStatus === 'empty') {
     profileClasses += ' swipe-right liked';
   } else if (action === 'disliked') {
     profileClasses += ' swipe-left disliked';

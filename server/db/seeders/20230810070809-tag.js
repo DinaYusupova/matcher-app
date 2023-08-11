@@ -126,6 +126,25 @@ module.exports = {
       ],
       {},
     );
+
+    await queryInterface.bulkInsert(
+      'Dislikes',
+      [
+        {
+          dislikerId: 1,
+          dislikedById: 2,
+        },
+        {
+          dislikerId: 2,
+          dislikedById: 3,
+        },
+        {
+          dislikerId: 3,
+          dislikedById: 1,
+        },
+      ],
+      {},
+    );
   },
 
   async down(queryInterface, Sequelize) {},
