@@ -13,7 +13,7 @@ export const signupUserService = async (formData: SignupUserType): Promise<UserM
   return data;
 };
 export const logoutUserService = async (): Promise<void> => {
-  await apiService('/api/auth/logout');
+  await apiService('/auth/logout');
 };
 export const checkUserService = async (): Promise<UserModelType> => {
   const { data } = await apiService.post<UserModelType>('/auth/check');
