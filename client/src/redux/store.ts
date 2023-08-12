@@ -5,7 +5,7 @@ import profileReducer from './slices/profile/profileSlice';
 
 export const store = configureStore({
   reducer: {
-  
+    user: userReducer,
     profile: profileReducer,
     chat: ChatReducer,
   },

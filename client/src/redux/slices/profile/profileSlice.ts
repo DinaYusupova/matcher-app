@@ -30,7 +30,7 @@ export const userSlice = createSlice({
         state.status = 'empty';
       }
     });
-    builder.addCase(likeProfileThunk.pending, (state) => ({ data: state.data, status: 'loading' }));
+    builder.addCase(likeProfileThunk.pending, (state) => ({ data: state.data, status: 'loaded' }));
     builder.addCase(likeProfileThunk.rejected, (state) => ({
       data: state.data,
       status: 'unloaded',
@@ -46,7 +46,7 @@ export const userSlice = createSlice({
       }
       state.status = 'loaded';
     });
-    builder.addCase(dislikeProfileThunk.pending, (state) => ({ data: state.data, status: 'loading' }));
+    builder.addCase(dislikeProfileThunk.pending, (state) => ({ data: state.data, status: 'loaded' }));
     builder.addCase(dislikeProfileThunk.rejected, (state) => ({
       data: state.data,
       status: 'unloaded',

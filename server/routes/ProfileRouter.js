@@ -1,17 +1,17 @@
 const express = require('express');
 const { QueryTypes } = require('sequelize');
-const { Like, Dislikes, sequelize } = require('../db/models');
+const { Like, Dislikes, Chat, sequelize } = require('../db/models');
 
 const router = express.Router();
-const session_user = 2;
+const sessionUser = 2;
 
 router.get('/', async (req, res) => {
   try {
     const newProfiles = await sequelize.query(
-      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge limit 3)',
+      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 3)',
       {
         replacements: {
-          userId: session_user,
+          userId: sessionUser,
           userGender: 'Female',
           minAge: 18,
           maxAge: 40,
@@ -30,15 +30,36 @@ router.post('/like', async (req, res) => {
   try {
     await Like.create({
       // eslint-disable-next-line camelcase
-      likerId: session_user,
+      likerId: sessionUser,
       likedById: req.body.userId,
     });
 
+    let isMutualLike = false;
+    await sequelize
+      .query(
+        '(select count(*) = 1 isMutual from "Likes" l where l."likerId" = :likedByCurrentUserId and l."likedById" = :currentUserId)',
+        {
+          replacements: {
+            likedByCurrentUserId: req.body.userId,
+            currentUserId: sessionUser,
+          },
+          type: QueryTypes.SELECT,
+        },
+      )
+      .then((object) => {
+        isMutualLike = object[0].ismutual;
+      });
+    if (isMutualLike) {
+      await Chat.create({
+        senderId: sessionUser,
+        recipientId: req.body.userId,
+      });
+    }
     const newProfile = await sequelize.query(
-      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge limit 1)',
+      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
       {
         replacements: {
-          userId: session_user,
+          userId: sessionUser,
           userGender: 'Female',
           minAge: 18,
           maxAge: 40,
@@ -53,18 +74,18 @@ router.post('/like', async (req, res) => {
   }
 });
 
-router.delete('/dislike/:id', async (req, res) => {
+router.get('/dislike/:id', async (req, res) => {
   try {
     await Dislikes.create({
-      // eslint-disable-next-line camelcase
-      dislikerId: session_user,
-      dislikedById: req.body.userId,
+      dislikerId: sessionUser,
+      dislikedById: req.params.id,
     });
+
     const newProfile = await sequelize.query(
-      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge limit 1)',
+      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
       {
         replacements: {
-          userId: session_user,
+          userId: sessionUser,
           userGender: 'Female',
           minAge: 18,
           maxAge: 40,

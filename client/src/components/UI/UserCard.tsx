@@ -39,29 +39,29 @@ export default function UserCard(): JSX.Element {
   };
 
   let profileClasses = 'user-profile';
+  let animationClass = ''; // Добавляем переменную для класса анимации
+
   if (action === 'liked' || profilesStatus === 'empty') {
-    profileClasses += ' swipe-right liked';
+    animationClass = 'swipe-right'; // Устанавливаем класс анимации
+    profileClasses += ' liked';
   } else if (action === 'disliked') {
-    profileClasses += ' swipe-left disliked';
+    animationClass = 'swipe-left'; // Устанавливаем класс анимации
+    profileClasses += ' disliked';
   }
 
   if (!profiles.length) {
     return (
       <div className="centered-container">
-        <div className={profileClasses}>
-          <div className="user-info">
-            <div className="user-name-age">
-              <h2>Пользователей с подходящими данными не найдено</h2>
-            </div>
+         <div className="user-info no-profiles">
+            <p>Больше пользователей с подходящими данными не найдено, расширьте фильтр поиска</p>
           </div>
-        </div>
       </div>
     );
   }
 
   return (
     <div className="centered-container">
-      <div className={profileClasses}>
+      <div className={`${profileClasses} ${animationClass}`}>
         <div className="user-info">
           <div className="user-name-age">
             <h2>

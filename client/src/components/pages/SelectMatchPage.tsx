@@ -16,6 +16,6 @@ export default function SelectMatchPage(): JSX.Element {
   return (
     <Loader isLoading={profile.status === 'loading'}>
       <UserCard />
-    </Loader>
+    </Loader> 
   );
 }

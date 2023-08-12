@@ -27,6 +27,6 @@ export const likeProfileService: ApiServiceLikeType = async (userId) => {
 };
 
 export const dislikeProfileService: ApiServiceDislikeType = async (userId) => {
-  const { data } = await apiService.delete<ProfileModelType[]>(`/profile/dislike/${userId}`);
+  const { data } = await apiService<ProfileModelType[]>(`/profile/dislike/${userId}`);
   return { data, userId };
 };
