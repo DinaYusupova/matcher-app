@@ -3,28 +3,12 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { addMessage } from '../../redux/slices/messages/ChatSlice';
 // добавить кнопку крестика по типу скрыть чат...доп.
-export default function CurrentChat({ submitHandler }): JSX.Element {
-  // const message = [
-  //   'message maybe with date but not sure',
-  //   'message',
-  //   'not your message',
-  //   'message',
-  //   'message',
-  //   'message',
-  //   'not your message',
-  //   'message',
-  //   'message',
-  //   'message',
-  //   'message',
-  //   'not your message',
-  //   'message',
-  //   'message',
-  //   'message',
-  //   'message',
-  //   'message',
-  //   'message',
-  //   'message',
-  // ];
+
+type Props = {
+  selectedChat: number;
+  submitHandler: (input: string, chatId: Props['selectedChat']) => void;
+};
+export default function CurrentChat({ selectedChat, submitHandler }: Props): JSX.Element {
   const chat = useAppSelector((store) => store.chat);
   const user = useAppSelector((store) => store.user);
   console.log('current chat log', chat);
@@ -51,8 +35,8 @@ export default function CurrentChat({ submitHandler }): JSX.Element {
         onSubmit={(e) => {
           e.preventDefault();
           const data = Object.fromEntries(new FormData(e.currentTarget));
-          submitHandler(data.message);
-          dispatch(addMessage(data.message));
+          submitHandler(data.message,selectedChat);
+          // dispatch(addMessage(data.message));
         }}
         component="form"
         width="60%"

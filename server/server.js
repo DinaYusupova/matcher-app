@@ -5,6 +5,7 @@ const { createServer } = require('http');
 const { upgradeCB, wsServer } = require('./websocket/wsServer');
 const sessionParser = require('./middlewares/sessionParser');
 
+
 const UserInfoRouter = require('./routes/userInfoRouter');
 const authRouter = require('./routes/authRouter');
 const messageRouter = require('./routes/messageRouter');
@@ -13,13 +14,13 @@ const connectionCB = require('./websocket/connection');
 require('dotenv').config();
 
 const app = express();
+app.use(sessionParser);
 const PORT = process.env.PORT || 3001;
 
 app.use(cors({ credentials: true, origin: true }));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(sessionParser);
 
 const server = createServer(app);
 

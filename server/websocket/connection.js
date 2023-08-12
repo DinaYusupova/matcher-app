@@ -24,8 +24,8 @@ const connectionCB = (socket, req) => {
       case 'NEW_MESSAGE':
         Chat.create({
           senderId: userId,
-          recipientId: 2,
-          message: payload,
+          recipientId: payload.chatId,
+          message: payload.input,
         }).then(async (newMessage) => {
           const messWithAuth = await Chat.findOne({
             where: {
