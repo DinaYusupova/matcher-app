@@ -1,32 +1,23 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Profiles', {
+    await queryInterface.createTable('Filters', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.TEXT,
+      searchGender: {
+        type: Sequelize.STRING,
       },
-      age: {
+      searchCity: {
+        type: Sequelize.STRING,
+      },
+      minSearchAge: {
         type: Sequelize.INTEGER,
       },
-      gender: {
-        type: Sequelize.TEXT,
-      },
-      userLongitude: {
-        type: Sequelize.TEXT,
-      },
-      userLatitude: {
-        type: Sequelize.TEXT,
-      },
-      city: {
-        type: Sequelize.TEXT,
-      },
-      distanceBetweenUsers: {
+      maxSearchAge: {
         type: Sequelize.INTEGER,
       },
       userId: {
@@ -39,12 +30,6 @@ module.exports = {
         },
         allowNull: true,
         onDelete: 'CASCADE',
-      },
-      description: {
-        type: Sequelize.TEXT,
-      },
-      city: {
-        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
@@ -59,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Profiles');
+    await queryInterface.dropTable('Filters');
   },
 };

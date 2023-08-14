@@ -17,8 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       userLongitude: DataTypes.TEXT,
       userLatitude: DataTypes.TEXT,
       distanceBetweenUsers: DataTypes.INTEGER,
+      city: DataTypes.TEXT,
       userId: DataTypes.INTEGER,
       description: DataTypes.TEXT,
+      city: DataTypes.TEXT,
     },
     {
       sequelize,

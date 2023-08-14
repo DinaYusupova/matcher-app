@@ -9,6 +9,7 @@ import Navigation from './components/UI/Navbar';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { checkUserAuthThunk } from './redux/slices/userAuth/userAuthThunk';
 import PrivateRouter from './components/hocs/PrivateRouter';
+import AccountPage from './components/pages/AccountPage';
 
 function App(): JSX.Element {
   const user = useAppSelector((store) => store.user);
@@ -28,12 +29,13 @@ function App(): JSX.Element {
           <Route
             path="/auth/:authType"
             element={
-              <PrivateRouter redirect="/chat" isAllowed={user.status !== 'logged'} >
+              <PrivateRouter redirect="/account" isAllowed={user.status !== 'logged'} >
                 <AuthPage />
               </PrivateRouter>
             }
           />
-        </Routes>
+          <Route path="/account" element={<AccountPage />} />
+      </Routes>
     </>
   );
 }
