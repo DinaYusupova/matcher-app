@@ -10,7 +10,7 @@ const messageRouter = require('./routes/messageRouter');
 const connectionCB = require('./websocket/connection');
 const locationRouter = require('./routes/locationRouter');
 const sessionParser = require('./middlewares/sessionParser');
-
+const LikeDislikeRouter = require('./routes/likeDislikeRouter');
 
 const UserPhotoRouter = require('./routes/account/userPhotoRouter');
 const UserAccountRouter = require('./routes/account/userAccountRouter');
@@ -33,6 +33,7 @@ server.on('upgrade', upgradeCB);
 wsServer.on('connection', connectionCB);
 app.use('/api/auth', authRouter);
 app.use('/api/profile', ProfileRouter);
+app.use('/api', LikeDislikeRouter);
 app.use('/api/chat', messageRouter);
 app.use('/api/save-location', locationRouter);
 app.use('/api/userphoto', UserPhotoRouter);
