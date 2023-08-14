@@ -3,15 +3,13 @@ const morgan = require('morgan');
 const cors = require('cors');
 const { createServer } = require('http');
 const { upgradeCB, wsServer } = require('./websocket/wsServer');
-// const sessionParser = require('./middlewares/sessionParser');
-const session = require('express-session');
-const FileStore = require('session-file-store')(session);
 
 const ProfileRouter = require('./routes/ProfileRouter');
 const authRouter = require('./routes/authRouter');
 const messageRouter = require('./routes/messageRouter');
 const connectionCB = require('./websocket/connection');
 const locationRouter = require('./routes/locationRouter');
+const sessionParser = require('./middlewares/sessionParser');
 
 require('dotenv').config();
 
