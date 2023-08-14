@@ -3,7 +3,9 @@ export type ProfileModelType = {
   name: string;
   age: number;
   gender: string;
-  city: string;
+  userLongitude: number;
+  userLatitude: number;
+  distanceBetweenUsers: number, 
   userId: number;
   description: string;
   photo: string;

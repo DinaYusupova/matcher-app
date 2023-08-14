@@ -52,9 +52,9 @@ export default function UserCard(): JSX.Element {
   if (!profiles.length) {
     return (
       <div className="centered-container">
-         <div className="user-info no-profiles">
-            <p>Больше пользователей с подходящими данными не найдено, расширьте фильтр поиска</p>
-          </div>
+        <div className="user-info no-profiles">
+          <p>Больше пользователей с подходящими данными не найдено, расширьте фильтр поиска</p>
+        </div>
       </div>
     );
   }
@@ -67,6 +67,7 @@ export default function UserCard(): JSX.Element {
             <h2>
               {profile.name}, {profile.age}
             </h2>
+            <p>{profile.distanceBetweenUsers}</p>
           </div>
 
           {profile.description.length <= 50 || showDescription ? (

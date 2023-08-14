@@ -11,6 +11,7 @@ const ProfileRouter = require('./routes/ProfileRouter');
 const authRouter = require('./routes/authRouter');
 const messageRouter = require('./routes/messageRouter');
 const connectionCB = require('./websocket/connection');
+const locationRouter = require('./routes/locationRouter');
 
 require('dotenv').config();
 
@@ -43,5 +44,6 @@ wsServer.on('connection', connectionCB);
 app.use('/api/profile', ProfileRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/chat', messageRouter);
+app.use('/api/save-location', locationRouter);
 
 server.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

@@ -1,6 +1,7 @@
 const express = require('express');
 const { QueryTypes } = require('sequelize');
-const { Like, Dislikes, Chat, sequelize } = require('../db/models');
+const { Like, Dislikes, Chat, sequelize, Profile } = require('../db/models');
+const calculateDistance = require('./fuctions/calculateDistance');
 
 const router = express.Router();
 const sessionUser = 2;
@@ -19,6 +20,22 @@ router.get('/', async (req, res) => {
         type: QueryTypes.SELECT,
       },
     );
+    const currentUserProfile = await Profile.findByPk(sessionUser);
+    newProfiles.forEach((profile) => {
+      // eslint-disable-next-line no-param-reassign
+      profile.distanceBetweenUsers = calculateDistance(
+        profile.userLatitude,
+        profile.userLongitude,
+        currentUserProfile.userLatitude,
+        currentUserProfile.userLongitude,
+      );
+    });
+    console.log(
+      newProfiles[0].distanceBetweenUsers,
+      newProfiles[1].distanceBetweenUsers,
+      newProfiles[2].distanceBetweenUsers,
+    );
+
     res.json(newProfiles);
   } catch (err) {
     console.error(err);
@@ -67,6 +84,13 @@ router.post('/like', async (req, res) => {
         type: QueryTypes.SELECT,
       },
     );
+    const currentUserProfile = await Profile.findByPk(sessionUser);
+    newProfile.distanceBetweenUsers = calculateDistance(
+      newProfile.userLatitude,
+      newProfile.userLongitude,
+      currentUserProfile.userLatitude,
+      currentUserProfile.userLongitude,
+    );
     res.json(newProfile);
   } catch (err) {
     console.error(err);
@@ -92,6 +116,13 @@ router.get('/dislike/:id', async (req, res) => {
         },
         type: QueryTypes.SELECT,
       },
+    );
+    const currentUserProfile = await Profile.findByPk(sessionUser);
+    newProfile.distanceBetweenUsers = calculateDistance(
+      newProfile.userLatitude,
+      newProfile.userLongitude,
+      currentUserProfile.userLatitude,
+      currentUserProfile.userLongitude,
     );
     res.json(newProfile);
   } catch (err) {

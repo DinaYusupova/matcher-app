@@ -1,0 +1,135 @@
+/* .pink-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #ff6b6b;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pink-btn:hover {
+    background-color: #ff4a4a;
+  }
+  .app {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    text-align: center;
+  }
+  
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+  .container {
+    background-image: url('path/to/your/image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Это свойство обеспечит, чтобы div занимал всю высоту видимой области */
+/* Другие стили для контейнера */
+
+.promo {
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.promo-content {
+  border-radius: 60px;
+  background-color: #f4f6f5;
+
+  display: flex;
+  column-gap: 24px;
+
+  padding-top: 50px;
+  padding-left: 120px;
+}
+
+
+.promo-button-wrap {
+  display: flex;
+  column-gap: 25px;
+  align-items: center;
+}
+
+.promo-title {
+  margin-top: 50px;
+  max-width: 480px;
+  font-weight: 900;
+  font-size: 96px;
+  line-height: 1.05;
+}
+.promo-button-wrap::before {
+  content: '';
+  display: inline-block;
+  width: 190px;
+  height: 32px;
+  background-image: url('./../../../img/vector-btn.svg');
+}
+.promo-btn {
+  margin-top: 40px;
+  padding: 18px 40px;
+  border-radius: 10px;
+  width: 220px;
+  height: 55px;
+  font-weight: 500;
+  background: black;
+  color: white;
+  margin-bottom: 50px;
+}
+
+.between {
+  background: #e5646e;
+  height: 20px;
+}
+
+.footer {
+  background: black;
+  height: 400px;
+}
+.footer-text-1 {
+  color: #787878;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 2;
+  letter-spacing: 0.02em;
+  margin-left: 770px;
+  margin-top: -150px;
+}
+.footer-text-2 {
+  color: #787878;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 2;
+  letter-spacing: 0.02em;
+  margin-left: 970px;
+  margin-top: -160px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  margin-top: 119px;
+  margin-left: 100px;
+  max-height: 300px;
+  max-width: 150px;
+}
+.footer-text-container {
+  max-width: 150px;
+}
+.company-name {
+  color: #bdbebd;
+  margin-top: 120px;
+  max-width: 480px;
+  font-weight: 900;
+  font-size: 52px;
+  line-height: 1.05;
+  max-width: 100px;
+}
