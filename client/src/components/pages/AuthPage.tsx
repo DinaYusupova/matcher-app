@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Box, Button, TextField } from '@mui/material';
 import React from 'react';
-import './AuthPage.css';
+import './styles/AuthPage.css';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/hooks';
 

@@ -19,7 +19,6 @@ function App(): JSX.Element {
   return (
     <>
       <Navigation />
-      <Container sx={{ marginTop: '60px' }}>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route element={<PrivateRouter isAllowed={user.status === 'logged'} />}>
@@ -35,7 +34,6 @@ function App(): JSX.Element {
             }
           />
         </Routes>
-      </Container>
     </>
   );
 }
