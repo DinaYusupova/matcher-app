@@ -44,8 +44,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'dislikedById',
         as: 'dislikedById',
       });
-      this.belongsTo(models.Filter, {
+      this.hasMany(models.Filter, {
         foreignKey: 'userId',
+        as: 'filter',
       });
     }
   }

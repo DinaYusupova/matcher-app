@@ -34,18 +34,18 @@ export default function AccountCard():JSX.Element {
     const [about, setAbout] = useState(''); // Описание пользователя
     const [editing, setEditing] = useState(false); // Режим редактирования о себе
 
-  useEffect(() => {
-    const fetchUserInfo =async (): Promise<void> =>{
-    const {data} = await apiService<AccountUserType>('/account');
-    if(data){
-    setAccountUser(data)
-    setGender(data.gender);
-    setAge(data.age);
-    setCity(data.city);
-    setAbout(data.description);
-    }}
-    fetchUserInfo()
-   }, []);
+  // useEffect(() => {
+  //   const fetchUserInfo =async (): Promise<void> =>{
+  //   const {data} = await apiService<AccountUserType>('/account');
+  //   if(data){
+  //   setAccountUser(data)
+  //   setGender(data.gender);
+  //   setAge(data.age);
+  //   setCity(data.city);
+  //   setAbout(data.description);
+  //   }}
+  //   fetchUserInfo()
+  //  }, []);
 
  // Обработчик переключения режима редактирования о себе
     const handleEditSaveClick = async (): Promise<void> => {
