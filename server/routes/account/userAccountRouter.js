@@ -20,13 +20,13 @@ router.get('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
   try {
-    const data = await Profile.findByPk(1);
+    const data = await Profile.findOne({ where: { userId: req.session.user.id } });
     if (!data) {
-      await Profile.create({ ...req.body, userId: req.session.user.id });
+      await Profile.create({ ...req.body, userId: req.session.user.id, name: 'alex' });
     } else {
       await Profile.update(req.body, {
         where: {
-          userId: req.session.usr.id,
+          userId: req.session.user.id,
         },
       });
     }

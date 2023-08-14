@@ -11,9 +11,9 @@ const connectionCB = require('./websocket/connection');
 const locationRouter = require('./routes/locationRouter');
 const sessionParser = require('./middlewares/sessionParser');
 
-// const UserInfoRouter = require('./routes/userInfoRouter');
-// const UserPhotoRouter = require('./routes/account/userPhotoRouter');
-// const UserAccountRouter = require('./routes/account/userAccountRouter');
+
+const UserPhotoRouter = require('./routes/account/userPhotoRouter');
+const UserAccountRouter = require('./routes/account/userAccountRouter');
 
 require('dotenv').config();
 
@@ -24,7 +24,7 @@ const PORT = process.env.PORT || 3001;
 app.use(cors({ credentials: true, origin: true }));
 app.use(morgan('dev'));
 app.use(express.json());
-// app.use(express.static('public'));
+app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
 const server = createServer(app);
@@ -36,7 +36,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/profile', ProfileRouter);
 app.use('/api/chat', messageRouter);
 app.use('/api/save-location', locationRouter);
-// app.use('/api/userphoto', UserPhotoRouter);
-// app.use('/api/account', UserAccountRouter);
+app.use('/api/userphoto', UserPhotoRouter);
+app.use('/api/account', UserAccountRouter);
 
 server.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

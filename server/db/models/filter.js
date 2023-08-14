@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.User, {
         foreignKey: 'userId',
-        as: 'filter',
+        as: 'user',
       });
     }
   }
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     searchCity: DataTypes.STRING,
     minSearchAge: DataTypes.INTEGER,
     maxSearchAge: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Filter',

@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   const photos = await UserPhoto.findAll({
     where: {
-      userId: 1,
+      userId: req.session.user.id,
     },
     order: [['createdAt', 'DESC']], // Сортировка по полю createdAt в порядке убывания
   });
@@ -34,7 +34,7 @@ router.post('/', upload.single('photo'), async (req, res) => {
     await UserPhoto.create({
 
       photo: name,
-      userId: 1,
+      userId: req.session.user.id,
     });
     const photo = await UserPhoto.findOne({ where: { photo: name } });
 
