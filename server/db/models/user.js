@@ -46,7 +46,6 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.belongsTo(models.Filter, {
         foreignKey: 'userId',
-        
       });
     }
   }
