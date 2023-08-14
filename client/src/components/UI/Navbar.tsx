@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import type { PathMatch} from 'react-router-dom';
-import { Link, matchPath, useLocation } from 'react-router-dom';
+import type { PathMatch } from 'react-router-dom';
+import { Link, matchPath, useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { logoutUserAuthThunk } from '../../redux/slices/userAuth/userAuthThunk';
@@ -21,11 +21,14 @@ function useRouteMatch(patterns: readonly string[]): PathMatch | null {
 }
 
 export default function Navigation(): JSX.Element {
-  const routeMatch = useRouteMatch(['/signin', '/signup', '/']);
-  const currentTab = routeMatch?.pattern?.path;
+  const location = useLocation();
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
-
+  const authRouteMatch = useRouteMatch(['/auth/signin', '/auth/signup']);
+  const authCurTab = authRouteMatch?.pattern?.path;
+  const authorizedRouteMatch = useRouteMatch(['/', '/chat']);
+  const authorizedCurTab = authorizedRouteMatch?.pattern.path;
+  const isActiveTab = (path: string) => location.pathname === path;
   return (
     <Box
       component="nav"
@@ -43,38 +46,54 @@ export default function Navigation(): JSX.Element {
         zIndex: 1000,
       }}
     >
-      <Tabs value={currentTab}>
-        <Tab
-          label="Войти"
-          value="/signin"
-          to="/signin"
-          component={Link}
-          sx={{ textTransform: 'uppercase' }}
-        />
-        <Tab
-          label="Зарегистрироваться"
-          value="/signup"
-          to="/signup"
-          component={Link}
-          sx={{ textTransform: 'uppercase' }}
-        />
+      {user.status === 'guest' && (
+        <Tabs value={authCurTab}>
+          <Tab
+            label="Войти"
+            value="/auth/signin"
+            to="/auth/signin"
+            component={Link}
+            sx={{ textTransform: 'uppercase' }}
+          />
+          <Tab
+            label="Зарегистрироваться"
+            value="/auth/signup"
+            to="/auth/signup"
+            component={Link}
+            sx={{ textTransform: 'uppercase' }}
+          />
+        </Tabs>
+      )}
 
-        <Tab
-          label="Главная"
-          value="/"
-          to="/"
-          component={Link}
-          sx={{ textTransform: 'uppercase' }}
-        />
-        <Button
-          color="error"
-          onClick={() => {
-           void dispatch(logoutUserAuthThunk());
-          }}
-        >
-          Разлогиниться
-        </Button>
-      </Tabs>
+      {user.status === 'logged' && (
+        <>
+          <Tabs value={authorizedCurTab}>
+            <Tab
+              label="Главная"
+              value="/"
+              to="/"
+              component={Link}
+              sx={{ textTransform: 'uppercase' }}
+            />
+            <Tab
+              label="Чат"
+              value="/chat"
+              to="/chat"
+              component={Link}
+              sx={{ textTransform: 'uppercase' }}
+            />
+          </Tabs>
+          <Button
+            color="error"
+            onClick={() => {
+              void dispatch(logoutUserAuthThunk());
+              // location('/auth/signin');
+            }}
+          >
+            Разлогиниться
+          </Button>
+        </>
+      )}
     </Box>
   );
 }

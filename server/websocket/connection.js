@@ -24,8 +24,8 @@ const connectionCB = (socket, req) => {
       case 'NEW_MESSAGE':
         Chat.create({
           senderId: userId,
-          recipientId: 2,
-          message: payload,
+          recipientId: payload.chatId,
+          message: payload.input,
         }).then(async (newMessage) => {
           const messWithAuth = await Chat.findOne({
             where: {
@@ -37,14 +37,32 @@ const connectionCB = (socket, req) => {
             ],
           });
           // console.log(map);
-          map.forEach(({ ws, user }) => {
+
+          const { ws: sender } = map.get(userId);
+          sender.send(
+            JSON.stringify({
+              type: 'ADD_MESSAGE',
+              payload: messWithAuth,
+            }),
+          );
+          if (map.get(payload.chatId)) {
+            const { ws } = map.get(payload.chatId);
             ws.send(
               JSON.stringify({
                 type: 'ADD_MESSAGE',
                 payload: messWithAuth,
               }),
             );
-          });
+          }
+          console.log('пробую забрать вебсокет соед только одного чувака!');
+          // map.forEach(({ ws, user }) => {
+          //   ws.send(
+          //     JSON.stringify({
+          //       type: 'ADD_MESSAGE',
+          //       payload: messWithAuth,
+          //     }),
+          //   );
+          // });
         });
         break;
 

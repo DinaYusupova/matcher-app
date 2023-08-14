@@ -55,7 +55,7 @@ authRouter.post('/signin', async (req, res) => {
 });
 authRouter.get('/logout', async (req, res) => {
   req.session.destroy();
-  return res.clearCookie('userID').sendStatus(200);
+  return res.clearCookie('sid').sendStatus(200);
 });
 authRouter.post('/check', async (req, res) => {
   if (req.session.user) {
