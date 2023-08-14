@@ -31,7 +31,6 @@ const server = createServer(app);
 
 server.on('upgrade', upgradeCB);
 wsServer.on('connection', connectionCB);
-// app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/profile', ProfileRouter);
 app.use('/api/chat', messageRouter);

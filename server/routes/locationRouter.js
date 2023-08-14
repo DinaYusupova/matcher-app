@@ -9,7 +9,6 @@ router.post('/', async (req, res) => {
   try {
     const { userLatitude } = req.body;
     const { userLongitude } = req.body;
-    console.log(userLatitude, userLongitude, 'userLocation');
     const updatedProfile = await Profile.findByPk(regSession);
     updatedProfile.userLatitude = userLatitude;
     updatedProfile.userLongitude = userLongitude;

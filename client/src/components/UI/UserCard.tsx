@@ -53,7 +53,7 @@ export default function UserCard(): JSX.Element {
     return (
       <div className="centered-container">
         <div className="user-info no-profiles">
-          <p>Больше пользователей с подходящими данными не найдено, расширьте фильтр поиска</p>
+          <p>Пользователей с подходящими данными не найдено, расширьте фильтр поиска</p>
         </div>
       </div>
     );
