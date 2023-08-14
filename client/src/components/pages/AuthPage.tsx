@@ -9,13 +9,13 @@ import type { SigninUserType, SignupUserType } from '../../types/userType';
 import { signinUserAuthThunk, signupUserAuthThunk } from '../../redux/slices/userAuth/userAuthThunk';
 
 export default function AuthPage(): JSX.Element {
-  const { auth } = useParams();
+  const { authType } = useParams();
   const dispatch = useAppDispatch();
-  if (auth !== 'signin' && auth !== 'signup') return <div>fool</div>;
+  if (authType !== 'signin' && authType !== 'signup') return <div>fool</div>;
   const submitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const formData = Object.fromEntries(new FormData(e.currentTarget));
-    auth === 'signup'
+    authType === 'signup'
       ? void dispatch(signupUserAuthThunk(formData as SignupUserType))
       : void dispatch(signinUserAuthThunk(formData as SigninUserType));
   };
@@ -60,7 +60,7 @@ export default function AuthPage(): JSX.Element {
           variant="contained"
           type="submit"
         >
-          {auth === 'signin' ? `войти` : `зарегиться`}
+          {authType === 'signin' ? `войти` : `зарегиться`}
         </Button>
       </Box>
     </>

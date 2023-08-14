@@ -7,8 +7,8 @@ import {
   signupUserService,
 } from '../../../services/apiUserServ';
 
-export const checkUserAuthThunk = createAsyncThunk<UserModelType>('user/CheckUser', () =>
-  checkUserService(),
+export const checkUserAuthThunk = createAsyncThunk<UserModelType>('user/CheckUser', async () =>
+  await checkUserService(),
 );
 
 export const signinUserAuthThunk = createAsyncThunk<UserModelType, SigninUserType>(

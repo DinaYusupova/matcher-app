@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchSelectedChatThunk } from '../../redux/slices/messages/ChatThunk';
 import { ADD_MESSAGE, SET_USERS } from '../chatUtils/chatActions';
 import { addMessage } from '../../redux/slices/messages/ChatSlice';
+import { apiService } from '../../services/apiServiceConfig';
 
 export default function ChatPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -24,8 +25,10 @@ export default function ChatPage(): JSX.Element {
     socket.onerror = (err) => {
       console.log(err);
     };
+  }, []);
+  useEffect(() => {
+    const socket = socketRef.current;
     socketRef.current.onmessage = (event) => {
-      console.log(event);
       const { type, payload } = JSON.parse(event.data);
       console.log(
         type,
@@ -37,7 +40,6 @@ export default function ChatPage(): JSX.Element {
           console.log('все юзеры онлайн с бэка', payload);
           break;
         case 'ADD_MESSAGE':
-          console.log('отправленный с бека пейлоад с сообщением', payload);
           dispatch(addMessage(payload));
           break;
         default:
