@@ -6,3 +6,4 @@ export const findChatByPkService = async (userid: UserModelType['id']): Promise<
   const { data } = await apiService.post<ChatType>(`/chat/${userid}`);
   return data;
 };
+export const test = () => {};

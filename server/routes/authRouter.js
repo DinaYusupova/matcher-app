@@ -5,6 +5,7 @@ const { User } = require('../db/models');
 const authRouter = express.Router();
 authRouter.post('/signup', async (req, res) => {
   try {
+    console.log("test")
     const { email, password } = req.body;
     if ((!email, !password)) {
       return res.status(400).json({ message: 'необходимо заполнить все поля' });
@@ -55,7 +56,7 @@ authRouter.post('/signin', async (req, res) => {
 });
 authRouter.get('/logout', async (req, res) => {
   req.session.destroy();
-  return res.clearCookie('userID').sendStatus(200);
+  return res.clearCookie('sid').sendStatus(200);
 });
 authRouter.post('/check', async (req, res) => {
   if (req.session.user) {

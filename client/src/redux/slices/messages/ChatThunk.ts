@@ -10,3 +10,4 @@ export const fetchSelectedChatThunk = createAsyncThunk<ChatType, UserModelType['
   'chat/GetSelectedChat',
   (id) => findChatByPkService(id),
 );
+export const example = () => {};
