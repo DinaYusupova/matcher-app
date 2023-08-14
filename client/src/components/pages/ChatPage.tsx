@@ -4,7 +4,7 @@ import AllChatsAsidePart from '../UI/AllChatsAsidePart';
 import CurrentChat from '../UI/CurrentChat';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchSelectedChatThunk } from '../../redux/slices/messages/ChatThunk';
-import { ADD_MESSAGE, SET_USERS } from '../chatUtils/chatActions';
+import { SET_USERS } from '../chatUtils/chatActions';
 import { addMessage } from '../../redux/slices/messages/ChatSlice';
 import { apiService } from '../../services/apiServiceConfig';
 
@@ -25,6 +25,7 @@ export default function ChatPage(): JSX.Element {
     socket.onerror = (err) => {
       console.log(err);
     };
+    apiService.post('/chat/find/matched');
   }, []);
   useEffect(() => {
     const socket = socketRef.current;
