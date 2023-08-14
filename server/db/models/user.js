@@ -33,6 +33,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'likedById',
         as: 'likedBy',
       });
+
+      this.belongsToMany(models.User, {
+        through: 'Dislikes',
+        foreignKey: 'dislikerId',
+        as: 'dislikerId',
+      });
+      this.belongsToMany(models.User, {
+        through: 'Dislikes',
+        foreignKey: 'dislikedById',
+        as: 'dislikedById',
+      });
       this.belongsTo(models.Filter, {
         foreignKey: 'userId',
         

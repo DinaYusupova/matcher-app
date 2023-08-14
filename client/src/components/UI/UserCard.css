@@ -17,19 +17,14 @@
 
 .user-actions {
   display: flex;
-  justify-content: space-between;
   width: 100%;
+  justify-content: center; /* Изменяем значение на center */
+  align-items: center;
+  margin-top: 10px;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
+user-actions > * {
+  margin: 0 5px; 
 }
 
 button:hover {
@@ -63,7 +58,7 @@ button:hover {
     background-color 0.3s,
     filter 0.3s;
   position: relative;
-  transform-origin: center; 
+  transform-origin: center;
 }
 
 .user-profile.liked {
@@ -112,4 +107,73 @@ button:hover {
 
 .user-profile.swipe-right {
   animation: swipeRight 0.3s forwards;
+}
+
+.no-profiles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin: 10px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+p,
+.user-name-age,
+.user-description {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+/* Заголовок */
+h1,
+h2,
+h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+h3 {
+  font-size: 18px;
 }
