@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
         id: 1,
       },
     });
+
     res.json(user);
   } catch (err) {
     console.error(err);

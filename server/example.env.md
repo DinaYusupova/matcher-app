@@ -1,4 +1,0 @@
-PORT=3001
-DB_NAME=task_db
-DB_USER=task_master
-DB_PASSWORD=123

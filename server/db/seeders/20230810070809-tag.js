@@ -25,7 +25,7 @@ module.exports = {
         {
           name: 'Alice',
           age: 28,
-          gender: 'Female',
+          gender: 'female',
           city: 'New York',
           userId: 1,
           description: 'I love hiking and photography.',
@@ -33,7 +33,7 @@ module.exports = {
         {
           name: 'Bob',
           age: 35,
-          gender: 'Male',
+          gender: 'male',
           city: 'Los Angeles',
           userId: 2,
           description: 'Musician and avid traveler.',
@@ -41,7 +41,7 @@ module.exports = {
         {
           name: 'Eve',
           age: 22,
-          gender: 'Female',
+          gender: 'female',
           city: 'Chicago',
           userId: 3,
           description: 'Aspiring artist and coffee enthusiast.',
