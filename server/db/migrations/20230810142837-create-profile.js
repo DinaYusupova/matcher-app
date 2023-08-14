@@ -17,8 +17,14 @@ module.exports = {
       gender: {
         type: Sequelize.TEXT,
       },
-      city: {
+      userLongitude: {
         type: Sequelize.TEXT,
+      },
+      userLatitude: {
+        type: Sequelize.TEXT,
+      },
+      distanceBetweenUsers: {
+        type: Sequelize.INTEGER,
       },
       userId: {
         type: Sequelize.INTEGER,

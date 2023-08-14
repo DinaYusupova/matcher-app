@@ -18,14 +18,12 @@ function App(): JSX.Element {
   return (
     <>
       <Navigation />
-      <Container sx={{ marginTop: '60px' }}>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/match" element={<SelectMatchPage />} />
           <Route path="/:auth" element={<AuthPage />} />
           <Route path="/chat" element={<ChatPage />} />
         </Routes>
-      </Container>
     </>
   );
 }
