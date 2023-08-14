@@ -1,42 +1,43 @@
 const express = require('express');
 const { QueryTypes } = require('sequelize');
-const { Like, Dislikes, Chat, sequelize, Profile } = require('../db/models');
-const calculateDistance = require('./fuctions/calculateDistance');
+const { Like, Dislikes, Chat, sequelize, Profile, Filter } = require('../db/models');
+const calculateDistance = require('./functions/calculateDistance');
 
 const router = express.Router();
-const sessionUser = 2;
 
 router.get('/', async (req, res) => {
   try {
-    const newProfiles = await sequelize.query(
-      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 3)',
+    const userFilter = await Filter.findOne({
+      where: {
+        userId: req.session.user.id,
+      },
+    });
+
+    console.log(userFilter, "USER_FILTER")
+
+    const newProfile = await sequelize.query(
+      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
       {
         replacements: {
-          userId: sessionUser,
-          userGender: 'Female',
-          minAge: 18,
-          maxAge: 40,
+          userId: req.session.user.id,
+          userGender: userFilter.searchGender,
+          minAge: userFilter.minSearchAge,
+          maxAge: userFilter.maxSearchAge,
         },
         type: QueryTypes.SELECT,
       },
     );
-    const currentUserProfile = await Profile.findByPk(sessionUser);
-    newProfiles.forEach((profile) => {
-      // eslint-disable-next-line no-param-reassign
-      profile.distanceBetweenUsers = calculateDistance(
-        profile.userLatitude,
-        profile.userLongitude,
-        currentUserProfile.userLatitude,
-        currentUserProfile.userLongitude,
-      );
-    });
-    console.log(
-      newProfiles[0].distanceBetweenUsers,
-      newProfiles[1].distanceBetweenUsers,
-      newProfiles[2].distanceBetweenUsers,
-    );
 
-    res.json(newProfiles);
+    // if (newProfile[0]) {
+    //   const currentUserProfile = await Profile.findByPk(req.session.user.id);
+    //   newProfile[0].distanceBetweenUsers = calculateDistance(
+    //     newProfile[0].userLatitude,
+    //     newProfile[0].userLongitude,
+    //     currentUserProfile.userLatitude,
+    //     currentUserProfile.userLongitude,
+    //   );
+    // }
+    res.json(newProfile);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
@@ -47,7 +48,7 @@ router.post('/like', async (req, res) => {
   try {
     await Like.create({
       // eslint-disable-next-line camelcase
-      likerId: sessionUser,
+      likerId: req.session.user.id,
       likedById: req.body.userId,
     });
 
@@ -58,7 +59,7 @@ router.post('/like', async (req, res) => {
         {
           replacements: {
             likedByCurrentUserId: req.body.userId,
-            currentUserId: sessionUser,
+            currentUserId: req.session.user.id,
           },
           type: QueryTypes.SELECT,
         },
@@ -68,29 +69,39 @@ router.post('/like', async (req, res) => {
       });
     if (isMutualLike) {
       await Chat.create({
-        senderId: sessionUser,
+        senderId: req.session.user.id,
         recipientId: req.body.userId,
       });
     }
+
+    const userFilter = await Filter.findOne({
+      where: {
+        userId: req.session.user.id,
+      },
+    });
+
     const newProfile = await sequelize.query(
       '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
       {
         replacements: {
-          userId: sessionUser,
-          userGender: 'Female',
-          minAge: 18,
-          maxAge: 40,
+          userId: req.session.user.id,
+          userGender: userFilter.searchGender,
+          minAge: userFilter.minSearchAge,
+          maxAge: userFilter.maxSearchAge,
         },
         type: QueryTypes.SELECT,
       },
     );
-    const currentUserProfile = await Profile.findByPk(sessionUser);
-    newProfile.distanceBetweenUsers = calculateDistance(
-      newProfile.userLatitude,
-      newProfile.userLongitude,
-      currentUserProfile.userLatitude,
-      currentUserProfile.userLongitude,
-    );
+
+    // if (newProfile[0]) {
+    //   const currentUserProfile = await Profile.findByPk(req.session.user.id);
+    //   newProfile[0].distanceBetweenUsers = calculateDistance(
+    //     newProfile[0].userLatitude,
+    //     newProfile[0].userLongitude,
+    //     currentUserProfile.userLatitude,
+    //     currentUserProfile.userLongitude,
+    //   );
+    // }
     res.json(newProfile);
   } catch (err) {
     console.error(err);
@@ -101,29 +112,38 @@ router.post('/like', async (req, res) => {
 router.get('/dislike/:id', async (req, res) => {
   try {
     await Dislikes.create({
-      dislikerId: sessionUser,
+      dislikerId: req.session.user.id,
       dislikedById: req.params.id,
+    });
+
+    const userFilter = await Filter.findOne({
+      where: {
+        userId: req.session.user.id,
+      },
     });
 
     const newProfile = await sequelize.query(
       '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
       {
         replacements: {
-          userId: sessionUser,
-          userGender: 'Female',
-          minAge: 18,
-          maxAge: 40,
+          userId: req.session.user.id,
+          userGender: userFilter.searchGender,
+          minAge: userFilter.minSearchAge,
+          maxAge: userFilter.maxSearchAge,
         },
         type: QueryTypes.SELECT,
       },
     );
-    const currentUserProfile = await Profile.findByPk(sessionUser);
-    newProfile.distanceBetweenUsers = calculateDistance(
-      newProfile.userLatitude,
-      newProfile.userLongitude,
-      currentUserProfile.userLatitude,
-      currentUserProfile.userLongitude,
-    );
+
+    // if (newProfile[0]) {
+    //   const currentUserProfile = await Profile.findByPk(req.session.user.id);
+    //   newProfile[0].distanceBetweenUsers = calculateDistance(
+    //     newProfile[0].userLatitude,
+    //     newProfile[0].userLongitude,
+    //     currentUserProfile.userLatitude,
+    //     currentUserProfile.userLongitude,
+    //   );
+    // }
     res.json(newProfile);
   } catch (err) {
     console.error(err);

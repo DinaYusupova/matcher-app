@@ -29,7 +29,7 @@ function App(): JSX.Element {
           <Route
             path="/auth/:authType"
             element={
-              <PrivateRouter redirect="/chat" isAllowed={user.status !== 'logged'} >
+              <PrivateRouter redirect="/account" isAllowed={user.status !== 'logged'} >
                 <AuthPage />
               </PrivateRouter>
             }
