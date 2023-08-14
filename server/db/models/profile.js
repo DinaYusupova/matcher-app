@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       distanceBetweenUsers: DataTypes.INTEGER,
       userId: DataTypes.INTEGER,
       description: DataTypes.TEXT,
+      city: DataTypes.TEXT,
     },
     {
       sequelize,

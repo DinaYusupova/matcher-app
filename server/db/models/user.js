@@ -44,6 +44,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'dislikedById',
         as: 'dislikedById',
       });
+      this.hasMany(models.Filter, {
+        foreignKey: 'userId',
+        as: 'filter',
+      });
     }
   }
   User.init(
