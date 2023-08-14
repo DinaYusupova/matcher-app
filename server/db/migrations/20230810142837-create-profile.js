@@ -23,6 +23,9 @@ module.exports = {
       userLatitude: {
         type: Sequelize.TEXT,
       },
+      city: {
+        type: Sequelize.TEXT,
+      },
       distanceBetweenUsers: {
         type: Sequelize.INTEGER,
       },

@@ -8,8 +8,8 @@ const sessionUser = 2;
 
 router.get('/', async (req, res) => {
   try {
-    const newProfiles = await sequelize.query(
-      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 3)',
+    const newProfile = await sequelize.query(
+      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
       {
         replacements: {
           userId: sessionUser,
@@ -20,17 +20,18 @@ router.get('/', async (req, res) => {
         type: QueryTypes.SELECT,
       },
     );
-    const currentUserProfile = await Profile.findByPk(sessionUser);
-    newProfiles.forEach((profile) => {
-      // eslint-disable-next-line no-param-reassign
-      profile.distanceBetweenUsers = calculateDistance(
-        profile.userLatitude,
-        profile.userLongitude,
+
+    if (newProfile[0]) {
+      const currentUserProfile = await Profile.findByPk(sessionUser);
+      newProfile[0].distanceBetweenUsers = calculateDistance(
+        newProfile[0].userLatitude,
+        newProfile[0].userLongitude,
         currentUserProfile.userLatitude,
         currentUserProfile.userLongitude,
       );
-    });
-    res.json(newProfiles);
+    }
+    console.log(newProfile, 'NEW_PROFILE');
+    res.json(newProfile);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
@@ -66,6 +67,7 @@ router.post('/like', async (req, res) => {
         recipientId: req.body.userId,
       });
     }
+
     const newProfile = await sequelize.query(
       '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
       {
@@ -78,6 +80,8 @@ router.post('/like', async (req, res) => {
         type: QueryTypes.SELECT,
       },
     );
+
+    console.log(newProfile, 'NEW_PROFILE_LIKE');
 
     if (newProfile[0]) {
       const currentUserProfile = await Profile.findByPk(sessionUser);
