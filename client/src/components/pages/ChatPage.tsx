@@ -6,13 +6,14 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchSelectedChatThunk } from '../../redux/slices/messages/ChatThunk';
 import { SET_USERS } from '../chatUtils/chatActions';
 import { addMessage } from '../../redux/slices/messages/ChatSlice';
-import { apiService } from '../../services/apiServiceConfig';
+import { fetchAvailableMessages } from '../../redux/slices/availableChats/availableChatThunks';
 
 export default function ChatPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const chat = useAppSelector((store) => store.chat);
   const socketRef = useRef<WebSocket>();
-  const [selectedChat, setSelectedChat] = useState<number>(1);
+  const [selectedChat, setSelectedChat] = useState<number>(0);
+  console.log(selectedChat);
   useEffect(() => {
     socketRef.current = new WebSocket(`ws://localhost:3001`);
     const socket = socketRef.current;
@@ -25,17 +26,12 @@ export default function ChatPage(): JSX.Element {
     socket.onerror = (err) => {
       console.log(err);
     };
-    apiService.post('/chat/find/matched');
   }, []);
   useEffect(() => {
     const socket = socketRef.current;
     socketRef.current.onmessage = (event) => {
       const { type, payload } = JSON.parse(event.data);
-      console.log(
-        type,
-        payload,
-        'проверка пейлоада и типа после того как сервер отправил add message',
-      );
+
       switch (type) {
         case SET_USERS:
           console.log('все юзеры онлайн с бэка', payload);
@@ -57,7 +53,7 @@ export default function ChatPage(): JSX.Element {
   };
   return (
     <Box sx={{ display: 'flex' }}>
-      <Box sx={{ flex: '1 1 25%', maxWidth: '25%' }}>
+      <Box sx={{backgroundColor:'darkkhaki',borderRadius:"10px",minHeight:'80vh', flex: '1 1 25%', maxWidth: '25%' }}>
         <AllChatsAsidePart setSelectedChat={setSelectedChat} />
       </Box>
       <Box sx={{ flex: '1 1 75%', maxWidth: '75%', maxHeight: '100vh', overflowY: 'auto' }}>

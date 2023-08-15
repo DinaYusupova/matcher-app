@@ -43,11 +43,22 @@ export default function CurrentChat({ selectedChat, submitHandler }: Props): JSX
               width: 'fit-content',
               padding: '8px',
               borderRadius: '8px',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.8)',
               marginLeft: el.senderId === user.id ? 'auto' : '10px',
               marginRight: el.senderId === user.id ? '10px' : 'auto',
             }}
           >
+            {el.message === null && (
+              <Box
+                sx={{
+                  margin: '0 auto',
+                  fontSize: '10px',
+                  color: 'gray', // Neutral color
+                }}
+              >
+                таймер чата запущен
+              </Box>
+            )}{' '}
             <Typography>{el.message}</Typography>
           </Box>
         ))}

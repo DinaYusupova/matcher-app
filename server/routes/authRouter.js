@@ -5,7 +5,6 @@ const { User } = require('../db/models');
 const authRouter = express.Router();
 authRouter.post('/signup', async (req, res) => {
   try {
-    console.log("test")
     const { email, password } = req.body;
     if ((!email, !password)) {
       return res.status(400).json({ message: 'необходимо заполнить все поля' });
@@ -38,12 +37,11 @@ authRouter.post('/signin', async (req, res) => {
       where: { email },
     });
     if (!user) return res.status(401).json({ message: 'no such user' });
-    // if (!(await bcrypt.compare(password, user.password))) {
-    //   return res.status(401).json({ message: 'wrong pass' });
-    // }
-    if (password !== user.password) {
+    if (!(await bcrypt.compare(password, user.password))) {
+      console.log('no pass');
       return res.status(401).json({ message: 'wrong pass' });
     }
+    console.log('TEEESAT @123213213123');
     const userSession = JSON.parse(JSON.stringify(user));
     console.log(userSession);
     delete userSession.password;

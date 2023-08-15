@@ -20,7 +20,6 @@ export default function SelectMatchPage(): JSX.Element {
         (position) => {
           const userLatitude = position.coords.latitude;
           const userLongitude = position.coords.longitude;
-
           postLocationService(userLatitude, userLongitude)
             .then((el) => console.log(el))
             .catch(console.error);

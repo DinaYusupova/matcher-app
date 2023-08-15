@@ -36,9 +36,15 @@ messageRouter.post('/find/matched', async (req, res) => {
           },
         ],
       },
+      include: {
+        model: User,
+        as: 'sender',
+        attributes: ['id', 'email'],
+        include: ['profile', 'photo'],
+      },
     });
-
-    console.log(avChats, 'ЧАТЫЫЫЫЫЫЫ!!!');
+    const test = JSON.parse(JSON.stringify(avChats));
+    console.log(test, 'ЧАТЫЫЫЫЫЫЫ!!!');
     res.status(200).json(avChats);
   } catch (error) {
     console.error(error);
