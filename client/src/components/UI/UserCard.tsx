@@ -5,9 +5,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Carousel } from 'react-responsive-carousel';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import type { ProfileType } from '../../types/profileType';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 import { dislikeProfileThunk, likeProfileThunk } from '../../redux/slices/profile/profileThunk';
+import type { ProfileType } from '../../types/profileType';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 export default function UserCard(): JSX.Element {
   const profile: ProfileType = useAppSelector((store) => store.profile.data[0]);
@@ -20,6 +24,23 @@ export default function UserCard(): JSX.Element {
 
   const [showDescription, setShowDescription] = useState(false);
   const [action, setAction] = useState(null);
+  // const [notification, setNotification] = useState(false);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const style = {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   const toggleDescription = () => {
     setShowDescription(!showDescription);
@@ -29,7 +50,26 @@ export default function UserCard(): JSX.Element {
     setAction(type);
     if (type === 'liked') {
       void dispatch(likeProfileThunk(profile.userId));
+      
+      // if (matchProfile){
+      // setNotification(true);
+      // }
+
+      // if (Notification.permission === 'granted') {
+      //   console.log('NOTIFICATION ', Notification.permission);
+      //   const notification = new Notification('Новый match!', {
+      //     body: 'Пупу',
+      //     // icon: '/matcher.png',
+      //   });
+      //   console.log('NEW NOTIFICATION ', notification);
+      //   notification.addEventListener('error', (e) => {
+      //     alert('Пожалуйста, разрешите уведомления, чтобы узнавать о новых match');
+      //   });
+      // }
     }
+    // }
+    // `У вас один новый match! Ваша пара - ${matchProfile.name}`
+
     if (type === 'disliked') {
       void dispatch(dislikeProfileThunk(profile.userId));
     }
@@ -128,6 +168,24 @@ export default function UserCard(): JSX.Element {
           </div>
         </div>
       </div>
+        <div>
+          <Button onClick={handleOpen}>Open modal</Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                Text in a modal
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              </Typography>
+            </Box>
+          </Modal>
+        </div>
     </div>
   );
 }
