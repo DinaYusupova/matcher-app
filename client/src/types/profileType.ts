@@ -5,10 +5,10 @@ export type ProfileModelType = {
   gender: string;
   userLongitude: string;
   userLatitude: string;
-  distanceBetweenUsers: number, 
+  distanceBetweenUsers: number;
   userId: number;
   description: string;
-  photo: string;
+  photos: null | string[];
 };
 
 export type ProfileType = ProfileModelType;
