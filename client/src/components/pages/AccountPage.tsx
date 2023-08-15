@@ -1,11 +1,10 @@
-import React, { useState, useEffect  } from 'react';
+import React from 'react';
 import AccountCard from '../UI/account/AccountCard';
 
-
-
-export default function AccountPage():JSX.Element {
-
+export default function AccountPage(): JSX.Element {
   return (
-    <div><AccountCard /></div>
+    <div>
+      <AccountCard />
+    </div>
   );
-};
+}

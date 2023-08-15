@@ -50,11 +50,11 @@
   padding-left: 120px;
 }
 
-
 .promo-button-wrap {
   display: flex;
   column-gap: 25px;
   align-items: center;
+  margin-top: 50px;
 }
 
 .promo-title {
@@ -72,8 +72,6 @@
   background-image: url('./../../../img/vector-btn.svg');
 }
 .promo-btn {
-  margin-top: 40px;
-  padding: 18px 40px;
   border-radius: 10px;
   width: 220px;
   height: 55px;
@@ -91,6 +89,7 @@
 .footer {
   background: black;
   height: 400px;
+  margin-bottom: -50px;
 }
 .footer-text-1 {
   color: #787878;

@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import type { ProfileModelType } from '../types/profileType';
+import type { UserLocationType } from '../types/userLocationType';
 import { apiService } from './apiServiceConfig';
 
 type ApiServiceType<
@@ -7,15 +8,19 @@ type ApiServiceType<
   ServiceArg = number,
 > = (arg: ServiceArg) => Promise<ReturnValue>;
 
-export const fetchProfileService = async (): Promise<ProfileModelType[]> => {
-  const { data } = await apiService<ProfileModelType[]>('/profile');
+type ApiServiceGetType<ReturnValue = ProfileModelType[], ServiceArg = UserLocationType> = (
+  arg: ServiceArg,
+) => Promise<ReturnValue>;
+
+export const fetchProfileService: ApiServiceGetType = async ({ userLatitude, userLongitude }) => {
+  const { data } = await apiService.post<ProfileModelType[]>('/profile', { userLatitude, userLongitude });
   return data;
 };
 
 export const likeProfileService: ApiServiceType = async (userId) => {
-  console.log(userId, 'userId LIKE SERVICE'); 
+  console.log(userId, 'userId LIKE SERVICE');
   const { data } = await apiService.post<ProfileModelType[]>('/like', { userId });
-  console.log (data, 'data LIKE SERVICE');
+  console.log(data, 'data LIKE SERVICE');
   return { data, userId };
 };
 
