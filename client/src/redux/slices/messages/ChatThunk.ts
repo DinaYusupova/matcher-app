@@ -1,8 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  fetchAllOwnMessagesService,
-  findChatByPkService,
-} from '../../../services/apiMessageService';
+import { findChatByPkService } from '../../../services/apiMessageService';
 import type { ChatType } from '../../../types/ChatType';
 import type { UserModelType } from '../../../types/userType';
 

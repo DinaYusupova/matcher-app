@@ -1,19 +1,26 @@
 import { Box, Typography } from '@mui/material';
 import type { SetStateAction } from 'react';
 import React from 'react';
+import type { ProfileType } from '../../types/profileType';
 
 type Props = {
   chatId: number;
   setSelectedChat: React.Dispatch<SetStateAction<number>>;
+  username: ProfileType['name'];
 };
-export default function OneChatAsideItem({ chatId, setSelectedChat }: Props): JSX.Element {
+function OneChatAsideItem({
+  activeChatId,
+  chatId,
+  setSelectedChat,
+  username,
+  onClick,
+}: Props): JSX.Element {
   return (
     <Box
-      onClick={() => {
-        setSelectedChat(chatId);
-      }}
+      onClick={onClick}
       mt={2}
       sx={{
+        backgroundColor: activeChatId === chatId ? 'red' : 'grey',
         display: 'flex',
         '&:hover': {
           cursor: 'pointer',
@@ -23,9 +30,10 @@ export default function OneChatAsideItem({ chatId, setSelectedChat }: Props): JS
     >
       <Box sx={{ width: '20px', height: '20px' }} alignSelf="center" component="img" src="" />
       <Box>
-        <Typography>{chatId}</Typography>
+        <Typography>{username}</Typography>
         <Typography>last message</Typography>
       </Box>
     </Box>
   );
 }
+export default React.memo(OneChatAsideItem);

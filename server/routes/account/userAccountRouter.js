@@ -22,7 +22,7 @@ router.put('/', async (req, res) => {
   try {
     const data = await Profile.findOne({ where: { userId: req.session.user.id } });
     if (!data) {
-      await Profile.create({ ...req.body, userId: req.session.user.id, name: 'alex' });
+      await Profile.create({ ...req.body, userId: req.session.user.id });
     } else {
       await Profile.update(req.body, {
         where: {
@@ -53,6 +53,7 @@ router.get('/filter', async (req, res) => {
 });
 
 router.put('/filter', async (req, res) => {
+ 
   try {
     const data = await Filter.findOne({ where: { userId: req.session.user.id } });
     if (!data) {

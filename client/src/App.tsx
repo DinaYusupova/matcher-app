@@ -20,6 +20,7 @@ function App(): JSX.Element {
   return (
     <>
       <Navigation />
+      <Container sx={{ marginTop: '100px' }}>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route element={<PrivateRouter isAllowed={user.status === 'logged'} />}>
@@ -29,13 +30,14 @@ function App(): JSX.Element {
           <Route
             path="/auth/:authType"
             element={
-              <PrivateRouter redirect="/account" isAllowed={user.status !== 'logged'} >
+              <PrivateRouter redirect="/account" isAllowed={user.status !== 'logged'}>
                 <AuthPage />
               </PrivateRouter>
             }
           />
           <Route path="/account" element={<AccountPage />} />
-      </Routes>
+        </Routes>
+      </Container>
     </>
   );
 }

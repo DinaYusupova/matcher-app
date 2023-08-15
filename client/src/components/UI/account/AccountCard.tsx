@@ -21,6 +21,7 @@ import AccountSearch from './AccountSearch';
 
 export default function AccountCard():JSX.Element {
   const [accountUser, setAccountUser] = useState({
+    name: '',
     gender: '',
     age: '',
     city: '',
@@ -28,39 +29,52 @@ export default function AccountCard():JSX.Element {
   });
 
     // Состояния для управления данными страницы
+    const [name, setName] = useState(''); // Пол пользователя
     const [gender, setGender] = useState(''); // Пол пользователя
     const [age, setAge] = useState(''); // Возраст пользователя
     const [city, setCity] = useState(''); // Город пользователя
     const [about, setAbout] = useState(''); // Описание пользователя
     const [editing, setEditing] = useState(false); // Режим редактирования о себе
+    const [aboutFieldsFilled, setAboutFieldsFilled] = useState(false); // Для отслеживания полей "О себе"
 
-  // useEffect(() => {
-  //   const fetchUserInfo =async (): Promise<void> =>{
-  //   const {data} = await apiService<AccountUserType>('/account');
-  //   if(data){
-  //   setAccountUser(data)
-  //   setGender(data.gender);
-  //   setAge(data.age);
-  //   setCity(data.city);
-  //   setAbout(data.description);
-  //   }}
-  //   fetchUserInfo()
-  //  }, []);
+  useEffect(() => {
+  const fetchUserInfo =async (): Promise<void> =>{
+  const {data} = await apiService<AccountUserType>('/account');
+  if(data){
+  setAccountUser(data)
+  setName(data.name)
+  setGender(data.gender);
+  setAge(data.age);
+  setCity(data.city);
+  setAbout(data.description);
+  }}
+  fetchUserInfo()
+  }, []);
+
+  
+
+  useEffect(() => {
+    // Проверяем, все ли поля заполнены
+    const areAboutFieldsFilled = name && gender && age && city && about;
+    setAboutFieldsFilled(areAboutFieldsFilled);
+  }, [name, gender, age, city, about]);
 
  // Обработчик переключения режима редактирования о себе
     const handleEditSaveClick = async (): Promise<void> => {
       if (editing) {
       await  apiService.put('/account', {
+          name,
           gender,
           age,
           city,
           description:about,
         });
         setAccountUser({
+          name,
           gender,
           age,
           city,
-          description:about,
+          description: about,
         });
         
       }
@@ -81,9 +95,19 @@ export default function AccountCard():JSX.Element {
     
              <Box sx={{ flex: 2, marginLeft: '20px' }}>
              <Box sx={{ flex: 2, marginLeft: '20px' }}>
-               <h2>О себе:</h2>
-               <Box sx={{ display: 'flex', marginBottom: '10px' }}>
+               <h3>О себе:</h3>
+               <TextField
+                   label="Имя"
+                   value={name}
+                   onChange={(event) => setName(event.target.value)}
+                   fullWidth
+                   disabled={!editing}
+                   sx={{ marginRight: '10px' }}
+                 />
+               <Box sx={{ display: 'flex', marginBottom: '10px', marginTop: '10px' }}>
+            
                  <FormControl sx={{ marginRight: '10px', minWidth: '120px' }}>
+                 
                    <InputLabel id="gender-label">Пол</InputLabel>
                    <Select
                      labelId="gender-label"
@@ -130,7 +154,8 @@ export default function AccountCard():JSX.Element {
                  {editing ? 'Сохранить' : 'Редактировать'}
                </Button>
              </Box>
-             <AccountSearch/>
+             <AccountSearch aboutFieldsFilled={aboutFieldsFilled}/>
+             
              </Box>
            </CardContent>
          </Card>
