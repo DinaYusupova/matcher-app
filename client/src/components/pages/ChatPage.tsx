@@ -12,7 +12,7 @@ export default function ChatPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const chat = useAppSelector((store) => store.chat);
   const socketRef = useRef<WebSocket>();
-  const [selectedChat, setSelectedChat] = useState<number>(0);
+  const [selectedChat, setSelectedChat] = useState<number>(1);
   console.log(selectedChat);
   useEffect(() => {
     socketRef.current = new WebSocket(`ws://localhost:3001`);
@@ -53,7 +53,15 @@ export default function ChatPage(): JSX.Element {
   };
   return (
     <Box sx={{ display: 'flex' }}>
-      <Box sx={{backgroundColor:'darkkhaki',borderRadius:"10px",minHeight:'80vh', flex: '1 1 25%', maxWidth: '25%' }}>
+      <Box
+        sx={{
+          backgroundColor: 'darkkhaki',
+          borderRadius: '10px',
+          minHeight: '80vh',
+          flex: '1 1 25%',
+          maxWidth: '25%',
+        }}
+      >
         <AllChatsAsidePart setSelectedChat={setSelectedChat} />
       </Box>
       <Box sx={{ flex: '1 1 75%', maxWidth: '75%', maxHeight: '100vh', overflowY: 'auto' }}>
