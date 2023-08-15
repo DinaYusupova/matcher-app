@@ -28,33 +28,50 @@ export default function SearchCard({aboutFieldsFilled}) :JSX.Element {
   const [isModalOpenSearch, setIsModalOpenSearch] = useState(false);
 
   useEffect(() => {
-    const fetchUserFilter = async () => {
-      const { data } = await apiService<AccountFilterType>('/account/filter');
-      if (data) {
-        setSearchGender(data.searchGender);
-        setSearchCity(data.searchCity);
-        setMinSearchAge(data.minSearchAge);
-        setMaxSearchAge(data.maxSearchAge);
-      }
-    };
-    fetchUserFilter();
-  }, []);
+    const fetchUserFilter =async (): Promise<void> =>{
+    const {data} = await apiService<AccountFilterType>('/account/filter');
+    if (data){
+    setSearchGender(data.searchGender);
+    setSearchCity(data.searchCity);
+    setMinSearchAge(data.minSearchAge);
+    setMaxSearchAge(data.maxSearchAge)
+    }}
+    fetchUserFilter()
+   }, []);
 
-  useEffect(() => {
-    const areSearchFieldsFilled =
-      searchGender && minSearchAge && maxSearchAge && searchCity;
-    setSearchFieldsFilled(areSearchFieldsFilled);
-  }, [searchGender, minSearchAge, maxSearchAge, searchCity]);
+// Обработчик переключения режима редактирования данных поиска
+const handleSearchEditSaveClick = async ():  Promise<void> => { 
+  if (searchEditing) {
+  await  apiService.put('/account/filter', {
+      searchGender,
+      minSearchAge,
+      maxSearchAge,
+      searchCity,
+    });
+    setSearchGender(searchGender);
+    setMinSearchAge(minSearchAge);
+    setMaxSearchAge(maxSearchAge);
+    setSearchCity(searchCity);
 
-  const handleSearchMatch = () => {
-    if (searchFieldsFilled && aboutFieldsFilled) {
-      window.location.href = '/match';
-    } else if(!aboutFieldsFilled){
-      setIsModalOpenAbout(true);
-    }else if(!searchFieldsFilled){
-      setIsModalOpenSearch(true);
-    }
-  };
+};
+setSearchEditing((prevSearchEditing) => !prevSearchEditing);
+}
+
+useEffect(() => {
+  const areSearchFieldsFilled =
+    searchGender && minSearchAge && maxSearchAge && searchCity;
+  setSearchFieldsFilled(areSearchFieldsFilled);
+}, [searchGender, minSearchAge, maxSearchAge, searchCity]);
+
+const handleSearchMatch = () => {
+  if (searchFieldsFilled && aboutFieldsFilled) {
+    window.location.href = '/match';
+  } else if(!aboutFieldsFilled){
+    setIsModalOpenAbout(true);
+  }else if(!searchFieldsFilled){
+    setIsModalOpenSearch(true);
+  }
+};
 
   return (
     <Box sx={{ flex: 2, marginLeft: '20px' }}>
@@ -100,14 +117,14 @@ export default function SearchCard({aboutFieldsFilled}) :JSX.Element {
         sx={{ marginRight: '10px', maxWidth: '120px' }}
         InputProps={{ inputProps: { min: minSearchAge, step: 1 } }}
       />
-      <Button
-        variant={searchEditing ? 'outlined' : 'contained'}
-        onClick={() => setSearchEditing((prevSearchEditing) => !prevSearchEditing)}
-        fullWidth
-        sx={{ marginTop: '15px' }}
-      >
-        {searchEditing ? 'Сохранить' : 'Редактировать'}
-      </Button>
+    <Button
+                 variant={searchEditing ? 'outlined' : 'contained'}
+                 onClick={handleSearchEditSaveClick}
+                 fullWidth
+                 sx={{ marginTop: '15px' }}
+               >
+                 {searchEditing ? 'Сохранить' : 'Редактировать'}
+               </Button>
       <Button
         variant={searchEditing ? 'outlined' : 'contained'}
         onClick={handleSearchMatch}

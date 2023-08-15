@@ -53,6 +53,7 @@ router.get('/filter', async (req, res) => {
 });
 
 router.put('/filter', async (req, res) => {
+ 
   try {
     const data = await Filter.findOne({ where: { userId: req.session.user.id } });
     if (!data) {
