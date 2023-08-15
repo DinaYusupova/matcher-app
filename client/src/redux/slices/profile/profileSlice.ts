@@ -22,7 +22,7 @@ export const userSlice = createSlice({
     builder.addCase(getProfileThunk.rejected, (state) => ({ data: [], status: 'unloaded' }));
 
     builder.addCase(likeProfileThunk.fulfilled, (state, action) => {
-      state.data = state.data.filter((el) => el.id !== action.payload.userId);
+      state.data = state.data.filter((el) => el.userId !== action.payload.userId);
       if (action.payload.data.length) {
         state.data.push(action.payload.data[0]);
         state.status = 'loaded';
@@ -37,7 +37,7 @@ export const userSlice = createSlice({
     }));
 
     builder.addCase(dislikeProfileThunk.fulfilled, (state, action) => {
-      state.data = state.data.filter((el) => el.id !== action.payload.userId);
+      state.data = state.data.filter((el) => el.userId !== action.payload.userId);
       if (action.payload.data.length) {
         state.data.push(action.payload.data[0]);
         state.status = 'loaded';

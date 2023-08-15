@@ -5,8 +5,16 @@ const calculateDistance = require('./functions/calculateDistance');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
+    const { userLatitude } = req.body;
+    const { userLongitude } = req.body;
+
+    const updatedProfile = await Profile.findOne({ where: { userId: req.session.user.id } });
+    updatedProfile.userLatitude = userLatitude;
+    updatedProfile.userLongitude = userLongitude;
+    await updatedProfile.save();
+
     const userFilter = await Filter.findOne({
       where: {
         userId: req.session.user.id,
