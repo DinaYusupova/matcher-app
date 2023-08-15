@@ -13,6 +13,8 @@ router.post('/like', async (req, res) => {
       likedById: req.body.userId,
     });
 
+    console.log(req.body.userId, 'REQ BODY USER ID');
+
     let isMutualLike = false;
     await sequelize
       .query(
@@ -42,7 +44,7 @@ router.post('/like', async (req, res) => {
     });
 
     const newProfile = await sequelize.query(
-      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
+      '(select p.*, up."photos" from "Profiles" p left join (select up."userId", array_agg(up."photo") photos from "UserPhotos" up group by up."userId") up on p."userId" = up."userId" where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
       {
         replacements: {
           userId: req.session.user.id,
@@ -63,6 +65,7 @@ router.post('/like', async (req, res) => {
         currentUserProfile.userLongitude,
       );
     }
+    console.log(newProfile, 'NEW PROFILE LIKES');
     res.json(newProfile);
   } catch (err) {
     console.error(err);
@@ -84,7 +87,7 @@ router.get('/dislike/:id', async (req, res) => {
     });
 
     const newProfile = await sequelize.query(
-      '(select * from "Profiles" p where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
+      '(select p.*, up."photos" from "Profiles" p left join (select up."userId", array_agg(up."photo") photos from "UserPhotos" up group by up."userId") up on p."userId" = up."userId" where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
       {
         replacements: {
           userId: req.session.user.id,

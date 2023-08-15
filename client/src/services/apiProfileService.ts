@@ -13,7 +13,9 @@ export const fetchProfileService = async (): Promise<ProfileModelType[]> => {
 };
 
 export const likeProfileService: ApiServiceType = async (userId) => {
+  console.log(userId, 'userId LIKE SERVICE'); 
   const { data } = await apiService.post<ProfileModelType[]>('/like', { userId });
+  console.log (data, 'data LIKE SERVICE');
   return { data, userId };
 };
 

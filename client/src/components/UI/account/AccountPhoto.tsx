@@ -1,19 +1,16 @@
 import type { ChangeEvent } from 'react';
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  IconButton,
-} from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import ClearIcon from '@mui/icons-material/Clear';
-import type {AccountPhotoType} from '../../../types/accountPhotoType'
+import type { AccountPhotoType } from '../../../types/accountPhotoType';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { apiService } from '../../../services/apiServiceConfig';
 import { Carousel } from 'react-responsive-carousel';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function AccountPhoto():JSX.Element {
+export default function AccountPhoto(): JSX.Element {
   const [photos, setPhotos] = useState<AccountPhotoType[]>([]);
   useEffect(() => {
     const fetchPhotos = async (): Promise<void> => {
@@ -31,9 +28,9 @@ export default function AccountPhoto():JSX.Element {
     const uploadedPhoto = event.target.files?.[0];
 
     if (photos.length >= 5) {
-        toast.error('Достигнут лимит загруженных фотографий');
-        return;
-      }
+      toast.error('Достигнут лимит загруженных фотографий');
+      return;
+    }
 
     if (uploadedPhoto) {
       const formData = new FormData();
@@ -50,24 +47,24 @@ export default function AccountPhoto():JSX.Element {
 
   const handleDeletePhoto = async (id: number) => {
     try {
-        const response = await apiService.delete(`/userphoto/${id}`);
-        if (response.status === 200) {
-          const { data } = await apiService<AccountPhotoType[]>('/userphoto');
-          setPhotos(data);
-        } else {
-          console.error('Ошибка при удалении фотографии. Сервер вернул статус:', response.status);
-        }
-      } catch (error) {
-        console.error('Ошибка при удалении фотографии:', error);
-      } finally {
-        toast.info('Фотография удалена');
+      const response = await apiService.delete(`/userphoto/${id}`);
+      if (response.status === 200) {
+        const { data } = await apiService<AccountPhotoType[]>('/userphoto');
+        setPhotos(data);
+      } else {
+        console.error('Ошибка при удалении фотографии. Сервер вернул статус:', response.status);
       }
+    } catch (error) {
+      console.error('Ошибка при удалении фотографии:', error);
+    } finally {
+      toast.info('Фотография удалена');
+    }
   };
 
   return (
     <Box sx={{ flex: 2 }}>
       <Box sx={{ position: 'relative', textAlign: 'center' }}>
-      <ToastContainer />
+        <ToastContainer />
 
         {photos.length > 0 && (
           <Carousel showThumbs={false} showStatus={false}>
@@ -93,7 +90,7 @@ export default function AccountPhoto():JSX.Element {
             ))}
           </Carousel>
         )}
-            <label htmlFor="photo-input">
+        <label htmlFor="photo-input">
           <input
             type="file"
             accept="image/*"
@@ -115,4 +112,3 @@ export default function AccountPhoto():JSX.Element {
     </Box>
   );
 }
-
