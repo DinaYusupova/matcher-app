@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op } = require('sequelize');
 
-const { Chat, Like, User } = require('../db/models');
+const { Chat, Like, User, Profile, sequelize } = require('../db/models');
 
 const messageRouter = express.Router();
 messageRouter.post('/:chat', async (req, res) => {
@@ -21,6 +21,37 @@ messageRouter.post('/:chat', async (req, res) => {
     return res.sendStatus(500);
   }
 });
+messageRouter.post('/find/matched', async (req, res) => {
+  try {
+    const avChats = await Chat.findAll({
+      where: {
+        [Op.and]: [
+          {
+            [Op.or]: [{ senderId: req.session.user.id }, { recipientId: req.session.user.id }],
+          },
+          {
+            message: {
+              [Op.eq]: null,
+            },
+          },
+        ],
+      },
+      include: {
+        model: User,
+        as: 'sender',
+        attributes: ['id', 'email'],
+        include: ['profile', 'photo'],
+      },
+    });
+    const test = JSON.parse(JSON.stringify(avChats));
+    console.log(test, 'ЧАТЫЫЫЫЫЫЫ!!!');
+    res.status(200).json(avChats);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error occurred while fetching empty messages' });
+  }
+});
+
 // messageRouter.get('/', async (req, res) => {
 //   Like.findAll({
 //     include: {

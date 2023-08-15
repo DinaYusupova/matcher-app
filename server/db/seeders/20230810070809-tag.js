@@ -461,8 +461,32 @@ module.exports = {
           likerId: 3,
         },
         {
+          likedById: 2,
+          likerId: 1,
+        },
+        {
+          likedById: 3,
+          likerId: 2,
+        },
+        {
+          likedById: 2,
+          likerId: 3,
+        },
+        {
           likedById: 3,
           likerId: 1,
+        },
+        {
+          likedById: 1,
+          likerId: 3,
+        },
+        {
+          likedById: 2,
+          likerId: 4,
+        },
+        {
+          likedById: 4,
+          likerId: 2,
         },
       ],
       {},
