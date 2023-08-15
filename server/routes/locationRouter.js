@@ -3,17 +3,13 @@ const { Profile } = require('../db/models');
 
 const router = express.Router();
 
-const regSession = 2;
-
 router.post('/', async (req, res) => {
   try {
     const { userLatitude } = req.body;
     const { userLongitude } = req.body;
-    console.log(userLatitude, userLongitude);
-    const updatedProfile = await Profile.findByPk(regSession);
+    const updatedProfile = await Profile.findOne({ where: { userId: req.session.user.id } });
     updatedProfile.userLatitude = userLatitude;
     updatedProfile.userLongitude = userLongitude;
-    console.log(updatedProfile);
     await updatedProfile.save();
     res.json({ message: 'Геолокация сохранена успешно.' });
   } catch (err) {

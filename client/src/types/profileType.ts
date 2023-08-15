@@ -3,12 +3,12 @@ export type ProfileModelType = {
   name: string;
   age: number;
   gender: string;
-  userLongitude: number;
-  userLatitude: number;
-  distanceBetweenUsers: number, 
+  userLongitude: string;
+  userLatitude: string;
+  distanceBetweenUsers: number;
   userId: number;
   description: string;
-  photo: string;
+  photos: null | string[];
 };
 
 export type ProfileType = ProfileModelType;

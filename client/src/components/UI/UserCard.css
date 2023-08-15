@@ -24,7 +24,7 @@
 }
 
 user-actions > * {
-  margin: 0 5px; 
+  margin: 0 5px;
 }
 
 button:hover {
@@ -176,4 +176,9 @@ h2 {
 
 h3 {
   font-size: 18px;
+}
+
+h4 {
+  color: gray;
+  font-size: 16px;
 }

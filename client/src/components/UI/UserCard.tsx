@@ -4,6 +4,7 @@ import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { Carousel } from 'react-responsive-carousel';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import type { ProfileType } from '../../types/profileType';
 import { dislikeProfileThunk, likeProfileThunk } from '../../redux/slices/profile/profileThunk';
@@ -53,7 +54,7 @@ export default function UserCard(): JSX.Element {
     return (
       <div className="centered-container">
         <div className="user-info no-profiles">
-          <p>Больше пользователей с подходящими данными не найдено, расширьте фильтр поиска</p>
+          <p>Пользователей с подходящими данными не найдено, расширьте фильтр поиска</p>
         </div>
       </div>
     );
@@ -64,10 +65,28 @@ export default function UserCard(): JSX.Element {
       <div className={`${profileClasses} ${animationClass}`}>
         <div className="user-info">
           <div className="user-name-age">
+            {!profile.photos || profile.photos.length !== 0 && (
+              <Carousel showThumbs={false} showStatus={false}>
+                {profile.photos.map((photo) => (
+                  <div key={photo}>
+                    <img
+                      src={`http://localhost:3001/img/${photo}`}
+                      alt="Фотография"
+                      style={{
+                        width: '100%',
+                        height: 'auto',
+                        objectFit: 'cover',
+                        borderRadius: '4px',
+                      }}
+                    />
+                  </div>
+                ))}
+              </Carousel>
+            )}
             <h2>
               {profile.name}, {profile.age}
             </h2>
-            <p>{profile.distanceBetweenUsers}</p>
+            {profile.distanceBetweenUsers && <h4>{profile.distanceBetweenUsers} км</h4>}
           </div>
 
           {profile.description.length <= 50 || showDescription ? (
@@ -99,7 +118,10 @@ export default function UserCard(): JSX.Element {
               color="success"
               aria-label="like"
               size="large"
-              onClick={() => handleAction('liked')}
+              onClick={() => {
+                console.log('liked');
+                handleAction('liked');
+              }}
             >
               <FavoriteIcon />
             </IconButton>

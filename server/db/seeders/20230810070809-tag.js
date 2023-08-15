@@ -157,7 +157,7 @@ module.exports = {
         {
           name: 'Alice',
           age: 28,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -73.985,
           userLatitude: 40.748817,
           userId: 1,
@@ -167,15 +167,15 @@ module.exports = {
           name: 'Bob',
           age: 35,
           gender: 'Male',
-          userLongitude: -118.2437,
-          userLatitude: 34.0522,
+          userLongitude: null,
+          userLatitude: null,
           userId: 2,
           description: 'Musician and avid traveler.',
         },
         {
           name: 'Eve',
           age: 22,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -87.6298,
           userLatitude: 41.8781,
           userId: 3,
@@ -184,7 +184,7 @@ module.exports = {
         {
           name: 'Alicy',
           age: 27,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -73.985,
           userLatitude: 40.748817,
           userId: 4,
@@ -193,7 +193,7 @@ module.exports = {
         {
           name: 'Alica',
           age: 26,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -73.985,
           userLatitude: 40.748817,
           userId: 5,
@@ -202,7 +202,7 @@ module.exports = {
         {
           name: 'Alici',
           age: 30,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -73.985,
           userLatitude: 40.748817,
           userId: 6,
@@ -229,7 +229,7 @@ module.exports = {
         {
           name: 'Grace',
           age: 24,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -71.0589,
           userLatitude: 42.3601,
           userId: 9,
@@ -247,7 +247,7 @@ module.exports = {
         {
           name: 'Hannah',
           age: 28,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -97.7431,
           userLatitude: 30.2672,
           userId: 11,
@@ -265,7 +265,7 @@ module.exports = {
         {
           name: 'Julia',
           age: 33,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -117.1611,
           userLatitude: 32.7157,
           userId: 13,
@@ -274,7 +274,7 @@ module.exports = {
         {
           name: 'Katherine',
           age: 26,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -122.6765,
           userLatitude: 45.5231,
           userId: 14,
@@ -292,7 +292,7 @@ module.exports = {
         {
           name: 'Mia',
           age: 31,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -73.985,
           userLatitude: 40.748817,
           userId: 16,

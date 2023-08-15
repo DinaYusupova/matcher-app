@@ -13,11 +13,13 @@ export const fetchProfileService = async (): Promise<ProfileModelType[]> => {
 };
 
 export const likeProfileService: ApiServiceType = async (userId) => {
-  const { data } = await apiService.post<ProfileModelType[]>('/profile/like', { userId });
+  console.log(userId, 'userId LIKE SERVICE'); 
+  const { data } = await apiService.post<ProfileModelType[]>('/like', { userId });
+  console.log (data, 'data LIKE SERVICE');
   return { data, userId };
 };
 
 export const dislikeProfileService: ApiServiceType = async (userId) => {
-  const { data } = await apiService<ProfileModelType[]>(`/profile/dislike/${userId}`);
+  const { data } = await apiService<ProfileModelType[]>(`/dislike/${userId}`);
   return { data, userId };
 };
