@@ -51,6 +51,8 @@ export default function AccountCard():JSX.Element {
   fetchUserInfo()
   }, []);
 
+  
+
   useEffect(() => {
     // Проверяем, все ли поля заполнены
     const areAboutFieldsFilled = name && gender && age && city && about;
