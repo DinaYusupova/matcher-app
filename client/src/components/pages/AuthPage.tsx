@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Box, Button, TextField } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import './styles/AuthPage.css';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/hooks';
 
 import type { SigninUserType, SignupUserType } from '../../types/userType';
-import { signinUserAuthThunk, signupUserAuthThunk } from '../../redux/slices/userAuth/userAuthThunk';
+import {
+  signinUserAuthThunk,
+  signupUserAuthThunk,
+} from '../../redux/slices/userAuth/userAuthThunk';
+import { postLocationService } from '../../services/apiLocationService';
 
 export default function AuthPage(): JSX.Element {
   const { authType } = useParams();
@@ -19,6 +23,27 @@ export default function AuthPage(): JSX.Element {
       ? void dispatch(signupUserAuthThunk(formData as SignupUserType))
       : void dispatch(signinUserAuthThunk(formData as SigninUserType));
   };
+
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLatitude = position.coords.latitude;
+          const userLongitude = position.coords.longitude;
+
+          postLocationService(userLatitude, userLongitude)
+            .then((el) => console.log(el))
+            .catch(console.error);
+        },
+        (error) => {
+          console.error('Ошибка получения геолокации:', error);
+        },
+      );
+    } else {
+      console.error('Геолокация недоступна в этом браузере.');
+    }
+  }, []);
+
   return (
     <>
       <Box

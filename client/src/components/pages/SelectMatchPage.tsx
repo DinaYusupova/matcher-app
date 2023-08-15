@@ -14,26 +14,6 @@ export default function SelectMatchPage(): JSX.Element {
 
   const profile = useAppSelector((store) => store.profile);
 
-  useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const userLatitude = position.coords.latitude;
-          const userLongitude = position.coords.longitude;
-
-          postLocationService(userLatitude, userLongitude)
-            .then((el) => console.log(el))
-            .catch(console.error);
-        },
-        (error) => {
-          console.error('Ошибка получения геолокации:', error);
-        },
-      );
-    } else {
-      console.error('Геолокация недоступна в этом браузере.');
-    }
-  }, []);
-
   return (
     <Loader isLoading={profile.status === 'loading'}>
       <UserCard />

@@ -65,7 +65,7 @@ export default function UserCard(): JSX.Element {
       <div className={`${profileClasses} ${animationClass}`}>
         <div className="user-info">
           <div className="user-name-age">
-            {!profile.photos || profile.photos.length !== 0 && (
+            {Array.isArray(profile.photos) && profile.photos.length && (
               <Carousel showThumbs={false} showStatus={false}>
                 {profile.photos.map((photo) => (
                   <div key={photo}>
