@@ -1,8 +1,11 @@
 const express = require('express');
-const { QueryTypes } = require('sequelize');
-const { Like, Dislikes, Chat, sequelize, Profile, Filter } = require('../db/models');
+const { QueryTypes, Op } = require('sequelize');
+const schedule = require('node-schedule');
+const { unique } = require('agenda/dist/job/unique');
+const { Like, Dislikes, Chat, sequelize, Profile, Filter, Dialogue } = require('../db/models');
 const calculateDistance = require('./functions/calculateDistance');
 
+const scheduledJobs = {};
 const router = express.Router();
 
 router.post('/like', async (req, res) => {
@@ -12,8 +15,6 @@ router.post('/like', async (req, res) => {
       likerId: req.session.user.id,
       likedById: req.body.userId,
     });
-
-    console.log(req.body.userId, 'REQ BODY USER ID');
 
     let isMutualLike = false;
     let matchUser = 0;
@@ -36,11 +37,6 @@ router.post('/like', async (req, res) => {
         senderId: req.session.user.id,
         recipientId: req.body.userId,
       });
-      // matchUser = await Profile.findOne({
-      //   where: {
-      //     userId: req.body.userId,
-      //   },
-
       const matchUsers = await sequelize.query(
         '(select * from "Profiles" p left join (select up."userId", array_agg(up."photo") photos from "UserPhotos" up where up."userId" = :userId group by up."userId") up on p."userId" = up."userId" where p."userId" = :userId)',
         {
@@ -51,6 +47,36 @@ router.post('/like', async (req, res) => {
         },
       );
       matchUser = matchUsers[0];
+      // создать диалог
+      const currentDialogue = await Dialogue.create({
+        buddyOne: req.session.user.id,
+        buddyTwo: req.body.userId,
+      });
+      const uniqueJobId = `${currentDialogue.dataValues.buddyOne}-${currentDialogue.dataValues.buddyTwo}`;
+      console.log(uniqueJobId, 'UNIQUE JOB ID!!!!!!!!!!!!!!!!!!!!!!');
+      console.log('SCHEDULE CREATED 5 MINS');
+      const job = schedule.scheduleJob('30 * * * * *', async () => {
+        console.log('delete testing---------------------------------------------');
+        await Chat.destroy({
+          where: {
+            [Op.or]: [
+              {
+                senderId: req.session.user.id,
+                recipientId: req.body.userId,
+              },
+              {
+                senderId: req.body.userId,
+                recipientId: req.session.user.id,
+              },
+            ],
+          },
+        });
+        delete scheduledJobs[uniqueJobId];
+        currentDialogue.destroy();
+        job.cancel();
+      });
+      scheduledJobs[uniqueJobId] = job;
+      console.log(scheduledJobs, 'JOBS OBJECT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     }
 
     const userFilter = await Filter.findOne({
@@ -142,4 +168,4 @@ router.get('/dislike/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = { router, scheduledJobs };
