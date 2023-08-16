@@ -117,22 +117,22 @@ const handleSearchMatch = () => {
         sx={{ marginRight: '10px', maxWidth: '120px' }}
         InputProps={{ inputProps: { min: minSearchAge, step: 1 } }}
       />
-    <Button
-                 variant={searchEditing ? 'outlined' : 'contained'}
-                 onClick={handleSearchEditSaveClick}
-                 fullWidth
-                 sx={{ marginTop: '15px' }}
+     <Button
+         variant={searchEditing ? 'outlined' : 'contained'}
+          onClick={handleSearchEditSaveClick}
+          fullWidth
+          sx={{ marginTop: '15px' }}
                >
-                 {searchEditing ? 'Сохранить' : 'Редактировать'}
+          {searchEditing ? 'Сохранить' : 'Редактировать'}
                </Button>
-      <Button
-        variant={searchEditing ? 'outlined' : 'contained'}
-        onClick={handleSearchMatch}
-        fullWidth
-        sx={{ marginTop: '15px' }}
+               <Button
+          variant={searchEditing ? 'contained' : 'contained'}  // Изменил 'contained' на 'outlined'
+          onClick={handleSearchMatch}
+          fullWidth
+          sx={{ marginTop: '15px' }}
       >
-        Начать поиск
-      </Button>
+    Начать поиск
+</Button>
       {!aboutFieldsFilled && (
         <Dialog open={isModalOpenAbout} onClose={() => setIsModalOpenAbout(false)}>
           <DialogTitle>Важное сообщение</DialogTitle>

@@ -11,6 +11,7 @@ import { checkUserAuthThunk } from './redux/slices/userAuth/userAuthThunk';
 import PrivateRouter from './components/hocs/PrivateRouter';
 import AccountPage from './components/pages/AccountPage';
 
+
 function App(): JSX.Element {
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
@@ -36,6 +37,8 @@ function App(): JSX.Element {
             }
           />
           <Route path="/account" element={<AccountPage />} />
+          
+          
         </Routes>
       </Container>
     </>
