@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import AllChatsAsidePart from '../UI/AllChatsAsidePart';
 import CurrentChat from '../UI/CurrentChat';
@@ -7,13 +7,14 @@ import { fetchSelectedChatThunk } from '../../redux/slices/messages/ChatThunk';
 import { SET_USERS } from '../chatUtils/chatActions';
 import { addMessage } from '../../redux/slices/messages/ChatSlice';
 import { fetchAvailableMessages } from '../../redux/slices/availableChats/availableChatThunks';
+import { clearTimeoutService } from '../../services/apiMessageService';
 
 export default function ChatPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const chat = useAppSelector((store) => store.chat);
   const socketRef = useRef<WebSocket>();
-  const [selectedChat, setSelectedChat] = useState<number>(1);
-  console.log(selectedChat);
+  const [selectedChat, setSelectedChat] = useState<number>(0);
+
   useEffect(() => {
     socketRef.current = new WebSocket(`ws://localhost:3001`);
     const socket = socketRef.current;
@@ -45,7 +46,10 @@ export default function ChatPage(): JSX.Element {
     };
   }, [chat]);
   useEffect(() => {
-    void dispatch(fetchSelectedChatThunk(selectedChat));
+    if (selectedChat !== 0) {
+      void dispatch(fetchSelectedChatThunk(selectedChat));
+      
+    }
   }, [selectedChat]);
   const submitHandler = (input: string, chatId: number): void => {
     // const socket = socketRef.current;
@@ -65,6 +69,14 @@ export default function ChatPage(): JSX.Element {
         <AllChatsAsidePart setSelectedChat={setSelectedChat} />
       </Box>
       <Box sx={{ flex: '1 1 75%', maxWidth: '75%', maxHeight: '100vh', overflowY: 'auto' }}>
+        {selectedChat && (
+          <>
+            <Button onClick={() => clearTimeoutService(selectedChat).catch(console.log)}>
+              продолжить общаться
+            </Button>
+            {/* <Box>{availableChat[selectedChat].createdAt}</Box> */}
+          </>
+        )}
         <CurrentChat selectedChat={selectedChat} submitHandler={submitHandler} />
       </Box>
     </Box>
