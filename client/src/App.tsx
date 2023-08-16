@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { checkUserAuthThunk } from './redux/slices/userAuth/userAuthThunk';
 import PrivateRouter from './components/hocs/PrivateRouter';
 import AccountPage from './components/pages/AccountPage';
+import OneAccountPage from './components/pages/OneAccountPage';
+import TwoAccountPage from './components/pages/TwoAccountPage';
 
 
 function App(): JSX.Element {
@@ -37,8 +39,8 @@ function App(): JSX.Element {
             }
           />
           <Route path="/account" element={<AccountPage />} />
-          
-          
+          <Route path="/account/about" element={<OneAccountPage />} />
+          <Route path="/account/filter" element={<TwoAccountPage />} />
         </Routes>
       </Container>
     </>

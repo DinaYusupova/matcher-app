@@ -14,9 +14,9 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import AccountPhoto from './AccountPhoto';
 import { apiService } from '../../../services/apiServiceConfig';
 import type { AccountUserType } from '../../../types/accountUserType';
-import { AccountFilterType } from '../../../types/accountFilterType';
-import SearchCard from './AccountSearch';
 import AccountSearch from './AccountSearch';
+
+
 
 
 export default function AccountCard():JSX.Element {
@@ -37,19 +37,28 @@ export default function AccountCard():JSX.Element {
     const [editing, setEditing] = useState(false); // Режим редактирования о себе
     const [aboutFieldsFilled, setAboutFieldsFilled] = useState(false); // Для отслеживания полей "О себе"
 
-  useEffect(() => {
-  const fetchUserInfo =async (): Promise<void> =>{
-  const {data} = await apiService<AccountUserType>('/account');
-  if(data){
-  setAccountUser(data)
-  setName(data.name)
-  setGender(data.gender);
-  setAge(data.age);
-  setCity(data.city);
-  setAbout(data.description);
-  }}
-  fetchUserInfo()
-  }, []);
+   
+
+
+    useEffect(() => {
+      const fetchUserInfo = async (): Promise<void> => {
+        try {
+          const { data } = await apiService<AccountUserType>('/account');
+          if (data) {
+            setAccountUser(data);
+            setName(data.name);
+            setGender(data.gender);
+            setAge(data.age);
+            setCity(data.city);
+            setAbout(data.description);
+          }
+        } catch (error) {
+          console.error('Ошибка при загрузке данных:', error);
+        }
+      };
+  
+      fetchUserInfo();
+    }, []);
 
   useEffect(() => {
     // Проверяем, все ли поля заполнены
@@ -80,6 +89,7 @@ export default function AccountCard():JSX.Element {
     }
 
      return (
+
        <Box
          display="flex"
          justifyContent="center"
@@ -90,7 +100,6 @@ export default function AccountCard():JSX.Element {
          <Card sx={{ maxWidth: '800px',width: '100%' }}>
            <CardContent sx={{ display: 'flex',  }}>
            <AccountPhoto/>
-    
              <Box sx={{ flex: 2, marginLeft: '20px' }}>
              <Box sx={{ flex: 2, marginLeft: '20px' }}>
                <h3>О себе:</h3>
@@ -153,7 +162,6 @@ export default function AccountCard():JSX.Element {
                </Button>
              </Box>
              <AccountSearch aboutFieldsFilled={aboutFieldsFilled}/>
-             
              </Box>
            </CardContent>
          </Card>
