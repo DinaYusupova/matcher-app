@@ -1,4 +1,5 @@
 /** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
@@ -6,7 +7,7 @@ module.exports = {
       [
         {
           email: 'user1@example.com',
-          password: 'password123',
+          password: '$2b$10$CPgoZwEqRXJvDhE7OGZW/.9OmSi39iM66E.cneIb5OfPLDn/hF2le',
         },
         {
           email: 'user2@example.com',
@@ -158,24 +159,24 @@ module.exports = {
           name: 'Alice',
           age: 28,
           gender: 'female',
-          userLongitude: -73.985,
-          userLatitude: 40.748817,
+          userLongitude: -87.6298,
+          userLatitude: 41.8781,
           userId: 1,
           description: 'I love hiking and photography.',
         },
         {
           name: 'Bob',
           age: 35,
-          gender: 'Male',
-          userLongitude: null,
-          userLatitude: null,
+          gender: 'male',
+          userLongitude: 41.8781,
+          userLatitude: 41.8781,
           userId: 2,
           description: 'Musician and avid traveler.',
         },
         {
           name: 'Eve',
           age: 22,
-          gender: 'female',
+          gender: 'male',
           userLongitude: -87.6298,
           userLatitude: 41.8781,
           userId: 3,
@@ -184,7 +185,7 @@ module.exports = {
         {
           name: 'Alicy',
           age: 27,
-          gender: 'female',
+          gender: 'male',
           userLongitude: -73.985,
           userLatitude: 40.748817,
           userId: 4,
@@ -193,7 +194,7 @@ module.exports = {
         {
           name: 'Alica',
           age: 26,
-          gender: 'female',
+          gender: 'male',
           userLongitude: -73.985,
           userLatitude: 40.748817,
           userId: 5,
@@ -211,7 +212,7 @@ module.exports = {
         {
           name: 'Charlie',
           age: 31,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -122.4194,
           userLatitude: 37.7749,
           userId: 7,
@@ -220,7 +221,7 @@ module.exports = {
         {
           name: 'David',
           age: 29,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -122.3321,
           userLatitude: 47.6062,
           userId: 8,
@@ -238,7 +239,7 @@ module.exports = {
         {
           name: 'Frank',
           age: 42,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -80.1918,
           userLatitude: 25.7617,
           userId: 10,
@@ -256,7 +257,7 @@ module.exports = {
         {
           name: 'Isaac',
           age: 37,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -104.9903,
           userLatitude: 39.7392,
           userId: 12,
@@ -283,7 +284,7 @@ module.exports = {
         {
           name: 'Liam',
           age: 23,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -87.6298,
           userLatitude: 41.8781,
           userId: 15,
@@ -301,7 +302,7 @@ module.exports = {
         {
           name: 'Nathan',
           age: 29,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -118.2437,
           userLatitude: 34.0522,
           userId: 17,
@@ -310,7 +311,7 @@ module.exports = {
         {
           name: 'Olivia',
           age: 27,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -122.4194,
           userLatitude: 37.7749,
           userId: 18,
@@ -319,7 +320,7 @@ module.exports = {
         {
           name: 'Patrick',
           age: 35,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -122.3321,
           userLatitude: 47.6062,
           userId: 19,
@@ -346,7 +347,7 @@ module.exports = {
         {
           name: 'Sam',
           age: 26,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -97.7431,
           userLatitude: 30.2672,
           userId: 22,
@@ -355,7 +356,7 @@ module.exports = {
         {
           name: 'Taylor',
           age: 30,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -104.9903,
           userLatitude: 39.7392,
           userId: 23,
@@ -373,7 +374,7 @@ module.exports = {
         {
           name: 'Victor',
           age: 32,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -80.1918,
           userLatitude: 25.7617,
           userId: 25,
@@ -382,7 +383,7 @@ module.exports = {
         {
           name: 'Wendy',
           age: 29,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -118.2437,
           userLatitude: 34.0522,
           userId: 26,
@@ -391,7 +392,7 @@ module.exports = {
         {
           name: 'Xander',
           age: 27,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -122.4194,
           userLatitude: 37.7749,
           userId: 27,
@@ -400,7 +401,7 @@ module.exports = {
         {
           name: 'Yara',
           age: 25,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -122.3321,
           userLatitude: 47.6062,
           userId: 28,
@@ -409,7 +410,7 @@ module.exports = {
         {
           name: 'Zane',
           age: 28,
-          gender: 'Male',
+          gender: 'male',
           userLongitude: -97.7431,
           userLatitude: 30.2672,
           userId: 29,
@@ -418,7 +419,7 @@ module.exports = {
         {
           name: 'Ava',
           age: 30,
-          gender: 'Female',
+          gender: 'female',
           userLongitude: -73.985,
           userLatitude: 40.748817,
           userId: 30,
@@ -457,36 +458,12 @@ module.exports = {
           likerId: 2,
         },
         {
-          likedById: 2,
-          likerId: 3,
-        },
-        {
-          likedById: 2,
-          likerId: 1,
-        },
-        {
-          likedById: 3,
-          likerId: 2,
-        },
-        {
-          likedById: 2,
-          likerId: 3,
-        },
-        {
-          likedById: 3,
-          likerId: 1,
-        },
-        {
           likedById: 1,
           likerId: 3,
         },
         {
-          likedById: 2,
+          likedById: 1,
           likerId: 4,
-        },
-        {
-          likedById: 4,
-          likerId: 2,
         },
       ],
       {},
@@ -510,6 +487,94 @@ module.exports = {
       ],
       {},
     );
+
+    // await queryInterface.bulkInsert(
+    //   'UserPhotos',
+    //   [
+    //     {
+    //       userId: 1,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 2,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 3,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 4,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 5,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 6,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 7,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 8,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 9,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 10,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 11,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 12,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 13,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 14,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 15,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 16,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 17,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 18,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 19,
+    //       photo: '1692082020606.webp',
+    //     },
+    //     {
+    //       userId: 20,
+    //       photo: '1692082020606.webp',
+    //     },
+    //   ],
+
+    //   {},
+    // );
   },
 
   async down(queryInterface, Sequelize) {},

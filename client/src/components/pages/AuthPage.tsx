@@ -6,7 +6,10 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/hooks';
 
 import type { SigninUserType, SignupUserType } from '../../types/userType';
-import { signinUserAuthThunk, signupUserAuthThunk } from '../../redux/slices/userAuth/userAuthThunk';
+import {
+  signinUserAuthThunk,
+  signupUserAuthThunk,
+} from '../../redux/slices/userAuth/userAuthThunk';
 
 export default function AuthPage(): JSX.Element {
   const { authType } = useParams();
@@ -19,6 +22,7 @@ export default function AuthPage(): JSX.Element {
       ? void dispatch(signupUserAuthThunk(formData as SignupUserType))
       : void dispatch(signinUserAuthThunk(formData as SigninUserType));
   };
+
   return (
     <>
       <Box

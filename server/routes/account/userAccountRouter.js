@@ -21,8 +21,11 @@ router.get('/', async (req, res) => {
 router.put('/', async (req, res) => {
   try {
     const data = await Profile.findOne({ where: { userId: req.session.user.id } });
+    const age = parseInt(req.body.age);
+    const parsedAge = isNaN(age) ? 0 : age;
     if (!data) {
-      await Profile.create({ ...req.body, userId: req.session.user.id });
+      await Profile.create({ ...req.body, userId: req.session.user.id, age: parsedAge 
+      });
     } else {
       await Profile.update(req.body, {
         where: {

@@ -1,6 +1,8 @@
 import React from 'react';
 import './styles/MainPage.css';
 import './styles/styles.css';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 import logo from '../../img/matcher.png';
 import promoImg from '../../img/promo_girl.svg';
 
@@ -12,9 +14,20 @@ export default function MainPage(): JSX.Element {
           <div className="promo-text">
             <div className="promo-title">ОТКРОЙ НОВЫХ ЛЮДЕЙ</div>
             <div className="promo-button-wrap">
-              <button type="button" className="promo-btn">
+              <Button
+                component={Link}
+                to="/auth/signup"
+                style={{
+                  borderRadius: '10px',
+                  width: '220px',
+                  height: '55px',
+                  fontWeight: '500',
+                  backgroundColor: '#000000',
+                  color: '#FFFFFF',
+                }}
+              >
                 Войти
-              </button>
+              </Button>
             </div>
           </div>
 
