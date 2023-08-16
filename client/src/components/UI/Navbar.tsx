@@ -3,7 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import type { PathMatch } from 'react-router-dom';
 import { Link, matchPath, useLocation, useNavigate } from 'react-router-dom';
-import { Box, Button } from '@mui/material';
+import { Box, Button, createTheme } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { logoutUserAuthThunk } from '../../redux/slices/userAuth/userAuthThunk';
 import logo from '../../img/matcher.png';
@@ -30,11 +30,11 @@ export default function Navigation(): JSX.Element {
   const authorizedRouteMatch = useRouteMatch(['/', '/chat']);
   const authorizedCurTab = authorizedRouteMatch?.pattern.path;
   const isActiveTab = (path: string) => location.pathname === path;
+
   return (
     <Box
       component="nav"
       sx={{
-        position: 'fixed',
         top: 0,
         left: 0,
         right: 0,
@@ -50,8 +50,12 @@ export default function Navigation(): JSX.Element {
         paddingRight: '50px',
       }}
     >
-      <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
-        <img src={logo} alt="logo" style={{ width: '50px'}} />
+      <Box
+        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+        component={Link}
+        to="/"
+      >
+        <img src={logo} alt="logo" style={{ width: '50px' }} />
         <h1
           style={{
             color: 'black',
@@ -60,7 +64,6 @@ export default function Navigation(): JSX.Element {
             fontSize: '16px',
             lineHeight: '1.05',
             maxWidth: '50px',
-            marginLeft: '10px',
             marginTop: '10px',
           }}
         >
@@ -89,19 +92,19 @@ export default function Navigation(): JSX.Element {
       )}
 
       {user.status === 'logged' && (
-        <>
+        <Box sx={{ justifyContent: 'end', display: 'flex', alignItems: 'center' }}>
           <Tabs value={authorizedCurTab}>
-            <Tab
-              label="Главная"
-              value="/"
-              to="/"
-              component={Link}
-              sx={{ textTransform: 'uppercase' }}
-            />
             <Tab
               label="Чат"
               value="/chat"
               to="/chat"
+              component={Link}
+              sx={{ textTransform: 'uppercase' }}
+            />
+            <Tab
+              label="Профиль"
+              value="/account"
+              to="/account"
               component={Link}
               sx={{ textTransform: 'uppercase' }}
             />
@@ -115,7 +118,7 @@ export default function Navigation(): JSX.Element {
           >
             Разлогиниться
           </Button>
-        </>
+        </Box>
       )}
     </Box>
   );

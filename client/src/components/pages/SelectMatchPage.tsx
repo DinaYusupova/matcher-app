@@ -7,7 +7,6 @@ import Loader from '../hocs/Loader';
 export default function SelectMatchPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {}, []);
 
   useEffect(() => {
     if ('geolocation' in navigator) {

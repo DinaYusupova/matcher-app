@@ -24,7 +24,7 @@ export default function AuthPage(): JSX.Element {
   };
 
   return (
-    <Container sx={{ marginTop: '100px' }}>
+    <div style={{ marginTop: '70px', background: "#f4f6f5"}}>
       <Box
         sx={{
           fontFamily: 'Monospace',
@@ -42,7 +42,7 @@ export default function AuthPage(): JSX.Element {
           className="inputs"
           required
           variant="filled"
-          label="mail"
+          label="email"
           type="email"
         />
         <TextField
@@ -50,23 +50,23 @@ export default function AuthPage(): JSX.Element {
           className="inputs"
           required
           variant="filled"
-          label="choose a password"
+          label= "password"
           type="password"
         />
         <Button
           sx={{
             maxWidth: '30%',
-            backgroundColor: 'purple',
+            backgroundColor: 'black',
             mt: 1,
-            ':hover': { backgroundColor: 'orange' },
+            ':hover': { backgroundColor: 'gray' },
           }}
           className="button"
           variant="contained"
           type="submit"
         >
-          {authType === 'signin' ? `войти` : `зарегиться`}
+          {authType === 'signin' ? `войти` : `зарегистрироваться`}
         </Button>
       </Box>
-    </Container>
+    </div>
   );
 }

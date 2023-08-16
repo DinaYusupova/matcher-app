@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './UserCard.css';
 import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -48,7 +48,7 @@ export default function UserCard(): JSX.Element {
     setShowDescription(!showDescription);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (matchProfile) {
       handleOpen();
     }
@@ -62,20 +62,19 @@ export default function UserCard(): JSX.Element {
     if (type === 'disliked') {
       void dispatch(dislikeProfileThunk(profile.userId));
     }
-    // Здесь вы можете добавить логику для обработки лайка или дизлайка
     setTimeout(() => {
       setAction(null);
     }, 300);
   };
 
   let profileClasses = 'user-profile';
-  let animationClass = ''; // Добавляем переменную для класса анимации
+  let animationClass = ''; 
 
   if (action === 'liked' || profilesStatus === 'empty') {
-    animationClass = 'swipe-right'; // Устанавливаем класс анимации
+    animationClass = 'swipe-right'; 
     profileClasses += ' liked';
   } else if (action === 'disliked') {
-    animationClass = 'swipe-left'; // Устанавливаем класс анимации
+    animationClass = 'swipe-left'; 
     profileClasses += ' disliked';
   }
 
