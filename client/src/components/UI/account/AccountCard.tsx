@@ -11,6 +11,7 @@ import {
   TextField,
 } from '@mui/material';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AccountPhoto from './AccountPhoto';
 import { apiService } from '../../../services/apiServiceConfig';
 import type { AccountUserType } from '../../../types/accountUserType';
@@ -36,6 +37,8 @@ export default function AccountCard():JSX.Element {
     const [about, setAbout] = useState(''); // Описание пользователя
     const [editing, setEditing] = useState(false); // Режим редактирования о себе
     const [aboutFieldsFilled, setAboutFieldsFilled] = useState(false); // Для отслеживания полей "О себе"
+    const [loading, setLoading] = useState(true);
+    
 
    
 
@@ -88,8 +91,31 @@ export default function AccountCard():JSX.Element {
       setEditing((prevEditing) => !prevEditing);
     }
 
-     return (
+     // Тема для стилизации элементов MUI
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#FE3C72', // Цвет контура и лейбла в активном состоянии
+      },
+      text: {
+        primary: '#000', // Цвет текста
+      },
+    },
+  });
 
+  const theme3 = createTheme({
+    palette: {
+      primary: {
+        main: '#fff', // Цвет контура и лейбла в активном состоянии
+      },
+      text: {
+        primary: '#fff', // Цвет текста
+      },
+    },
+  });
+
+     return (
+      <ThemeProvider theme={theme}>
        <Box
          display="flex"
          justifyContent="center"
@@ -97,12 +123,22 @@ export default function AccountCard():JSX.Element {
          minHeight="100vh"
          p={1}
        >
-         <Card sx={{ maxWidth: '800px',width: '100%' }}>
+         <Card  sx={{
+            maxWidth: '800px',
+            width: '100%',
+            height: '620px',
+            borderRadius: '10px', // Закругление углов рамки
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)', // Тень рамки
+          }}>
            <CardContent sx={{ display: 'flex',  }}>
            <AccountPhoto/>
              <Box sx={{ flex: 2, marginLeft: '20px' }}>
              <Box sx={{ flex: 2, marginLeft: '20px' }}>
-               <h3>О себе:</h3>
+               <h3 style={{
+                fontFamily: 'Poppins, sans-serif', // Замените на имя вашего шрифта
+                fontSize: '17px', // Настройте размер шрифта
+                fontWeight: 550, // Настройте жирность шрифта
+              }}>О СЕБЕ:</h3>
                <TextField
                    label="Имя"
                    value={name}
@@ -113,26 +149,25 @@ export default function AccountCard():JSX.Element {
                  />
                <Box sx={{ display: 'flex', marginBottom: '10px', marginTop: '10px' }}>
             
-                 <FormControl sx={{ marginRight: '10px', minWidth: '120px' }}>
-                 
-                   <InputLabel id="gender-label">Пол</InputLabel>
-                   <Select
-                     labelId="gender-label"
-                     value={gender}
-                     onChange={(event) => setGender(event.target.value)}
-                     disabled={!editing}
-                   >
-                     <MenuItem value="male">Мужской</MenuItem>
-                     <MenuItem value="female">Женский</MenuItem>
-                   </Select>
-                 </FormControl>
+                  <TextField
+                label="Пол"
+                value={gender}
+                onChange={(event) => setGender(event.target.value)}
+                select // Добавляем атрибут select
+                fullWidth
+                disabled={!editing}
+                sx={{ marginRight: '10px',  width: '40%'}}
+              >
+                <MenuItem value="male">M</MenuItem>
+                <MenuItem value="female">Ж</MenuItem>
+              </TextField>
                  <TextField
                    label="Возраст"
                    value={age}
                    onChange={(event) => setAge(event.target.value)}
                    fullWidth
                    disabled={!editing}
-                   sx={{ marginRight: '10px' }}
+                   sx={{ marginRight: '10px', width: '40%' }}
                  />
                  <TextField
                    label="Город"
@@ -152,19 +187,31 @@ export default function AccountCard():JSX.Element {
                  fullWidth
                  disabled={!editing}
                />
+                 <ThemeProvider theme={theme3}>
                <Button
                  variant={editing ? 'outlined' : 'contained'}
                  onClick={handleEditSaveClick}
                  fullWidth
-                 sx={{ marginTop: '15px' }}
+                 sx={{ marginTop: '10px',
+                 marginBottom: '5px', // Уменьшаем нижний отступ
+                 fontSize: '14px',
+                 fontWeight: 'bold', // Делаем текст жирным
+                 color: 'white',
+                 backgroundColor: '#a8a3a3', // Цвет кнопки как в Tinder
+                 '&:hover': {
+                   backgroundColor: '#919191', // Цвет при наведении
+                 },
+                }}
                >
                  {editing ? 'Сохранить' : 'Редактировать'}
                </Button>
+               </ThemeProvider>
              </Box>
              <AccountSearch aboutFieldsFilled={aboutFieldsFilled}/>
              </Box>
            </CardContent>
          </Card>
        </Box>
+        </ThemeProvider>
      );
    };

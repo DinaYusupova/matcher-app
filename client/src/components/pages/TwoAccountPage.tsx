@@ -73,7 +73,14 @@ export default function SearchCard(): JSX.Element {
         minHeight="100vh"
         p={1}
       >
-        <Card sx={{ maxWidth: '550px', width: '100%', height: '620px' }}>
+        <Card  sx={{
+            maxWidth: '550px',
+            width: '100%',
+            height: '620px',
+            borderRadius: '10px', // Закругление углов рамки
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)', // Тень рамки
+            
+          }}>
           <CardContent sx={{ display: 'flex' }}>
             <Box sx={{ flex: 2, marginLeft: '20px', marginRight: '20px' }}>
               <h3 style={{
@@ -81,6 +88,7 @@ export default function SearchCard(): JSX.Element {
                 fontSize: '20px',
                 fontWeight: 550,
                 textAlign: 'center', // Выравнивание по центру
+                marginTop:'50px'
               }}>
                 ЗАПОЛНИТЕ ФИЛЬТР ПОИСКА
               </h3>
@@ -92,7 +100,7 @@ export default function SearchCard(): JSX.Element {
                 onChange={(event) => setSearchGender(event.target.value)}
                 select // Используем атрибут select
                 fullWidth
-                sx={{ marginRight: '10px', marginTop: '15px' }}
+                sx={{ marginRight: '10px', marginTop: '50px' }}
               >
                 <MenuItem value="male">Мужской</MenuItem>
                 <MenuItem value="female">Женский</MenuItem>

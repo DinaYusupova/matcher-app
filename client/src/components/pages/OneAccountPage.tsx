@@ -102,7 +102,7 @@ export default function AccountCard(): JSX.Element {
               {/* Форма для заполнения информации о пользователе */}
               <h3 style={{
                 fontFamily: 'Poppins, sans-serif', // Замените на имя вашего шрифта
-                fontSize: '20px', // Настройте размер шрифта
+                fontSize: '17px', // Настройте размер шрифта
                 fontWeight: 550, // Настройте жирность шрифта
               }}>
                 ЗАПОЛНИТЕ ИНФОРМАЦИЮ О СЕБЕ
