@@ -7,8 +7,10 @@ export type FirstMessage = {
   senderId: UserModelType['id'];
   recipientId: UserModelType['id'];
   message: null;
+  createdAt: Date
   sender: UserModelType & {
     profile: ProfileType[];
     photo: AccountPhotoType[];
   };
+  recipient: FirstMessage['sender'];
 };

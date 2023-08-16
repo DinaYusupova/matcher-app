@@ -1,23 +1,32 @@
 import { Box, Typography } from '@mui/material';
 import type { SetStateAction } from 'react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { ProfileType } from '../../types/profileType';
+import type { AccountPhotoType } from '../../types/accountPhotoType';
+import { useAppSelector } from '../../redux/hooks';
+import TimerOnChat from './timerOnChat';
 
 type Props = {
   chatId: number;
   setSelectedChat: React.Dispatch<SetStateAction<number>>;
   username: ProfileType['name'];
+  avatar: AccountPhotoType['photo'];
 };
 function OneChatAsideItem({
   activeChatId,
   chatId,
   setSelectedChat,
   username,
-  onClick,
+  setActiveChatId,
+  avatar,
+  timer,
 }: Props): JSX.Element {
   return (
     <Box
-      onClick={onClick}
+      onClick={() => {
+        setSelectedChat(chatId);
+        setActiveChatId(chatId);
+      }}
       mt={2}
       sx={{
         backgroundColor: activeChatId === chatId ? 'red' : 'grey',
@@ -28,10 +37,16 @@ function OneChatAsideItem({
       }}
       flexDirection="row"
     >
-      <Box sx={{ width: '20px', height: '20px' }} alignSelf="center" component="img" src="" />
-      <Box>
+      <Box
+        sx={{ marginLeft: '10px', borderRadius: '50%', width: '50px', height: '50px' }}
+        alignSelf="center"
+        component="img"
+        src={`http://localhost:3001/img/${avatar}`}
+      />
+      <Box marginLeft={5}>
         <Typography>{username}</Typography>
         <Typography>last message</Typography>
+        <TimerOnChat timer={timer} />
       </Box>
     </Box>
   );

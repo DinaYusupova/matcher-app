@@ -9,6 +9,7 @@ type Props = {
   selectedChat: number;
   submitHandler: (input: string, chatId: Props['selectedChat']) => void;
 };
+
 export default function CurrentChat({ selectedChat, submitHandler }: Props): JSX.Element {
   const messagesEndRef = React.useRef<HTMLDivElement | null>(null);
   const chat = useAppSelector((store) => store.chat);
@@ -39,7 +40,7 @@ export default function CurrentChat({ selectedChat, submitHandler }: Props): JSX
             key={el.id} // Уникальный ключ для каждого элемента списка
             mt={2}
             sx={{
-              backgroundColor: el.senderId === user.id ? 'blue' : 'red',
+              backgroundColor: el.senderId === user.id ? 'blue' : 'grey',
               width: 'fit-content',
               padding: '8px',
               borderRadius: '8px',
@@ -63,58 +64,62 @@ export default function CurrentChat({ selectedChat, submitHandler }: Props): JSX
           </Box>
         ))}
       </Box>
-      <Box
-        component="form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const data = Object.fromEntries(new FormData(e.currentTarget));
-          submitHandler(data.message, selectedChat);
-        }}
-        alignItems="center"
-        bottom={20}
-        mt={2}
-        display="flex"
-        justifyContent="space-between"
-        paddingX={2}
-      >
-        <TextField
-          name="message"
-          sx={{
-            backgroundColor: 'white',
-            overflowY: 'auto',
-            maxHeight: 200,
-            flexGrow: 1, // Развернуть на всю ширину
-          }}
-          autoFocus
-          fullWidth
-          multiline
-          value={messageState}
-          type="text"
-          variant="standard"
-          label="type in message"
-          onChange={(e) => setMessageState(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
+      {selectedChat ? (
         <Box
-          component="button"
-          type="submit"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          maxHeight={40}
-          width={100}
-          sx={{
-            backgroundColor: 'purple',
-            borderRadius: 3,
-            marginLeft: 2,
-            '&:hover': {
-              cursor: 'pointer',
-            },
+          component="form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.currentTarget));
+            submitHandler(data.message, selectedChat);
           }}
+          alignItems="center"
+          bottom={20}
+          mt={2}
+          display="flex"
+          justifyContent="space-between"
+          paddingX={2}
         >
-          send
+          <TextField
+            name="message"
+            sx={{
+              backgroundColor: 'white',
+              overflowY: 'auto',
+              maxHeight: 200,
+              flexGrow: 1, // Развернуть на всю ширину
+            }}
+            autoFocus
+            fullWidth
+            multiline
+            value={messageState}
+            type="text"
+            variant="standard"
+            label="type in message"
+            onChange={(e) => setMessageState(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+          <Box
+            component="button"
+            type="submit"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            maxHeight={40}
+            width={100}
+            sx={{
+              backgroundColor: 'purple',
+              borderRadius: 3,
+              marginLeft: 2,
+              '&:hover': {
+                cursor: 'pointer',
+              },
+            }}
+          >
+            send
+          </Box>
         </Box>
-      </Box>
+      ) : (
+        `привет`
+      )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { Box, Grid, Container } from '@mui/material';
+import { Box, Button, Grid, Container } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import AllChatsAsidePart from '../UI/AllChatsAsidePart';
 import CurrentChat from '../UI/CurrentChat';
@@ -7,6 +7,7 @@ import { fetchSelectedChatThunk } from '../../redux/slices/messages/ChatThunk';
 import { SET_USERS } from '../chatUtils/chatActions';
 import { addMessage } from '../../redux/slices/messages/ChatSlice';
 import { fetchAvailableMessages } from '../../redux/slices/availableChats/availableChatThunks';
+import { clearTimeoutService } from '../../services/apiMessageService';
 
 export default function ChatPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -43,30 +44,39 @@ export default function ChatPage(): JSX.Element {
     };
   }, [chat]);
   useEffect(() => {
-    void dispatch(fetchSelectedChatThunk(selectedChat));
+    if (selectedChat !== 0) {
+      void dispatch(fetchSelectedChatThunk(selectedChat));
+      
+    }
   }, [selectedChat]);
   const submitHandler = (input: string, chatId: number): void => {
     // const socket = socketRef.current;
     socketRef.current.send(JSON.stringify({ payload: { input, chatId }, type: 'NEW_MESSAGE' }));
   };
   return (
-    <Container sx={{ marginTop: '100px' }}>
-      <Box sx={{ display: 'flex' }}>
-        <Box
-          sx={{
-            backgroundColor: 'darkkhaki',
-            borderRadius: '10px',
-            minHeight: '80vh',
-            flex: '1 1 25%',
-            maxWidth: '25%',
-          }}
-        >
-          <AllChatsAsidePart setSelectedChat={setSelectedChat} />
-        </Box>
-        <Box sx={{ flex: '1 1 75%', maxWidth: '75%', maxHeight: '100vh', overflowY: 'auto' }}>
-          <CurrentChat selectedChat={selectedChat} submitHandler={submitHandler} />
-        </Box>
+    <Box sx={{ display: 'flex' }}>
+      <Box
+        sx={{
+          backgroundColor: 'darkkhaki',
+          borderRadius: '10px',
+          minHeight: '80vh',
+          flex: '1 1 25%',
+          maxWidth: '25%',
+        }}
+      >
+        <AllChatsAsidePart setSelectedChat={setSelectedChat} />
       </Box>
-    </Container>
+      <Box sx={{ flex: '1 1 75%', maxWidth: '75%', maxHeight: '100vh', overflowY: 'auto' }}>
+        {selectedChat && (
+          <>
+            <Button onClick={() => clearTimeoutService(selectedChat).catch(console.log)}>
+              продолжить общаться
+            </Button>
+            {/* <Box>{availableChat[selectedChat].createdAt}</Box> */}
+          </>
+        )}
+        <CurrentChat selectedChat={selectedChat} submitHandler={submitHandler} />
+      </Box>
+    </Box>
   );
 }

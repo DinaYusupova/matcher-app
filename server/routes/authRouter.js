@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const schedule = require('node-schedule');
 const { User } = require('../db/models');
 
 const authRouter = express.Router();
@@ -21,6 +22,11 @@ authRouter.post('/signup', async (req, res) => {
     const userSession = JSON.parse(JSON.stringify(user));
     delete userSession.password;
     req.session.user = userSession;
+    const job = schedule.scheduleJob('10 * * * * *', () => {
+      console.log('hello user cron test from auth');
+      job.cancel();
+    });
+
     return res.json(userSession);
   } catch (err) {
     console.log(err);

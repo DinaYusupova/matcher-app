@@ -33,6 +33,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'likedById',
         as: 'likedBy',
       });
+      this.belongsToMany(models.User, {
+        through: 'Dialogues',
+        foreignKey: 'buddyOne',
+        as: 'first_buddy',
+      });
+      this.belongsToMany(models.User, {
+        through: 'Dialogues',
+        foreignKey: 'buddyTwo',
+        as: 'second_buddy',
+      });
 
       this.belongsToMany(models.User, {
         through: 'Dislikes',
@@ -48,6 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         as: 'filter',
       });
+      this.hasMany(models.DialogueUserStatus, { foreignKey: 'userId' });
     }
   }
   User.init(

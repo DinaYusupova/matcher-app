@@ -24,7 +24,7 @@ export default function AuthPage(): JSX.Element {
   };
 
   return (
-    <div style={{ marginTop: '70px', background: "#f4f6f5"}}>
+    <div style={{ height: '100vh', marginTop:"4px", paddingTop: "100px", background: "#f4f6f5"}}>
       <Box
         sx={{
           fontFamily: 'Monospace',

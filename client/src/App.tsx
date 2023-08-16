@@ -9,6 +9,9 @@ import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { checkUserAuthThunk } from './redux/slices/userAuth/userAuthThunk';
 import PrivateRouter from './components/hocs/PrivateRouter';
 import AccountPage from './components/pages/AccountPage';
+import OneAccountPage from './components/pages/OneAccountPage';
+import TwoAccountPage from './components/pages/TwoAccountPage';
+
 
 function App(): JSX.Element {
   const user = useAppSelector((store) => store.user);
@@ -19,23 +22,26 @@ function App(): JSX.Element {
   return (
     <>
       <Navigation />
-
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route element={<PrivateRouter redirect="/" isAllowed={user.status === 'logged'} />}>
-          <Route path="/chat" element={<ChatPage />} />
-        </Route>
-        <Route
-          path="/auth/:authType"
-          element={
-            <PrivateRouter redirect="/account" isAllowed={user.status !== 'logged'}>
-              <AuthPage />
-            </PrivateRouter>
-          }
-        />
-        <Route path="/match" element={<SelectMatchPage />} />
-        <Route path="/account" element={<AccountPage />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route element={<PrivateRouter redirect="/" isAllowed={user.status === 'logged'} />}>
+            
+            <Route path="/chat" element={<ChatPage />} />
+            
+          </Route>
+          <Route
+            path="/auth/:authType"
+            element={
+              <PrivateRouter redirect="/account/about" isAllowed={user.status !== 'logged'}>
+                <AuthPage />
+              </PrivateRouter>
+            }
+          />          
+          <Route path="/match" element={<SelectMatchPage />} />
+          <Route path="/account" element={<AccountPage />} />
+          <Route path="/account/about" element={<OneAccountPage />} />
+          <Route path="/account/filter" element={<TwoAccountPage />} />
+        </Routes>
     </>
   );
 }
