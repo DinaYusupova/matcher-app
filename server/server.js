@@ -9,7 +9,7 @@ const ProfileRouter = require('./routes/ProfileRouter');
 const messageRouter = require('./routes/messageRouter');
 const connectionCB = require('./websocket/connection');
 const sessionParser = require('./middlewares/sessionParser');
-const LikeDislikeRouter = require('./routes/likeDislikeRouter');
+const { router: LikeDislikeRouter } = require('./routes/likeDislikeRouter');
 
 const UserPhotoRouter = require('./routes/account/userPhotoRouter');
 const UserAccountRouter = require('./routes/account/userAccountRouter');
@@ -19,7 +19,6 @@ require('dotenv').config();
 const app = express();
 app.use(sessionParser);
 const PORT = process.env.PORT || 3001;
-
 app.use(cors({ credentials: true, origin: true }));
 app.use(morgan('dev'));
 app.use(express.json());

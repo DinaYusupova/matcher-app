@@ -12,6 +12,7 @@ export default function AllChatsAsidePart({ setSelectedChat }: Props): JSX.Eleme
   const availableChat = useAppSelector((store) => store.availableChat);
   const dispatch = useAppDispatch();
   const [activeChatId, setActiveChatId] = useState(null);
+  const user = useAppSelector((store) => store.user);
 
   useEffect(() => {
     void dispatch(fetchAvailableMessages());
@@ -20,18 +21,33 @@ export default function AllChatsAsidePart({ setSelectedChat }: Props): JSX.Eleme
     setSelectedChat(chatId);
     setActiveChatId(chatId);
   };
+  console.log(user.id, 'cвой id');
+  // availableChat.forEach((el) => console.log(el.senderId)),
+
   return (
     <div style={{ overflowY: 'auto', maxHeight: '100vh' }}>
-      {availableChat.map((oneChat) => (
-        <OneChatAsideItem
-          key={oneChat.id}
-          chatId={oneChat.senderId}
-          username={oneChat.sender.profile[0].name}
-          setSelectedChat={setSelectedChat}
-          onClick={() => handleChatItemClick(oneChat.senderId)}
-          activeChatId={activeChatId}
-        />
-      ))}
+      {availableChat.map((oneChat, i) => (
+          <OneChatAsideItem
+            key={oneChat.id}
+            chatId={user.id == oneChat.senderId ? oneChat.recipientId : oneChat.senderId}
+            username={
+              user.id === oneChat.senderId
+                ? oneChat.recipient.profile[0].name
+                : oneChat.sender.profile[0].name
+            }
+            timer={oneChat.createdAt}
+            setSelectedChat={setSelectedChat}
+            activeChatId={activeChatId}
+            setActiveChatId={setActiveChatId}
+            
+
+            avatar={
+              user.id !== oneChat.recipientId
+                ? oneChat.recipient.photo[0].photo
+                : oneChat.sender.photo[0].photo
+            }
+          />
+        ))}
     </div>
   );
 }
