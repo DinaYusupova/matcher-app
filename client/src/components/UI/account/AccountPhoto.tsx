@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, IconButton } from '@mui/material';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import ClearIcon from '@mui/icons-material/Clear';
 import { apiService } from '../../../services/apiServiceConfig';
 import { Carousel } from 'react-responsive-carousel';
@@ -8,7 +8,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function AccountPhoto() {
+export default function AccountPhoto():JSX.Element {
   const [photos, setPhotos] = useState([]);
   
   useEffect(() => {
@@ -126,9 +126,9 @@ export default function AccountPhoto() {
           color="primary"
           aria-label="upload photo"
           component="span"
-          sx={{ fontSize: '1.5rem', marginTop: '60px' }}
+          sx={{ fontSize: '1.5rem', marginTop: '55px' }}
         >
-          <AddPhotoAlternateIcon />
+          <PhotoCameraIcon />
         </IconButton>
       </label>
     </Box>
