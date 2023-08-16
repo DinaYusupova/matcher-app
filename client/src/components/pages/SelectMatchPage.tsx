@@ -10,8 +10,6 @@ export default function SelectMatchPage(): JSX.Element {
   // useEffect(() => {}, []);
 
   useEffect(() => {
-    void Notification.requestPermission();
-
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         (position) => {

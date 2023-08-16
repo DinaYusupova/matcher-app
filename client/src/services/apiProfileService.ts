@@ -21,8 +21,8 @@ export const fetchProfileService: ApiGetServiceType = async ({ userLatitude, use
   return data;
 };
 
-export const likeProfileService: ApiLikeServiceType = async (userId) => {
-  const { data } = await apiService.post<ReturnPostLikeType>('/like', { userId });
+export const likeProfileService: ApiServiceType = async (userId) => {
+  const { data } = await apiService.post<ProfileModelType[]>('/like', { userId });
   console.log(data, 'data LIKE SERVICE');
   return { data, userId };
 };

@@ -5,7 +5,7 @@ import { dislikeProfileThunk, getProfileThunk, likeProfileThunk } from './profil
 type ProfileSliceType = {
   data: ProfileType[];
   status: 'loading' | 'unloaded' | 'loaded' | 'empty';
-  matchProfile?: ProfileType;
+  matchProfile: ProfileType | undefined;
 };
 
 const initialState: ProfileSliceType = { data: [], status: 'loading', matchProfile: undefined };
@@ -18,23 +18,37 @@ export const userSlice = createSlice({
     builder.addCase(getProfileThunk.fulfilled, (state, action) => ({
       data: action.payload,
       status: 'loaded',
+      matchProfile: undefined,
     }));
-    builder.addCase(getProfileThunk.pending, (state) => ({ data: [], status: 'loading' }));
-    builder.addCase(getProfileThunk.rejected, (state) => ({ data: [], status: 'unloaded' }));
+    builder.addCase(getProfileThunk.pending, (state) => ({
+      data: [],
+      status: 'loading',
+      matchProfile: undefined,
+    }));
+    builder.addCase(getProfileThunk.rejected, (state) => ({
+      data: [],
+      status: 'unloaded',
+      matchProfile: undefined,
+    }));
 
     builder.addCase(likeProfileThunk.fulfilled, (state, action) => {
       state.data = state.data.filter((el) => el.userId !== action.payload.userId);
-      if (action.payload.data.newProfile) {
-        state.data.push(action.payload.data.newProfile);
+      if (action.payload.data.length === 1) {
+        state.data.push(action.payload.data[0]);
         state.status = 'loaded';
-      } else {
+      } else if (action.payload.data.length === 2) {
+        state.data.push(action.payload.data[0]);
+        state.status = 'loaded';
+        state.matchProfile = action.payload.data[1];
+      } else if (action.payload.data.length === 0) {
         state.status = 'empty';
       }
-      if (action.payload.data.matchUser) {
-        state.matchProfile = action.payload.data.matchUser;
-      }
     });
-    builder.addCase(likeProfileThunk.pending, (state) => ({ data: state.data, status: 'loaded', matchProfile: undefined }));
+    builder.addCase(likeProfileThunk.pending, (state) => ({
+      data: state.data,
+      status: 'loaded',
+      matchProfile: undefined,
+    }));
     builder.addCase(likeProfileThunk.rejected, (state) => ({
       data: state.data,
       status: 'unloaded',
@@ -54,10 +68,12 @@ export const userSlice = createSlice({
     builder.addCase(dislikeProfileThunk.pending, (state) => ({
       data: state.data,
       status: 'loaded',
+      matchProfile: undefined,
     }));
     builder.addCase(dislikeProfileThunk.rejected, (state) => ({
       data: state.data,
       status: 'unloaded',
+      matchProfile: undefined,
     }));
   },
 });

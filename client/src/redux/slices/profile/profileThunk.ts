@@ -12,7 +12,7 @@ export const getProfileThunk = createAsyncThunk<ProfileModelType[], UserLocation
   '/user/getUser',
   async ({ userLatitude, userLongitude }) => fetchProfileService({ userLatitude, userLongitude }),
 );
-export const likeProfileThunk = createAsyncThunk< ApiDataUserIdReturn, ProfileModelType['userId']>(
+export const likeProfileThunk = createAsyncThunk<{ data: ProfileModelType[]; userId: number }, ProfileModelType['userId']>(
   '/user/like',
   async (userId) => likeProfileService(userId),
 );

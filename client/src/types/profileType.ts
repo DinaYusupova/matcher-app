@@ -16,7 +16,7 @@ export type ProfileType = ProfileModelType;
 // | { status: 'loading' }
 // | { status: 'unloaded' };
 
-export type ReturnPostLikeType = { newProfile: ProfileModelType; matchUser: ProfileModelType };
+export type ReturnPostLikeType = { newProfile: ProfileModelType[]; matchUser: ProfileModelType };
 
 export type ApiDataUserIdReturn = { data: ReturnPostLikeType; userId: ProfileModelType['userId'] };
 

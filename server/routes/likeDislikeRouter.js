@@ -36,11 +36,21 @@ router.post('/like', async (req, res) => {
         senderId: req.session.user.id,
         recipientId: req.body.userId,
       });
-      matchUser = await Profile.findOne({
-        where: {
-          userId: req.body.userId,
+      // matchUser = await Profile.findOne({
+      //   where: {
+      //     userId: req.body.userId,
+      //   },
+
+      const matchUsers = await sequelize.query(
+        '(select * from "Profiles" p left join (select up."userId", array_agg(up."photo") photos from "UserPhotos" up where up."userId" = :userId group by up."userId") up on p."userId" = up."userId" where p."userId" = :userId)',
+        {
+          replacements: {
+            userId: req.body.userId,
+          },
+          type: QueryTypes.SELECT,
         },
-      });
+      );
+      matchUser = matchUsers[0];
     }
 
     const userFilter = await Filter.findOne({
@@ -49,7 +59,7 @@ router.post('/like', async (req, res) => {
       },
     });
 
-    const newProfiles = await sequelize.query(
+    const newProfile = await sequelize.query(
       '(select p.*, up."photos" from "Profiles" p left join (select up."userId", array_agg(up."photo") photos from "UserPhotos" up group by up."userId") up on p."userId" = up."userId" where p."userId" not in (select l."likedById" from "Likes" l where l."likerId" = :userId) and p."userId" not in (select d."dislikedById" from "Dislikes" d where d."dislikerId" = :userId) and p."gender" = :userGender and p."age" between :minAge and :maxAge and p."userId" <> :userId limit 1)',
       {
         replacements: {
@@ -62,13 +72,11 @@ router.post('/like', async (req, res) => {
       },
     );
 
-    const newProfile = newProfiles[0];
-
     if (newProfile) {
       const currentUserProfile = await Profile.findOne({ where: { userId: req.session.user.id } });
-      newProfile.distanceBetweenUsers = calculateDistance(
-        newProfile.userLatitude,
-        newProfile.userLongitude,
+      newProfile[0].distanceBetweenUsers = calculateDistance(
+        newProfile[0].userLatitude,
+        newProfile[0].userLongitude,
         currentUserProfile.userLatitude,
         currentUserProfile.userLongitude,
       );
@@ -82,7 +90,7 @@ router.post('/like', async (req, res) => {
         currentUserProfile.userLongitude,
       );
 
-      res.json({ newProfile, matchUser });
+      res.json([...newProfile, matchUser]);
     } else {
       res.json(newProfile);
     }
