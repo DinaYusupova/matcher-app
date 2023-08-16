@@ -3,7 +3,6 @@ import UserCard from '../UI/UserCard';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getProfileThunk } from '../../redux/slices/profile/profileThunk';
 import Loader from '../hocs/Loader';
-import { postLocationService } from '../../services/apiLocationService';
 
 export default function SelectMatchPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -17,7 +16,7 @@ export default function SelectMatchPage(): JSX.Element {
           const userLatitude = position.coords.latitude;
           const userLongitude = position.coords.longitude;
 
-          void dispatch(getProfileThunk({userLatitude, userLongitude}));
+          void dispatch(getProfileThunk({ userLatitude, userLongitude }));
         },
         (error) => {
           console.error('Ошибка получения геолокации:', error);

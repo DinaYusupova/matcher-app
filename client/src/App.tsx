@@ -26,9 +26,10 @@ function App(): JSX.Element {
       <Container sx={{ marginTop: '100px' }}>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route element={<PrivateRouter isAllowed={user.status === 'logged'} />}>
-            <Route path="/match" element={<SelectMatchPage />} />
+          <Route element={<PrivateRouter redirect="/" isAllowed={user.status === 'logged'} />}>
+            
             <Route path="/chat" element={<ChatPage />} />
+            
           </Route>
           <Route
             path="/auth/:authType"
@@ -37,7 +38,8 @@ function App(): JSX.Element {
                 <AuthPage />
               </PrivateRouter>
             }
-          />
+          />          
+          <Route path="/match" element={<SelectMatchPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/account/about" element={<OneAccountPage />} />
           <Route path="/account/filter" element={<TwoAccountPage />} />

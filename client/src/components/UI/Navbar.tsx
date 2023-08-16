@@ -37,13 +37,14 @@ export default function Navigation(): JSX.Element {
         top: 0,
         left: 0,
         right: 0,
-        height: '50px',
-        backgroundColor: 'greenyellow',
+        height: '70px',
+        backgroundColor: 'white',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
         zIndex: 1000,
+        color: "white",
       }}
     >
       {user.status === 'guest' && (
