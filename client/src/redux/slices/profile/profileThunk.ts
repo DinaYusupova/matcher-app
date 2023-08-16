@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import type { ProfileModelType } from '../../../types/profileType';
+import type { ApiDataUserIdReturn, ProfileModelType, ReturnPostLikeType } from '../../../types/profileType';
 import {
   dislikeProfileService,
   fetchProfileService,
@@ -12,10 +12,10 @@ export const getProfileThunk = createAsyncThunk<ProfileModelType[], UserLocation
   '/user/getUser',
   async ({ userLatitude, userLongitude }) => fetchProfileService({ userLatitude, userLongitude }),
 );
-export const likeProfileThunk = createAsyncThunk<
-  { data: ProfileModelType[]; userId: number },
-  ProfileModelType['userId']
->('/user/like', async (userId) => likeProfileService(userId));
+export const likeProfileThunk = createAsyncThunk<{ data: ProfileModelType[]; userId: number }, ProfileModelType['userId']>(
+  '/user/like',
+  async (userId) => likeProfileService(userId),
+);
 
 export const dislikeProfileThunk = createAsyncThunk<
   { data: ProfileModelType[]; userId: number },

@@ -16,6 +16,7 @@ router.post('/like', async (req, res) => {
     console.log(req.body.userId, 'REQ BODY USER ID');
 
     let isMutualLike = false;
+    let matchUser = 0;
     await sequelize
       .query(
         '(select count(*) = 1 isMutual from "Likes" l where l."likerId" = :likedByCurrentUserId and l."likedById" = :currentUserId)',
@@ -35,6 +36,21 @@ router.post('/like', async (req, res) => {
         senderId: req.session.user.id,
         recipientId: req.body.userId,
       });
+      // matchUser = await Profile.findOne({
+      //   where: {
+      //     userId: req.body.userId,
+      //   },
+
+      const matchUsers = await sequelize.query(
+        '(select * from "Profiles" p left join (select up."userId", array_agg(up."photo") photos from "UserPhotos" up where up."userId" = :userId group by up."userId") up on p."userId" = up."userId" where p."userId" = :userId)',
+        {
+          replacements: {
+            userId: req.body.userId,
+          },
+          type: QueryTypes.SELECT,
+        },
+      );
+      matchUser = matchUsers[0];
     }
 
     const userFilter = await Filter.findOne({
@@ -56,7 +72,7 @@ router.post('/like', async (req, res) => {
       },
     );
 
-    if (newProfile[0]) {
+    if (newProfile) {
       const currentUserProfile = await Profile.findOne({ where: { userId: req.session.user.id } });
       newProfile[0].distanceBetweenUsers = calculateDistance(
         newProfile[0].userLatitude,
@@ -65,8 +81,19 @@ router.post('/like', async (req, res) => {
         currentUserProfile.userLongitude,
       );
     }
-    console.log(newProfile, 'NEW PROFILE LIKES');
-    res.json(newProfile);
+    if (matchUser) {
+      const currentUserProfile = await Profile.findOne({ where: { userId: req.session.user.id } });
+      matchUser.distanceBetweenUsers = calculateDistance(
+        matchUser.userLatitude,
+        matchUser.userLongitude,
+        currentUserProfile.userLatitude,
+        currentUserProfile.userLongitude,
+      );
+
+      res.json([...newProfile, matchUser]);
+    } else {
+      res.json(newProfile);
+    }
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
