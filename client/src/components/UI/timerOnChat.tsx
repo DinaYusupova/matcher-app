@@ -9,7 +9,7 @@ export default function TimerOnChat({ timer }): JSX.Element {
 
   useEffect(() => {
     console.log(timeRemaining.minutes, timeRemaining.seconds);
-    if (timeRemaining.hours === 0 && timeRemaining.minutes === 0 && timeRemaining.seconds <= 0) {
+    if (timeRemaining.hours === 0 && timeRemaining.minutes === 0 && timeRemaining.seconds <= 30) {
       void dispatch(fetchAvailableMessages());
     }
 
