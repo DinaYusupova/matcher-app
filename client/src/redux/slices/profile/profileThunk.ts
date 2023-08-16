@@ -6,11 +6,12 @@ import {
   fetchProfileService,
   likeProfileService,
 } from '../../../services/apiProfileService';
+import type { UserLocationType } from '../../../types/userLocationType';
 
-export const getProfileThunk = createAsyncThunk<ProfileModelType[]>('/user/getUser', (async) =>
-  fetchProfileService(),
+export const getProfileThunk = createAsyncThunk<ProfileModelType[], UserLocationType>(
+  '/user/getUser',
+  async ({ userLatitude, userLongitude }) => fetchProfileService({ userLatitude, userLongitude }),
 );
-
 export const likeProfileThunk = createAsyncThunk<
   { data: ProfileModelType[]; userId: number },
   ProfileModelType['userId']

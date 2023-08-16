@@ -8,11 +8,7 @@ import { postLocationService } from '../../services/apiLocationService';
 export default function SelectMatchPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    void dispatch(getProfileThunk());
-  }, []);
-
-  const profile = useAppSelector((store) => store.profile);
+  // useEffect(() => {}, []);
 
   useEffect(() => {
     if ('geolocation' in navigator) {
@@ -20,9 +16,8 @@ export default function SelectMatchPage(): JSX.Element {
         (position) => {
           const userLatitude = position.coords.latitude;
           const userLongitude = position.coords.longitude;
-          postLocationService(userLatitude, userLongitude)
-            .then((el) => console.log(el))
-            .catch(console.error);
+
+          void dispatch(getProfileThunk({userLatitude, userLongitude}));
         },
         (error) => {
           console.error('Ошибка получения геолокации:', error);
@@ -32,6 +27,8 @@ export default function SelectMatchPage(): JSX.Element {
       console.error('Геолокация недоступна в этом браузере.');
     }
   }, []);
+
+  const profile = useAppSelector((store) => store.profile);
 
   return (
     <Loader isLoading={profile.status === 'loading'}>
