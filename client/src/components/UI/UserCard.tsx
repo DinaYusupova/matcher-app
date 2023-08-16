@@ -148,7 +148,6 @@ export default function UserCard(): JSX.Element {
               aria-label="like"
               size="large"
               onClick={() => {
-                console.log('liked');
                 handleAction('liked');
               }}
             >

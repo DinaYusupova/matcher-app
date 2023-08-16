@@ -43,7 +43,6 @@ router.post('/', async (req, res) => {
         currentUserProfile.userLongitude,
       );
     }
-    console.log(newProfile, 'NEW PROFILE');
     res.json(newProfile);
   } catch (err) {
     console.error(err);

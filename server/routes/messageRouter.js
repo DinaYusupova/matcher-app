@@ -44,24 +44,11 @@ messageRouter.post('/find/matched', async (req, res) => {
       },
     });
     const test = JSON.parse(JSON.stringify(avChats));
-    console.log(test, 'ЧАТЫЫЫЫЫЫЫ!!!');
     res.status(200).json(avChats);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error occurred while fetching empty messages' });
   }
 });
-
-// messageRouter.get('/', async (req, res) => {
-//   Like.findAll({
-//     include: {
-//       model: User,
-//       as: 'likedBy', // Используйте правильный алиас
-//       where: { likerId: req.session.user.id },
-//     },
-//   }).then((matchingUsers) => {
-//     console.log('Пользователи с взаимными лайками:', matchingUsers);
-//   });
-// });
 
 module.exports = messageRouter;

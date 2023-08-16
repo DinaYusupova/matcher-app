@@ -13,8 +13,6 @@ router.post('/like', async (req, res) => {
       likedById: req.body.userId,
     });
 
-    console.log(req.body.userId, 'REQ BODY USER ID');
-
     let isMutualLike = false;
     let matchUser = 0;
     await sequelize

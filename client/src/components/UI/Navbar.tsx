@@ -6,6 +6,7 @@ import { Link, matchPath, useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { logoutUserAuthThunk } from '../../redux/slices/userAuth/userAuthThunk';
+import logo from '../../img/matcher.png';
 
 function useRouteMatch(patterns: readonly string[]): PathMatch | null {
   const location = useLocation();
@@ -41,29 +42,50 @@ export default function Navigation(): JSX.Element {
         backgroundColor: 'white',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
         zIndex: 1000,
-        color: "white",
+        color: 'white',
+        paddingLeft: '120px',
+        paddingRight: '50px',
       }}
     >
+      <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'  }}>
+        <img src={logo} alt="logo" style={{ width: '50px'}} />
+        <h1
+          style={{
+            color: 'black',
+            fontFamily: 'Arial, Helvetica, sans-serif',
+            fontWeight: '900',
+            fontSize: '16px',
+            lineHeight: '1.05',
+            maxWidth: '50px',
+            marginLeft: '10px',
+            marginTop: '10px',
+          }}
+        >
+          MA TCH ER
+        </h1>
+      </Box>
       {user.status === 'guest' && (
-        <Tabs value={authCurTab}>
-          <Tab
-            label="Войти"
-            value="/auth/signin"
-            to="/auth/signin"
-            component={Link}
-            sx={{ textTransform: 'uppercase' }}
-          />
-          <Tab
-            label="Зарегистрироваться"
-            value="/auth/signup"
-            to="/auth/signup"
-            component={Link}
-            sx={{ textTransform: 'uppercase' }}
-          />
-        </Tabs>
+        <Box sx={{ justifyContent: 'end', display: 'flex', alignItems: 'center' }}>
+          <Tabs value={authCurTab}>
+            <Tab
+              label="Войти"
+              value="/auth/signin"
+              to="/auth/signin"
+              component={Link}
+              sx={{ textTransform: 'uppercase' }}
+            />
+            <Tab
+              label="Зарегистрироваться"
+              value="/auth/signup"
+              to="/auth/signup"
+              component={Link}
+              sx={{ textTransform: 'uppercase' }}
+            />
+          </Tabs>
+        </Box>
       )}
 
       {user.status === 'logged' && (

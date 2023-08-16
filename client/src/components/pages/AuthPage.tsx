@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Container } from '@mui/material';
 import React from 'react';
 import './styles/AuthPage.css';
 import { useParams } from 'react-router-dom';
@@ -24,7 +24,7 @@ export default function AuthPage(): JSX.Element {
   };
 
   return (
-    <>
+    <Container sx={{ marginTop: '100px' }}>
       <Box
         sx={{
           fontFamily: 'Monospace',
@@ -67,6 +67,6 @@ export default function AuthPage(): JSX.Element {
           {authType === 'signin' ? `войти` : `зарегиться`}
         </Button>
       </Box>
-    </>
+    </Container>
   );
 }

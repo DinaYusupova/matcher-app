@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Container } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './components/pages/MainPage';
 import SelectMatchPage from './components/pages/SelectMatchPage';
@@ -21,7 +20,7 @@ function App(): JSX.Element {
   return (
     <>
       <Navigation />
-      <Container sx={{ marginTop: '100px' }}>
+      
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route element={<PrivateRouter redirect="/" isAllowed={user.status === 'logged'} />}>
@@ -40,7 +39,6 @@ function App(): JSX.Element {
           <Route path="/match" element={<SelectMatchPage />} />
           <Route path="/account" element={<AccountPage />} />
         </Routes>
-      </Container>
     </>
   );
 }

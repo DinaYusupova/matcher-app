@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Container } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import AllChatsAsidePart from '../UI/AllChatsAsidePart';
 import CurrentChat from '../UI/CurrentChat';
@@ -13,7 +13,6 @@ export default function ChatPage(): JSX.Element {
   const chat = useAppSelector((store) => store.chat);
   const socketRef = useRef<WebSocket>();
   const [selectedChat, setSelectedChat] = useState<number>(0);
-  console.log(selectedChat);
   useEffect(() => {
     socketRef.current = new WebSocket(`ws://localhost:3001`);
     const socket = socketRef.current;
@@ -34,7 +33,6 @@ export default function ChatPage(): JSX.Element {
 
       switch (type) {
         case SET_USERS:
-          console.log('все юзеры онлайн с бэка', payload);
           break;
         case 'ADD_MESSAGE':
           dispatch(addMessage(payload));
@@ -52,13 +50,23 @@ export default function ChatPage(): JSX.Element {
     socketRef.current.send(JSON.stringify({ payload: { input, chatId }, type: 'NEW_MESSAGE' }));
   };
   return (
-    <Box sx={{ display: 'flex' }}>
-      <Box sx={{backgroundColor:'darkkhaki',borderRadius:"10px",minHeight:'80vh', flex: '1 1 25%', maxWidth: '25%' }}>
-        <AllChatsAsidePart setSelectedChat={setSelectedChat} />
+    <Container sx={{ marginTop: '100px' }}>
+      <Box sx={{ display: 'flex' }}>
+        <Box
+          sx={{
+            backgroundColor: 'darkkhaki',
+            borderRadius: '10px',
+            minHeight: '80vh',
+            flex: '1 1 25%',
+            maxWidth: '25%',
+          }}
+        >
+          <AllChatsAsidePart setSelectedChat={setSelectedChat} />
+        </Box>
+        <Box sx={{ flex: '1 1 75%', maxWidth: '75%', maxHeight: '100vh', overflowY: 'auto' }}>
+          <CurrentChat selectedChat={selectedChat} submitHandler={submitHandler} />
+        </Box>
       </Box>
-      <Box sx={{ flex: '1 1 75%', maxWidth: '75%', maxHeight: '100vh', overflowY: 'auto' }}>
-        <CurrentChat selectedChat={selectedChat} submitHandler={submitHandler} />
-      </Box>
-    </Box>
+    </Container>
   );
 }
