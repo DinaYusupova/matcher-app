@@ -6,7 +6,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Carousel } from 'react-responsive-carousel';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { dislikeProfileThunk, likeProfileThunk } from '../../redux/slices/profile/profileThunk';
@@ -20,11 +19,12 @@ export default function UserCard(): JSX.Element {
 
   const profilesStatus: string = useAppSelector((store) => store.profile.status);
 
+  const matchProfile: ProfileType = useAppSelector((store) => store.profile.matchProfile);
+
   const dispatch = useAppDispatch();
 
   const [showDescription, setShowDescription] = useState(false);
   const [action, setAction] = useState(null);
-  // const [notification, setNotification] = useState(false);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -37,7 +37,7 @@ export default function UserCard(): JSX.Element {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    borderRadius: '10px',
     boxShadow: 24,
     p: 4,
   };
@@ -50,126 +50,110 @@ export default function UserCard(): JSX.Element {
     setAction(type);
     if (type === 'liked') {
       void dispatch(likeProfileThunk(profile.userId));
-      
-      // if (matchProfile){
-      // setNotification(true);
-      // }
 
-      // if (Notification.permission === 'granted') {
-      //   console.log('NOTIFICATION ', Notification.permission);
-      //   const notification = new Notification('Новый match!', {
-      //     body: 'Пупу',
-      //     // icon: '/matcher.png',
-      //   });
-      //   console.log('NEW NOTIFICATION ', notification);
-      //   notification.addEventListener('error', (e) => {
-      //     alert('Пожалуйста, разрешите уведомления, чтобы узнавать о новых match');
-      //   });
-      // }
+      if (matchProfile) {
+        handleOpen();
+      }
+
+      if (type === 'disliked') {
+        void dispatch(dislikeProfileThunk(profile.userId));
+      }
+      // Здесь вы можете добавить логику для обработки лайка или дизлайка
+      setTimeout(() => {
+        setAction(null);
+      }, 300);
     }
-    // }
-    // `У вас один новый match! Ваша пара - ${matchProfile.name}`
 
-    if (type === 'disliked') {
-      void dispatch(dislikeProfileThunk(profile.userId));
+    let profileClasses = 'user-profile';
+    let animationClass = ''; // Добавляем переменную для класса анимации
+
+    if (action === 'liked' || profilesStatus === 'empty') {
+      animationClass = 'swipe-right'; // Устанавливаем класс анимации
+      profileClasses += ' liked';
+    } else if (action === 'disliked') {
+      animationClass = 'swipe-left'; // Устанавливаем класс анимации
+      profileClasses += ' disliked';
     }
-    // Здесь вы можете добавить логику для обработки лайка или дизлайка
-    setTimeout(() => {
-      setAction(null);
-    }, 300);
-  };
 
-  let profileClasses = 'user-profile';
-  let animationClass = ''; // Добавляем переменную для класса анимации
+    if (!profiles.length) {
+      return (
+        <div className="centered-container">
+          <div className="user-info no-profiles">
+            <p>Пользователей с подходящими данными не найдено, расширьте фильтр поиска</p>
+          </div>
+        </div>
+      );
+    }
 
-  if (action === 'liked' || profilesStatus === 'empty') {
-    animationClass = 'swipe-right'; // Устанавливаем класс анимации
-    profileClasses += ' liked';
-  } else if (action === 'disliked') {
-    animationClass = 'swipe-left'; // Устанавливаем класс анимации
-    profileClasses += ' disliked';
-  }
-
-  if (!profiles.length) {
     return (
       <div className="centered-container">
-        <div className="user-info no-profiles">
-          <p>Пользователей с подходящими данными не найдено, расширьте фильтр поиска</p>
-        </div>
-      </div>
-    );
-  }
+        <div className={`${profileClasses} ${animationClass}`}>
+          <div className="user-info">
+            <div className="user-name-age">
+              {Array.isArray(profile.photos) && profile.photos.length && (
+                <Carousel showThumbs={false} showStatus={false}>
+                  {profile.photos.map((photo) => (
+                    <div key={photo}>
+                      <img
+                        src={`http://localhost:3001/img/${photo}`}
+                        alt="Фотография"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          objectFit: 'cover',
+                          borderRadius: '4px',
+                        }}
+                      />
+                    </div>
+                  ))}
+                </Carousel>
+              )}
+              <h2>
+                {profile.name}, {profile.age}
+              </h2>
+              {profile.distanceBetweenUsers && <h4>{profile.distanceBetweenUsers} км</h4>}
+            </div>
 
-  return (
-    <div className="centered-container">
-      <div className={`${profileClasses} ${animationClass}`}>
-        <div className="user-info">
-          <div className="user-name-age">
-            {Array.isArray(profile.photos) && profile.photos.length && (
-              <Carousel showThumbs={false} showStatus={false}>
-                {profile.photos.map((photo) => (
-                  <div key={photo}>
-                    <img
-                      src={`http://localhost:3001/img/${photo}`}
-                      alt="Фотография"
-                      style={{
-                        width: '100%',
-                        height: 'auto',
-                        objectFit: 'cover',
-                        borderRadius: '4px',
-                      }}
-                    />
-                  </div>
-                ))}
-              </Carousel>
+            {profile.description.length <= 50 || showDescription ? (
+              <div className="description">{profile.description}</div>
+            ) : (
+              <div className="description">
+                {profile.description.slice(0, 50)}
+                <IconButton
+                  color="error"
+                  aria-label="full-description"
+                  size="large"
+                  onClick={toggleDescription}
+                >
+                  <ArrowDropDownIcon />
+                </IconButton>
+              </div>
             )}
-            <h2>
-              {profile.name}, {profile.age}
-            </h2>
-            {profile.distanceBetweenUsers && <h4>{profile.distanceBetweenUsers} км</h4>}
-          </div>
 
-          {profile.description.length <= 50 || showDescription ? (
-            <div className="description">{profile.description}</div>
-          ) : (
-            <div className="description">
-              {profile.description.slice(0, 50)}
+            <div className="user-actions">
               <IconButton
                 color="error"
-                aria-label="full-description"
+                aria-label="like"
                 size="large"
-                onClick={toggleDescription}
+                onClick={() => handleAction('disliked')}
               >
-                <ArrowDropDownIcon />
+                <CloseIcon />
+              </IconButton>
+              <IconButton
+                color="success"
+                aria-label="like"
+                size="large"
+                onClick={() => {
+                  console.log('liked');
+                  handleAction('liked');
+                }}
+              >
+                <FavoriteIcon />
               </IconButton>
             </div>
-          )}
-
-          <div className="user-actions">
-            <IconButton
-              color="error"
-              aria-label="like"
-              size="large"
-              onClick={() => handleAction('disliked')}
-            >
-              <CloseIcon />
-            </IconButton>
-            <IconButton
-              color="success"
-              aria-label="like"
-              size="large"
-              onClick={() => {
-                console.log('liked');
-                handleAction('liked');
-              }}
-            >
-              <FavoriteIcon />
-            </IconButton>
           </div>
         </div>
-      </div>
         <div>
-          <Button onClick={handleOpen}>Open modal</Button>
           <Modal
             open={open}
             onClose={handleClose}
@@ -178,14 +162,16 @@ export default function UserCard(): JSX.Element {
           >
             <Box sx={style}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                Text in a modal
+                У вас новый match!
               </Typography>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                Ваш match-
+                {(profile.name, matchProfile.name, matchProfile.age)}
               </Typography>
             </Box>
           </Modal>
         </div>
-    </div>
-  );
+      </div>
+    );
+  };
 }

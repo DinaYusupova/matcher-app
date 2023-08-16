@@ -15,3 +15,12 @@ export type ProfileType = ProfileModelType;
 // | (ProfileModelType & { status: 'loaded' })
 // | { status: 'loading' }
 // | { status: 'unloaded' };
+
+export type ReturnPostLikeType = { newProfile: ProfileModelType; matchUser: ProfileModelType };
+
+export type ApiDataUserIdReturn = { data: ReturnPostLikeType; userId: ProfileModelType['userId'] };
+
+export type ApiLikeServiceType<
+  ReturnValue = ApiDataUserIdReturn,
+  ServiceArg = ProfileModelType['userId'],
+> = (arg: ServiceArg) => Promise<ReturnValue>;
