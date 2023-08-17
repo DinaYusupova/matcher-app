@@ -19,8 +19,9 @@ function OneChatAsideItem({
   username,
   setActiveChatId,
   avatar,
-  timer,
+  // timer,
 }: Props): JSX.Element {
+  console.log(avatar);
   return (
     <Box
       onClick={() => {
@@ -41,12 +42,12 @@ function OneChatAsideItem({
         sx={{ marginLeft: '10px', borderRadius: '50%', width: '50px', height: '50px' }}
         alignSelf="center"
         component="img"
-        src={`http://localhost:3001/img/${avatar}`}
+        src={`http://localhost:3001/api/userphoto/photos/${avatar}`}
       />
       <Box marginLeft={5}>
         <Typography>{username}</Typography>
-        <Typography>last message</Typography>
-        <TimerOnChat timer={timer} />
+        {/* <Typography>last message</Typography> */}
+        {/* <TimerOnChat timer={timer} /> */}
       </Box>
     </Box>
   );

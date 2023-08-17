@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './UserCard.css';
 import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -48,7 +48,7 @@ export default function UserCard(): JSX.Element {
     setShowDescription(!showDescription);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (matchProfile) {
       handleOpen();
     }
@@ -62,20 +62,19 @@ export default function UserCard(): JSX.Element {
     if (type === 'disliked') {
       void dispatch(dislikeProfileThunk(profile.userId));
     }
-    // Здесь вы можете добавить логику для обработки лайка или дизлайка
     setTimeout(() => {
       setAction(null);
     }, 300);
   };
 
   let profileClasses = 'user-profile';
-  let animationClass = ''; // Добавляем переменную для класса анимации
+  let animationClass = '';
 
   if (action === 'liked' || profilesStatus === 'empty') {
-    animationClass = 'swipe-right'; // Устанавливаем класс анимации
+    animationClass = 'swipe-right';
     profileClasses += ' liked';
   } else if (action === 'disliked') {
-    animationClass = 'swipe-left'; // Устанавливаем класс анимации
+    animationClass = 'swipe-left';
     profileClasses += ' disliked';
   }
 
@@ -97,13 +96,13 @@ export default function UserCard(): JSX.Element {
             {Array.isArray(profile.photos) && profile.photos.length && (
               <Carousel showThumbs={false} showStatus={false}>
                 {profile.photos.map((photo) => (
-                  <div key={photo}>
+                  <div key={photo} style={{ maxHeight: '300px' }}>
                     <img
                       src={`http://localhost:3001/api/userphoto/photos/${photo}`}
                       alt="Фотография"
                       style={{
                         width: '100%',
-                        height: 'auto',
+                        height: '100%',
                         objectFit: 'cover',
                         borderRadius: '4px',
                       }}
@@ -115,7 +114,7 @@ export default function UserCard(): JSX.Element {
             <h2>
               {profile.name}, {profile.age}
             </h2>
-            {profile.distanceBetweenUsers && <h4>{profile.distanceBetweenUsers} км</h4>}
+            {profile.distanceBetweenUsers !== null && <h4>{profile.distanceBetweenUsers} км от вас</h4>}
           </div>
 
           {/* {profile.description.length <= 50 || showDescription ? ( */}
@@ -148,7 +147,6 @@ export default function UserCard(): JSX.Element {
               aria-label="like"
               size="large"
               onClick={() => {
-                console.log('liked');
                 handleAction('liked');
               }}
             >
@@ -169,7 +167,7 @@ export default function UserCard(): JSX.Element {
               id="modal-modal-title"
               variant="h6"
               component="h2"
-              sx={{ textAlign: 'center' }}
+              sx={{ textAlign: 'center', marginBottom: '20px' }}
             >
               У вас новый match!
             </Typography>

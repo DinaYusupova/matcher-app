@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import type { ApiLikeServiceType, ProfileModelType, ReturnPostLikeType } from '../types/profileType';
+import type { ProfileModelType } from '../types/profileType';
 import type { UserLocationType } from '../types/userLocationType';
 import { apiService } from './apiServiceConfig';
 
@@ -23,7 +23,6 @@ export const fetchProfileService: ApiGetServiceType = async ({ userLatitude, use
 
 export const likeProfileService: ApiServiceType = async (userId) => {
   const { data } = await apiService.post<ProfileModelType[]>('/like', { userId });
-  console.log(data, 'data LIKE SERVICE');
   return { data, userId };
 };
 

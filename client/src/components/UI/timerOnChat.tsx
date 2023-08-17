@@ -5,12 +5,14 @@ import { fetchAvailableMessages } from '../../redux/slices/availableChats/availa
 
 export default function TimerOnChat({ timer }): JSX.Element {
   const [timeRemaining, setTimeRemaining] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const [show, setShow] = useState(true);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     console.log(timeRemaining.minutes, timeRemaining.seconds);
-    if (timeRemaining.hours === 0 && timeRemaining.minutes === 0 && timeRemaining.seconds <= 30) {
+    if (timeRemaining.seconds === 0) {
       void dispatch(fetchAvailableMessages());
+      setShow(false);
     }
 
     const createdAtDateObj = new Date(timer);
@@ -50,10 +52,12 @@ export default function TimerOnChat({ timer }): JSX.Element {
   }, []);
 
   return (
-    <Typography>
-      {timeRemaining.hours}:
-      {timeRemaining.minutes < 10 ? `0${timeRemaining.minutes}` : timeRemaining.minutes}:
-      {timeRemaining.seconds < 10 ? `0${timeRemaining.seconds}` : timeRemaining.seconds}
-    </Typography>
+    show && (
+      <Typography>
+        {timeRemaining.hours}:
+        {timeRemaining.minutes < 10 ? `0${timeRemaining.minutes}` : timeRemaining.minutes}:
+        {timeRemaining.seconds < 10 ? `0${timeRemaining.seconds}` : timeRemaining.seconds}
+      </Typography>
+    )
   );
 }

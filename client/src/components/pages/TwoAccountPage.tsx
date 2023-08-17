@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
 import { apiService } from '../../services/apiServiceConfig';
 
 export default function SearchCard(): JSX.Element {
@@ -30,8 +31,7 @@ export default function SearchCard(): JSX.Element {
 
   // Эффект useEffect для определения, заполнены ли все поля поиска
   useEffect(() => {
-    const areSearchFieldsFilled =
-      searchGender && minSearchAge && maxSearchAge && searchCity;
+    const areSearchFieldsFilled = searchGender && minSearchAge && maxSearchAge && searchCity;
     setSearchFieldsFilled(areSearchFieldsFilled);
   }, [searchGender, minSearchAge, maxSearchAge, searchCity]);
 
@@ -45,7 +45,6 @@ export default function SearchCard(): JSX.Element {
         searchCity,
       });
       // Перенаправление на страницу с результатами
-      window.location.href = '/match';
     } else if (!searchFieldsFilled) {
       // Открытие модального окна, если не заполнены все поля
       setIsModalOpenSearch(true);
@@ -72,6 +71,7 @@ export default function SearchCard(): JSX.Element {
         alignItems="center"
         maxHeight="100vh"
         p={0}
+        sx={{marginTop:'20px'}}
       >
         <Card  sx={{
             maxWidth: '550px',
@@ -79,17 +79,19 @@ export default function SearchCard(): JSX.Element {
             height: '620px',
             borderRadius: '10px', // Закругление углов рамки
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)', // Тень рамки
-            
-          }}>
+          }}
+        >
           <CardContent sx={{ display: 'flex' }}>
             <Box sx={{ flex: 2, marginLeft: '20px', marginRight: '20px' }}>
-              <h3 style={{
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: '20px',
-                fontWeight: 550,
-                textAlign: 'center', // Выравнивание по центру
-                marginTop:'50px'
-              }}>
+              <h3
+                style={{
+                  fontFamily: 'Poppins, sans-serif',
+                  fontSize: '20px',
+                  fontWeight: 550,
+                  textAlign: 'center', // Выравнивание по центру
+                  marginTop: '50px',
+                }}
+              >
                 ЗАПОЛНИТЕ ФИЛЬТР ПОИСКА
               </h3>
 
@@ -138,7 +140,7 @@ export default function SearchCard(): JSX.Element {
 
               {/* Кнопка для начала поиска */}
               <Button
-                variant='contained'
+                variant="contained"
                 onClick={handleSearchMatch}
                 fullWidth
                 sx={{
@@ -151,6 +153,8 @@ export default function SearchCard(): JSX.Element {
                   fontSize: '20px', // Размер шрифта
                   fontWeight: 550, // Насыщенность шрифта
                 }}
+                component={Link}
+                to="/match"
               >
                 Начать поиск
               </Button>

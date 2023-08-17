@@ -122,6 +122,7 @@ export default function AccountCard():JSX.Element {
          alignItems="center"
          maxHeight="100vh"
          p={0}
+         sx={{marginTop:'20px'}}
        >
          <Card  sx={{
             maxWidth: '800px',

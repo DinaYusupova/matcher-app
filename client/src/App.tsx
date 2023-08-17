@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Container } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import MainPage from './components/pages/MainPage';
 import SelectMatchPage from './components/pages/SelectMatchPage';
@@ -12,6 +11,8 @@ import PrivateRouter from './components/hocs/PrivateRouter';
 import AccountPage from './components/pages/AccountPage';
 import OneAccountPage from './components/pages/OneAccountPage';
 import TwoAccountPage from './components/pages/TwoAccountPage';
+import TimerPart from './components/UI/test';
+import { Container } from '@mui/material';
 
 
 function App(): JSX.Element {
@@ -23,7 +24,7 @@ function App(): JSX.Element {
   return (
     <>
       <Navigation />
-      <Container sx={{ marginTop: '100px' }}>
+    
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route element={<PrivateRouter redirect="/" isAllowed={user.status === 'logged'} />}>
@@ -44,7 +45,7 @@ function App(): JSX.Element {
           <Route path="/account/about" element={<OneAccountPage />} />
           <Route path="/account/filter" element={<TwoAccountPage />} />
         </Routes>
-      </Container>
+    
     </>
   );
 }

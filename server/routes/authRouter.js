@@ -1,6 +1,5 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const schedule = require('node-schedule');
 const { User } = require('../db/models');
 
 const authRouter = express.Router();
@@ -22,10 +21,6 @@ authRouter.post('/signup', async (req, res) => {
     const userSession = JSON.parse(JSON.stringify(user));
     delete userSession.password;
     req.session.user = userSession;
-    const job = schedule.scheduleJob('10 * * * * *', () => {
-      console.log('hello user cron test from auth');
-      job.cancel();
-    });
 
     return res.json(userSession);
   } catch (err) {
@@ -48,7 +43,8 @@ authRouter.post('/signin', async (req, res) => {
       return res.status(401).json({ message: 'wrong pass' });
     }
     const userSession = JSON.parse(JSON.stringify(user));
-    console.log(userSession);
+
+    console.log('=========>', userSession);
     delete userSession.password;
     req.session.user = userSession;
     return res.json(userSession);
@@ -62,9 +58,14 @@ authRouter.get('/logout', async (req, res) => {
   return res.clearCookie('sid').sendStatus(200);
 });
 authRouter.post('/check', async (req, res) => {
-  if (req.session.user) {
-    return res.status(200).json(req.session.user);
+  try {
+    if (req.session.user) {
+      return res.status(200).json(req.session.user);
+    }
+    return res.sendStatus(401);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
   }
-  return res.sendStatus(401);
 });
 module.exports = authRouter;
