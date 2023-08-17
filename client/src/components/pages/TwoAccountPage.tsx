@@ -70,8 +70,8 @@ export default function SearchCard(): JSX.Element {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        minHeight="100vh"
-        p={1}
+        maxHeight="100vh"
+        p={0}
       >
         <Card  sx={{
             maxWidth: '550px',
