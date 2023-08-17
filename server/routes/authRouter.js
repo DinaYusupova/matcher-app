@@ -58,9 +58,14 @@ authRouter.get('/logout', async (req, res) => {
   return res.clearCookie('sid').sendStatus(200);
 });
 authRouter.post('/check', async (req, res) => {
-  if (req.session.user) {
-    return res.status(200).json(req.session.user);
+  try {
+    if (req.session.user) {
+      return res.status(200).json(req.session.user);
+    }
+    return res.sendStatus(401);
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
   }
-  return res.sendStatus(401);
 });
 module.exports = authRouter;

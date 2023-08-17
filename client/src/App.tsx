@@ -24,7 +24,7 @@ function App(): JSX.Element {
   return (
     <>
       <Navigation />
-      <Container sx={{ marginTop: '100px' }}>
+    
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route element={<PrivateRouter redirect="/" isAllowed={user.status === 'logged'} />}>
@@ -45,7 +45,7 @@ function App(): JSX.Element {
           <Route path="/account/about" element={<OneAccountPage />} />
           <Route path="/account/filter" element={<TwoAccountPage />} />
         </Routes>
-      </Container>
+    
     </>
   );
 }

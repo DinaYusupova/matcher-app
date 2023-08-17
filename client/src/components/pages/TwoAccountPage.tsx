@@ -65,9 +65,15 @@ export default function SearchCard(): JSX.Element {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" p={1}>
-        <Card
-          sx={{
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        maxHeight="100vh"
+        p={0}
+        sx={{marginTop:'20px'}}
+      >
+        <Card  sx={{
             maxWidth: '550px',
             width: '100%',
             height: '620px',
