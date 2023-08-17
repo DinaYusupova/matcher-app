@@ -3,7 +3,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import type { PathMatch } from 'react-router-dom';
 import { Link, matchPath, useLocation, useNavigate } from 'react-router-dom';
-import { Box, Button, createTheme } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { logoutUserAuthThunk } from '../../redux/slices/userAuth/userAuthThunk';
 import logo from '../../img/matcher.png';
@@ -27,11 +28,23 @@ export default function Navigation(): JSX.Element {
   const dispatch = useAppDispatch();
   const authRouteMatch = useRouteMatch(['/auth/signin', '/auth/signup']);
   const authCurTab = authRouteMatch?.pattern?.path;
-  const authorizedRouteMatch = useRouteMatch(['/', '/chat']);
+  const authorizedRouteMatch = useRouteMatch(['/', '/chat', '/account', '/match']);
   const authorizedCurTab = authorizedRouteMatch?.pattern.path;
   const isActiveTab = (path: string) => location.pathname === path;
 
+  const theme6 = createTheme({
+    palette: {
+      primary: {
+        main: '#FE3C72', // Цвет контура и лейбла в активном состоянии
+      },
+      text: {
+        primary: '#000', // Цвет текста
+      },
+    },
+  });
+
   return (
+    <ThemeProvider theme={theme6}>
     <Box
       component="nav"
       sx={{
@@ -94,16 +107,16 @@ export default function Navigation(): JSX.Element {
         <Box sx={{ justifyContent: 'end', display: 'flex', alignItems: 'center' }}>
           <Tabs value={authorizedCurTab}>
           <Tab
-              label="Поиск"
-              value="/match"
-              to="/match"
+              label="Главная"
+              value="/"
+              to="/"
               component={Link}
               sx={{ textTransform: 'uppercase' }}
             />
-            <Tab
-              label="Чат"
-              value="/chat"
-              to="/chat"
+          <Tab
+              label="Поиск"
+              value="/match"
+              to="/match"
               component={Link}
               sx={{ textTransform: 'uppercase' }}
             />
@@ -114,18 +127,27 @@ export default function Navigation(): JSX.Element {
               component={Link}
               sx={{ textTransform: 'uppercase' }}
             />
+            <Tab
+              label="Чат"
+              value="/chat"
+              to="/chat"
+              component={Link}
+              sx={{ textTransform: 'uppercase' }}
+            />
+        
           </Tabs>
           <Button
-            color="error"
-            onClick={() => {
-              void dispatch(logoutUserAuthThunk());
-              // location('/auth/signin');
-            }}
-          >
-            Разлогиниться
-          </Button>
+  style={{ color: '#5d615e' }}
+  onClick={() => {
+    void dispatch(logoutUserAuthThunk());
+    // location('/auth/signin');
+  }}
+>
+  Разлогиниться
+</Button>
         </Box>
       )}
     </Box>
+    </ThemeProvider>
   );
 }

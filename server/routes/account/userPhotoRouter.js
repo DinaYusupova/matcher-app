@@ -9,13 +9,18 @@ const authPhotoMiddleware = require('../../middlewares/ authPhotoMiddleware');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const photos = await UserPhoto.findAll({
-    where: {
-      userId: req.session.user.id,
-    },
-    order: [['createdAt', 'DESC']], // Сортировка по полю createdAt в порядке убывания
-  });
-  res.json(photos);
+  try {
+    const photos = await UserPhoto.findAll({
+      where: {
+        userId: req.session.user.id,
+      },
+      order: [['createdAt', 'DESC']], // Сортировка по полю createdAt в порядке убывания
+    });
+    res.json(photos);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
 });
 
 router.get('/photos/:filename', authPhotoMiddleware, async (req, res) => { // ------------- ручка на запрос файла к серверу
