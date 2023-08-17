@@ -17,7 +17,7 @@ export default function AllChatsAsidePart({ setSelectedChat }: Props): JSX.Eleme
   useEffect(() => {
     void dispatch(fetchAvailableMessages());
   }, []);
-  const handleChatItemClick = (chatId): void => {
+   const handleChatItemClick = (chatId): void => {
     setSelectedChat(chatId);
     setActiveChatId(chatId);
   };

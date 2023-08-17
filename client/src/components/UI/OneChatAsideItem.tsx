@@ -18,16 +18,20 @@ function OneChatAsideItem({
   setSelectedChat,
   username,
   setActiveChatId,
-  avatar,
-  // timer,
+  avatar, // timer,
 }: Props): JSX.Element {
   console.log(avatar);
   return (
     <Box
-      onClick={() => {
-        setSelectedChat(chatId);
+    onClick={() => {
+      if (activeChatId === chatId) {
+        setSelectedChat(0);
+        setActiveChatId(0); 
+      } else {
+        setSelectedChat(chatId); // Открыть чат
         setActiveChatId(chatId);
-      }}
+      }
+    }}
       mt={2}
       sx={{
         backgroundColor: activeChatId === chatId ? 'red' : 'grey',
@@ -44,7 +48,7 @@ function OneChatAsideItem({
         component="img"
         src={`http://localhost:3001/api/userphoto/photos/${avatar}`}
       />
-      <Box marginLeft={5}>
+      <Box textAlign="center" marginLeft={5}>
         <Typography>{username}</Typography>
         {/* <Typography>last message</Typography> */}
         {/* <TimerOnChat timer={timer} /> */}

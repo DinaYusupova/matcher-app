@@ -21,7 +21,7 @@ function useRouteMatch(patterns: readonly string[]): PathMatch | null {
   return null;
 }
 
-export default function Navigation(): JSX.Element {
+export default function Navigation({ setLocation }): JSX.Element {
   const location = useLocation();
   const user = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
@@ -53,6 +53,7 @@ export default function Navigation(): JSX.Element {
       <Box
         style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
         component={Link}
+        onClick={() => setLocation('/')}
         to="/"
       >
         <img src={logo} alt="logo" style={{ width: '50px' }} />
@@ -76,6 +77,7 @@ export default function Navigation(): JSX.Element {
               label="Войти"
               value="/auth/signin"
               to="/auth/signin"
+              onClick={() => setLocation('/auth/signin')}
               component={Link}
               sx={{ textTransform: 'uppercase' }}
             />
@@ -83,6 +85,7 @@ export default function Navigation(): JSX.Element {
               label="Зарегистрироваться"
               value="/auth/signup"
               to="/auth/signup"
+              onClick={() => setLocation('/auth/signup')}
               component={Link}
               sx={{ textTransform: 'uppercase' }}
             />
@@ -93,11 +96,12 @@ export default function Navigation(): JSX.Element {
       {user.status === 'logged' && (
         <Box sx={{ justifyContent: 'end', display: 'flex', alignItems: 'center' }}>
           <Tabs value={authorizedCurTab}>
-          <Tab
+            <Tab
               label="Поиск"
               value="/match"
               to="/match"
               component={Link}
+              onClick={() => setLocation('/match')}
               sx={{ textTransform: 'uppercase' }}
             />
             <Tab
@@ -111,6 +115,7 @@ export default function Navigation(): JSX.Element {
               label="Профиль"
               value="/account"
               to="/account"
+              onClick={() => setLocation('/account')}
               component={Link}
               sx={{ textTransform: 'uppercase' }}
             />
