@@ -18,16 +18,23 @@ function OneChatAsideItem({
   setSelectedChat,
   username,
   setActiveChatId,
+  avatar, // timer,
+}: Props): JSX.Element {
   avatar,
 } // timer,
 : Props): JSX.Element {
   console.log(avatar);
   return (
     <Box
-      onClick={() => {
-        setSelectedChat(chatId);
+    onClick={() => {
+      if (activeChatId === chatId) {
+        setSelectedChat(0);
+        setActiveChatId(0); 
+      } else {
+        setSelectedChat(chatId); // Открыть чат
         setActiveChatId(chatId);
-      }}
+      }
+    }}
       mt={2}
       sx={{
         backgroundColor: activeChatId === chatId ? '#ffffff' : '#f9fafc',

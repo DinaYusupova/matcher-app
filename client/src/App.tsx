@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { Container } from '@mui/material';
 import { Container } from '@mui/material';
 import MainPage from './components/pages/MainPage';
 import SelectMatchPage from './components/pages/SelectMatchPage';
@@ -21,20 +22,19 @@ function App(): JSX.Element {
   useEffect(() => {
     void dispatch(checkUserAuthThunk());
   }, []);
-
+  const [location, setLocation] = useState('');
   return (
     <>
-      <Navigation />
+      <Navigation setLocation={setLocation} />
       <Loader isLoading={user.status === 'loading'}>
-   
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route element={<PrivateRouter redirect="/" isAllowed={user.status === 'logged'} />}>
-          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/chat" element={<ChatPage location={location} />} />
           <Route path="/match" element={<SelectMatchPage />} />
-          <Route path="/account" element={<AccountPage />} />
-          <Route path="/account/about" element={<OneAccountPage />} />
-          <Route path="/account/filter" element={<TwoAccountPage />} />
+        <Route path="/account" element={<AccountPage />} />
+        <Route path="/account/about" element={<OneAccountPage />} />
+        <Route path="/account/filter" element={<TwoAccountPage />} />
         </Route>
         <Route
           path="/auth/:authType"
@@ -44,6 +44,7 @@ function App(): JSX.Element {
             </PrivateRouter>
           }
         />
+        
       </Routes>
       </Loader>
     </>

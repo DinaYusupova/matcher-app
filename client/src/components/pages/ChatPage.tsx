@@ -6,14 +6,18 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchSelectedChatThunk } from '../../redux/slices/messages/ChatThunk';
 import { SET_USERS } from '../chatUtils/chatActions';
 import { addMessage } from '../../redux/slices/messages/ChatSlice';
-import { fetchAvailableMessages } from '../../redux/slices/availableChats/availableChatThunks';
-import { clearTimeoutService } from '../../services/apiMessageService';
 
-export default function ChatPage(): JSX.Element {
+
+
+export default function ChatPage({ location }): JSX.Element {
   const dispatch = useAppDispatch();
   const chat = useAppSelector((store) => store.chat);
   const socketRef = useRef<WebSocket>();
+  console.log(location);
   const [selectedChat, setSelectedChat] = useState<number>(0);
+  // if (location !== '/chat') {
+  //   setSelectedChat(0);
+  // }
   useEffect(() => {
     socketRef.current = new WebSocket(`ws://localhost:3001`);
     const socket = socketRef.current;
@@ -26,6 +30,7 @@ export default function ChatPage(): JSX.Element {
     socket.onerror = (err) => {
       console.log(err);
     };
+    setSelectedChat(0);
   }, []);
   useEffect(() => {
     const socket = socketRef.current;
