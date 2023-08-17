@@ -14,6 +14,7 @@ import {
 import MenuItem from '@mui/material/MenuItem';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
 import AccountPhoto from '../UI/account/AccountPhoto';
 import { apiService } from '../../services/apiServiceConfig';
 
@@ -62,7 +63,6 @@ export default function AccountCard(): JSX.Element {
         city,
         description: about,
       });
-      window.location.href = '/account/filter'; // Перенаправление пользователя
     }
   };
 
@@ -163,6 +163,8 @@ export default function AccountCard(): JSX.Element {
                   fontSize: '20px', // Настройте размер шрифта
                   fontWeight: 550, // Настройте жирность шрифта
                 }}
+                component={Link}
+                to="/account/filter"
               >
                 Далее
               </Button>

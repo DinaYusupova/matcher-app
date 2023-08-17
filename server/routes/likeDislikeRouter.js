@@ -97,8 +97,8 @@ router.post('/like', async (req, res) => {
         type: QueryTypes.SELECT,
       },
     );
-
-    if (newProfile) {
+    console.log({ newProfile });
+    if (newProfile.length) {
       const currentUserProfile = await Profile.findOne({ where: { userId: req.session.user.id } });
       newProfile[0].distanceBetweenUsers = calculateDistance(
         newProfile[0].userLatitude,

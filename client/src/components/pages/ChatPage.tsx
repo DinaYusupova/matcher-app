@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Grid, Container } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import AllChatsAsidePart from '../UI/AllChatsAsidePart';
 import CurrentChat from '../UI/CurrentChat';
@@ -14,7 +14,6 @@ export default function ChatPage(): JSX.Element {
   const chat = useAppSelector((store) => store.chat);
   const socketRef = useRef<WebSocket>();
   const [selectedChat, setSelectedChat] = useState<number>(0);
-
   useEffect(() => {
     socketRef.current = new WebSocket(`ws://localhost:3001`);
     const socket = socketRef.current;
@@ -35,7 +34,6 @@ export default function ChatPage(): JSX.Element {
 
       switch (type) {
         case SET_USERS:
-          console.log('все юзеры онлайн с бэка', payload);
           break;
         case 'ADD_MESSAGE':
           dispatch(addMessage(payload));

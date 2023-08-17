@@ -58,6 +58,8 @@ messageRouter.post('/find/matched', async (req, res) => {
         },
       ],
     });
+    const test = JSON.parse(JSON.stringify(avChats));
+    res.status(200).json(avChats);
     
 
     return res.status(200).json(avChats);

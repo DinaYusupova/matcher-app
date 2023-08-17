@@ -48,7 +48,8 @@ authRouter.post('/signin', async (req, res) => {
       return res.status(401).json({ message: 'wrong pass' });
     }
     const userSession = JSON.parse(JSON.stringify(user));
-    console.log(userSession);
+
+    console.log('=========>', userSession);
     delete userSession.password;
     req.session.user = userSession;
     return res.json(userSession);
