@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Container } from '@mui/material';
-import { Container } from '@mui/material';
 import MainPage from './components/pages/MainPage';
 import SelectMatchPage from './components/pages/SelectMatchPage';
 import AuthPage from './components/pages/AuthPage';
@@ -13,7 +11,6 @@ import PrivateRouter from './components/hocs/PrivateRouter';
 import AccountPage from './components/pages/AccountPage';
 import OneAccountPage from './components/pages/OneAccountPage';
 import TwoAccountPage from './components/pages/TwoAccountPage';
-import TimerPart from './components/UI/test';
 import Loader from './components/hocs/Loader';
 
 function App(): JSX.Element {
@@ -27,25 +24,24 @@ function App(): JSX.Element {
     <>
       <Navigation setLocation={setLocation} />
       <Loader isLoading={user.status === 'loading'}>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route element={<PrivateRouter redirect="/" isAllowed={user.status === 'logged'} />}>
-          <Route path="/chat" element={<ChatPage location={location} />} />
-          <Route path="/match" element={<SelectMatchPage />} />
-        <Route path="/account" element={<AccountPage />} />
-        <Route path="/account/about" element={<OneAccountPage />} />
-        <Route path="/account/filter" element={<TwoAccountPage />} />
-        </Route>
-        <Route
-          path="/auth/:authType"
-          element={
-            <PrivateRouter redirect="/account/about" isAllowed={user.status !== 'logged'}>
-              <AuthPage />
-            </PrivateRouter>
-          }
-        />
-        
-      </Routes>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route element={<PrivateRouter redirect="/" isAllowed={user.status === 'logged'} />}>
+            <Route path="/chat" element={<ChatPage location={location} />} />
+            <Route path="/match" element={<SelectMatchPage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/account/about" element={<OneAccountPage />} />
+            <Route path="/account/filter" element={<TwoAccountPage />} />
+          </Route>
+          <Route
+            path="/auth/:authType"
+            element={
+              <PrivateRouter redirect="/account/about" isAllowed={user.status !== 'logged'}>
+                <AuthPage />
+              </PrivateRouter>
+            }
+          />
+        </Routes>
       </Loader>
     </>
   );
