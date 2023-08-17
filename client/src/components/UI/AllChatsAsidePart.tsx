@@ -21,8 +21,6 @@ export default function AllChatsAsidePart({ setSelectedChat }: Props): JSX.Eleme
     setSelectedChat(chatId);
     setActiveChatId(chatId);
   };
-  console.log(user.id, 'cвой id');
-  // availableChat.forEach((el) => console.log(el.senderId)),
   
   return (
     <div style={{ overflowY: 'auto', maxHeight: '100vh' }}>

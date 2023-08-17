@@ -31,8 +31,6 @@ router.get('/photos/:filename', authPhotoMiddleware, async (req, res) => { // --
     // Формируем путь к файлу на основе имени и текущего расположения скрипта
     const filePath = path.join(__dirname, '../../photos/img', filename);
 
-    console.log('--------------------------------------', filePath);
-
     // Отправляем файл в ответ на запрос
     res.sendFile(filePath);
   } catch (err) {

@@ -40,7 +40,7 @@ export default function CurrentChat({ selectedChat, submitHandler }: Props): JSX
             key={el.id}
             mt={2}
             sx={{
-              backgroundColor: el.senderId === user.id ? 'blue' : 'grey',
+              backgroundColor: el.senderId === user.id ? '#1ac0e8' : '#e6e6e6',
               width: 'fit-content',
               padding: '8px',
               borderRadius: '8px',
