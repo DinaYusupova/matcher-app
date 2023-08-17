@@ -21,9 +21,9 @@ export default function CurrentChat({ selectedChat, submitHandler }: Props): JSX
       setMessageState((prev) => `${prev}\n`);
     }
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault(); // Предотвращаем перевод строки в поле ввода
+      e.preventDefault(); 
       submitHandler(messageState, selectedChat);
-      setMessageState(''); // Очищаем поле ввода после отправки сообщения
+      setMessageState('');
     }
   };
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function CurrentChat({ selectedChat, submitHandler }: Props): JSX
         {chat.map((el) => (
           <Box
             ref={messagesEndRef}
-            key={el.id} // Уникальный ключ для каждого элемента списка
+            key={el.id}
             mt={2}
             sx={{
               backgroundColor: el.senderId === user.id ? 'blue' : 'grey',
