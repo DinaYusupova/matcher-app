@@ -61,11 +61,13 @@ export default function ChatPage({ location }): JSX.Element {
     <Box sx={{ display: 'flex' }}>
       <Box
         sx={{
-          backgroundColor: 'darkkhaki',
+          backgroundColor: '#f9fafc',
           borderRadius: '10px',
-          minHeight: '80vh',
+          minHeight: '86vh',
           flex: '1 1 25%',
           maxWidth: '25%',
+          marginTop: "5px",
+
         }}
       >
         <AllChatsAsidePart setSelectedChat={setSelectedChat} />

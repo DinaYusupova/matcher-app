@@ -9,7 +9,6 @@ export default function TimerOnChat({ timer }): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log(timeRemaining.minutes, timeRemaining.seconds);
     if (timeRemaining.seconds === 0) {
       void dispatch(fetchAvailableMessages());
       setShow(false);
