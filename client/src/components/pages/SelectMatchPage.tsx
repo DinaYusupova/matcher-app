@@ -3,10 +3,10 @@ import UserCard from '../UI/UserCard';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getProfileThunk } from '../../redux/slices/profile/profileThunk';
 import Loader from '../hocs/Loader';
+import './styles/styles.css';
 
 export default function SelectMatchPage(): JSX.Element {
   const dispatch = useAppDispatch();
-
 
   useEffect(() => {
     if ('geolocation' in navigator) {

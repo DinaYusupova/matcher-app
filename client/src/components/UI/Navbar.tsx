@@ -64,7 +64,6 @@ export default function Navigation(): JSX.Element {
             fontSize: '16px',
             lineHeight: '1.05',
             maxWidth: '50px',
-            marginTop: '10px',
           }}
         >
           MA TCH ER
@@ -94,6 +93,13 @@ export default function Navigation(): JSX.Element {
       {user.status === 'logged' && (
         <Box sx={{ justifyContent: 'end', display: 'flex', alignItems: 'center' }}>
           <Tabs value={authorizedCurTab}>
+          <Tab
+              label="Поиск"
+              value="/match"
+              to="/match"
+              component={Link}
+              sx={{ textTransform: 'uppercase' }}
+            />
             <Tab
               label="Чат"
               value="/chat"
