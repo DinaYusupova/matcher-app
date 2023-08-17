@@ -87,6 +87,7 @@ export default function AccountCard(): JSX.Element {
         maxHeight="100vh"
         p={0}
         sx={{marginTop:'20px'}}
+        
       >
         <Card
           sx={{

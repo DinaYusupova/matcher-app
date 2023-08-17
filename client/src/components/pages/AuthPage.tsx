@@ -44,7 +44,7 @@ export default function AuthPage(): JSX.Element {
           alignItems: 'center',
           justifyContent: 'center',
           maxHeight: '100vh',
-          marginTop: '0px', // Поднять контент чуть выше
+          marginTop: '30px', // Поднять контент чуть выше
         }}
       >
         <Box
@@ -101,14 +101,14 @@ export default function AuthPage(): JSX.Element {
               fontFamily: 'Poppins, sans-serif', // Замените на имя вашего шрифта
               fontSize: '20px', // Размер шрифта
               fontWeight: 550, // Насыщенность шрифта
-              minWidth:'260px'
+              minWidth:'300px'
             }}
             className="button"
             variant="contained"
             type="submit"
            
           >
-            {authType === 'signin' ? 'Войти' : 'Зарегиться'}
+            {authType === 'signin' ? 'Войти' : 'Зарегиcтрироваться'}
           </Button>
         </Box>
       </Box>

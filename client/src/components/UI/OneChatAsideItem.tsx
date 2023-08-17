@@ -18,7 +18,7 @@ function OneChatAsideItem({
   setSelectedChat,
   username,
   setActiveChatId,
-  avatar, 
+  avatar,
 }: Props): JSX.Element {
   return (
     <Box
@@ -53,15 +53,17 @@ function OneChatAsideItem({
         }}
         alignSelf="center"
       >
-        <img
-          src={`http://localhost:3001/api/userphoto/photos/${avatar}`}
-          alt="Описание картинки"
-          style={{
-            objectFit: 'cover',
-            width: '100%',
-            height: '100%',
-          }}
-        />
+        {avatar ? (
+          <img
+            src={`http://localhost:3001/api/userphoto/photos/${avatar}`}
+            alt="Описание картинки"
+            style={{
+              objectFit: 'cover',
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        ) : null}
       </Box>
       <Box marginLeft={5}>
         <Typography sx={{ marginTop: '23px' }}>{username} </Typography>
