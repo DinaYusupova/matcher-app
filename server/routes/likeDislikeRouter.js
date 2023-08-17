@@ -47,36 +47,6 @@ router.post('/like', async (req, res) => {
         },
       );
       matchUser = matchUsers[0];
-      // создать диалог
-      // const currentDialogue = await Dialogue.create({
-      //   buddyOne: req.session.user.id,
-      //   buddyTwo: req.body.userId,
-      // });
-      // const uniqueJobId = `${currentDialogue.dataValues.buddyOne}-${currentDialogue.dataValues.buddyTwo}`;
-      // console.log(uniqueJobId, 'UNIQUE JOB ID!!!!!!!!!!!!!!!!!!!!!!');
-      // console.log('SCHEDULE CREATED 30sec');
-      // const job = schedule.scheduleJob('*/29 * * * * *', async () => {
-      //   console.log('delete testing---------------------------------------------');
-      //   await Chat.destroy({
-      //     where: {
-      //       [Op.or]: [
-      //         {
-      //           senderId: req.session.user.id,
-      //           recipientId: req.body.userId,
-      //         },
-      //         {
-      //           senderId: req.body.userId,
-      //           recipientId: req.session.user.id,
-      //         },
-      //       ],
-      //     },
-      //   });
-      //   delete scheduledJobs[uniqueJobId];
-      //   currentDialogue.destroy();
-      //   job.cancel();
-      // });
-      // scheduledJobs[uniqueJobId] = job;
-      // console.log(scheduledJobs, 'JOBS OBJECT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     }
 
     const userFilter = await Filter.findOne({
@@ -97,7 +67,6 @@ router.post('/like', async (req, res) => {
         type: QueryTypes.SELECT,
       },
     );
-    console.log({ newProfile });
     if (newProfile.length) {
       const currentUserProfile = await Profile.findOne({ where: { userId: req.session.user.id } });
       newProfile[0].distanceBetweenUsers = calculateDistance(
