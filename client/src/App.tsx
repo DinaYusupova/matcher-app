@@ -12,6 +12,7 @@ import PrivateRouter from './components/hocs/PrivateRouter';
 import AccountPage from './components/pages/AccountPage';
 import OneAccountPage from './components/pages/OneAccountPage';
 import TwoAccountPage from './components/pages/TwoAccountPage';
+import TimerPart from './components/UI/test';
 
 
 function App(): JSX.Element {
@@ -24,6 +25,7 @@ function App(): JSX.Element {
     <>
       <Navigation />
       <Container sx={{ marginTop: '100px' }}>
+        {/* <TimerPart timeProp={2000} /> */}
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route element={<PrivateRouter redirect="/" isAllowed={user.status === 'logged'} />}>
@@ -45,6 +47,7 @@ function App(): JSX.Element {
           <Route path="/account/filter" element={<TwoAccountPage />} />
         </Routes>
       </Container>
+
     </>
   );
 }

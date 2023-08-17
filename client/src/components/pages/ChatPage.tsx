@@ -48,7 +48,6 @@ export default function ChatPage(): JSX.Element {
   useEffect(() => {
     if (selectedChat !== 0) {
       void dispatch(fetchSelectedChatThunk(selectedChat));
-      
     }
   }, [selectedChat]);
   const submitHandler = (input: string, chatId: number): void => {
@@ -69,14 +68,13 @@ export default function ChatPage(): JSX.Element {
         <AllChatsAsidePart setSelectedChat={setSelectedChat} />
       </Box>
       <Box sx={{ flex: '1 1 75%', maxWidth: '75%', maxHeight: '100vh', overflowY: 'auto' }}>
-        {selectedChat && (
+        {/* {selectedChat && (
           <>
-            <Button onClick={() => clearTimeoutService(selectedChat).catch(console.log)}>
+            <Button onClick={() => clearTimeoutService(selectedChat).catch(console.log)}>       
               продолжить общаться
             </Button>
-            {/* <Box>{availableChat[selectedChat].createdAt}</Box> */}
           </>
-        )}
+        )} */}
         <CurrentChat selectedChat={selectedChat} submitHandler={submitHandler} />
       </Box>
     </Box>
