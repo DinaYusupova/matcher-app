@@ -1,48 +1,7 @@
-/* .pink-btn {
-    display: inline-block;
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #ff6b6b;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-  
-  .pink-btn:hover {
-    background-color: #ff4a4a;
-  }
-  .app {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-    text-align: center;
-  }
-  
-  .main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-  }
-  .container {
-    background-image: url('path/to/your/image.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100vh; /* Это свойство обеспечит, чтобы div занимал всю высоту видимой области */
-/* Другие стили для контейнера */
-
-.promo {
-  margin-top: -30px;
-  margin-left: -55.5px;
-  margin-right: -55.5px;
-}
 
 .promo-content {
-  border-radius: 60px;
   background-color: #f4f6f5;
+  margin-top: 4px;
 
   display: flex;
   column-gap: 24px;
