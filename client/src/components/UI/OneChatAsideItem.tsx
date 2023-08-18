@@ -3,9 +3,7 @@ import type { SetStateAction } from 'react';
 import React, { useEffect, useState } from 'react';
 import type { ProfileType } from '../../types/profileType';
 import type { AccountPhotoType } from '../../types/accountPhotoType';
-import { useAppSelector } from '../../redux/hooks';
-import TimerOnChat from './timerOnChat';
-
+import questionmark from '../../img/questionmark.webp'
 type Props = {
   chatId: number;
   setSelectedChat: React.Dispatch<SetStateAction<number>>;
@@ -63,7 +61,17 @@ function OneChatAsideItem({
               height: '100%',
             }}
           />
-        ) : null}
+        ) : (
+          <img
+            src={questionmark}
+            alt="Описание картинки"
+            style={{
+              objectFit: 'cover',
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        )}
       </Box>
       <Box marginLeft={5}>
         <Typography sx={{ marginTop: '23px' }}>{username} </Typography>

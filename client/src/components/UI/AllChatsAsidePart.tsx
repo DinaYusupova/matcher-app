@@ -8,6 +8,7 @@ import { fetchAvailableMessages } from '../../redux/slices/availableChats/availa
 type Props = {
   setSelectedChat: React.Dispatch<SetStateAction<number>>;
 };
+
 export default function AllChatsAsidePart({ setSelectedChat }: Props): JSX.Element {
   const availableChat = useAppSelector((store) => store.availableChat);
   const dispatch = useAppDispatch();
@@ -17,35 +18,35 @@ export default function AllChatsAsidePart({ setSelectedChat }: Props): JSX.Eleme
   useEffect(() => {
     void dispatch(fetchAvailableMessages());
   }, []);
-  const handleChatItemClick = (chatId): void => {
-    setSelectedChat(chatId);
-    setActiveChatId(chatId);
-  };
-  console.log(user.id, 'cвой id');
-  // availableChat.forEach((el) => console.log(el.senderId)),
 
   return (
     <div style={{ overflowY: 'auto', maxHeight: '100vh' }}>
-      {availableChat.map((oneChat, i) => (
-        <OneChatAsideItem
-          key={oneChat.id}
-          chatId={user.id == oneChat.senderId ? oneChat.recipientId : oneChat.senderId}
-          username={
-            user.id === oneChat.senderId
-              ? oneChat.recipient.profile[0].name
-              : oneChat.sender.profile[0].name
-          }
-          // timer={oneChat.createdAt}
-          setSelectedChat={setSelectedChat}
-          activeChatId={activeChatId}
-          setActiveChatId={setActiveChatId}
-          avatar={
-            user.id !== oneChat.recipientId
-              ? oneChat.recipient.photo[0].photo
-              : oneChat.sender.photo[0].photo
-          }
-        />
-      ))}
+      {availableChat.map((oneChat, i) => {
+        const isCurrentUserSender = user.id === oneChat.senderId;
+        const isCurrentUserRecipient = user.id === oneChat.recipientId;
+        const chatUsername = isCurrentUserSender
+          ? oneChat.recipient.profile[0].name
+          : oneChat.sender.profile[0].name;
+        
+        let chatAvatar = "questionmark.png";
+        if (isCurrentUserSender) {
+          chatAvatar = oneChat.recipient.photo[0]?.photo;
+        } else if (isCurrentUserRecipient) {
+          chatAvatar = oneChat.sender.photo[0]?.photo;
+        }
+        
+        return (
+          <OneChatAsideItem
+            key={oneChat.id}
+            chatId={isCurrentUserSender ? oneChat.recipientId : oneChat.senderId}
+            username={chatUsername}
+            setSelectedChat={setSelectedChat}
+            activeChatId={activeChatId}
+            setActiveChatId={setActiveChatId}
+            avatar={chatAvatar}
+          />
+        );
+      })}
     </div>
   );
 }
