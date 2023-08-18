@@ -1,6 +1,7 @@
 import type { KeyboardEvent } from 'react';
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Button, TextField, Typography } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import type { Props } from '../types';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { addMessage } from '../../redux/slices/messages/ChatSlice';
@@ -26,7 +27,20 @@ export default function CurrentChat({ selectedChat, submitHandler }: Props): JSX
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chat]);
+
+  const theme8 = createTheme({
+    palette: {
+      primary: {
+        main: '#FE3C72', // Цвет контура и лейбла в активном состоянии
+      },
+      text: {
+        primary: '#000', // Цвет текста
+      },
+    },
+  });
+
   return (
+    <ThemeProvider theme={theme8}>
     <Box
       style={{
         display: 'flex',
@@ -156,5 +170,6 @@ export default function CurrentChat({ selectedChat, submitHandler }: Props): JSX
         </div>
       )}
     </Box>
+    </ThemeProvider>
   );
 }
