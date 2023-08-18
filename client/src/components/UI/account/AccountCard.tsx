@@ -146,7 +146,7 @@ export default function AccountCard():JSX.Element {
                    onChange={(event) => setName(event.target.value)}
                    fullWidth
                    disabled={!editing}
-                   sx={{ marginRight: '10px' }}
+                   sx={{ marginRight: '10px', marginTop:'10px' }}
                  />
                <Box sx={{ display: 'flex', marginBottom: '10px', marginTop: '10px' }}>
             
